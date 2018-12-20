@@ -83,7 +83,7 @@ import { Device } from '@ionic-native/device';
 import { IonicImageViewerModule, ImageViewerComponent, ImageViewerController } from 'ionic-img-viewer';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ImagesProvider } from '../providers/images/images';
-
+// import { AdMobPro } from '@ionic-native/admob-pro';
 
 @NgModule({
   declarations: [

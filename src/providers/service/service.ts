@@ -11,6 +11,7 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
   */
   @Injectable()
   export class ServiceProvider {
+    public isAdsShown: boolean = false;
 
     constructor(public http: HttpClient, 
       private storage: Storage,
@@ -53,6 +54,14 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
           }
         });
       });
+    }
+
+    setAdsShown(){
+      this.isAdsShown = true;
+    }
+
+    getAdsShown(){
+      return this.isAdsShown;
     }
     
 

@@ -18,7 +18,7 @@ import {
 import { ListingProvider } from '../../providers/listing/listing';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ServiceProvider } from '../../providers/service/service';
-
+// import { AdMobPro } from '@ionic-native/admob-pro';
 
 /**
  * Generated class for the ListingPage page.
@@ -40,6 +40,7 @@ import { ServiceProvider } from '../../providers/service/service';
    private listings: any = [];
    private provinces: any = [];
    private province: any;
+   private startAfter: number = 0;
    private filter: any = {
      sort_by: 'newest',
      keyword: '',
@@ -48,13 +49,15 @@ import { ServiceProvider } from '../../providers/service/service';
      province: '',
      district: '',
      min_price: '',
-     max_price: ''
+     max_price: '',
+     page: 0
    };
    private land_icon: MarkerIcon;
    private house_icon: MarkerIcon;
    private apartment_icon: MarkerIcon;
    private commercial_icon: MarkerIcon;
    private room_icon: MarkerIcon;
+   private isFirebaseQuery: boolean;
    constructor(private platform: Platform, 
      public actionSheetCtrl: ActionSheetController, 
      private navCtrl: NavController, 
@@ -138,8 +141,17 @@ import { ServiceProvider } from '../../providers/service/service';
        if (listing.property_type == 'room'){
          icon = this.room_icon;
        }
+       let formatter = new Intl.NumberFormat('en-US', {
+         style: 'currency',
+         currency: 'USD',
+         minimumFractionDigits: 0,
+         // the default value for minimumFractionDigits depends on the currency
+         // and is usually already 2
+       });
+
+       let price = formatter.format(listing.price);
        this.locations.push({
-         title: '$'+listing.price,
+         title: price,
          disableAutoPan: true, 
          icon: icon, 
          position: {lat: parseFloat(listing.lat), lng: parseFloat(listing.lng)},
@@ -160,6 +172,7 @@ import { ServiceProvider } from '../../providers/service/service';
            this.filter.listing_type = listing_type;
          }
        }
+       this.isFirebaseQuery = true;
        this.listingProvider.getFirebaseAll({province: this.province.id, listing_type: listing_type}).then((listings) => {
          this.location = new LatLng(this.province.lat, this.province.lng);
          this.listings = listings;
@@ -169,6 +182,7 @@ import { ServiceProvider } from '../../providers/service/service';
 
      let keyword = this.navParams.get('keyword');
      if (keyword){
+       this.isFirebaseQuery = false;
        this.filter.keyword = keyword;
        this.filter.province = '';
        this.listingProvider.getAll({keyword: keyword}).then((listings) => {
@@ -185,29 +199,29 @@ import { ServiceProvider } from '../../providers/service/service';
 
 
    refreshMap(){
-     console.log('1');
+
      let height = this.platform.height() - 160 + 'px';
      this.renderer.setStyle(this.mapElement.nativeElement, "height", height);
      this.renderer.setStyle(this.mapElement.nativeElement, "marginTop", '5px');
-     console.log('2');
+     
 
      let element = this.mapElement.nativeElement;
      this.map = GoogleMaps.create(element);
-     console.log('3');
-     console.log('MAP', JSON.stringify(this.map));
+     
+     
      this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
-       console.log('4');
+
        this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(() => {
-         console.log('5');
+
          try{
            this.detailModal.dismiss();
          }catch(e){
-           console.log('6', e);
+
          }
        });
        let options = {
          target: this.location,
-         zoom: 10,
+         zoom: 12,
        };
        this.map.moveCamera(options);
 
@@ -253,182 +267,208 @@ import { ServiceProvider } from '../../providers/service/service';
      catch(e){
      }
    }
-   // doInfinite(infiniteScroll) {
-   //   console.log('Begin async operation');
-   //   this.listingProvider.getAll(this.filter).then((listings) => {
-   //     this.listings.push(listings);
-   //     infiniteScroll.complete();
-   //   });
-   // }
+   doInfinite(infiniteScroll) {
+     //ServiceProvider
+     if (this.serviceProvider.getAdsShown() == false){
+       // this.admob.onAdDismiss().subscribe(() => { 
+         // this.serviceProvider.setAdsShown();
+         this.loadMoreListings(infiniteScroll);
+       // });
+     }
+     else{
+       this.loadMoreListings(infiniteScroll);
+     }
+   }
+   loadMoreListings(infiniteScroll){
+     this.startAfter = this.startAfter + 25;
+     this.filter.page++;
+     if (this.isFirebaseQuery){
+       let listing_type = this.navParams.get('listing_type');
+      this.listingProvider.getFirebaseAll({startAfter: this.startAfter, province: this.province.id, listing_type: listing_type}).then((listings) => {
+         this.listings.push(listings);
+         this.refreshLocations();
+         infiniteScroll.complete();
+       });
+     }
+     else{
+
+       this.listingProvider.getAll(this.filter).then((listings) => {
+         this.listings.push(listings);
+         infiniteScroll.complete();
+       });    
+     }
+     
+   }
    // https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/blue-dot.png?alt=media&token=79ea3640-d17c-445e-82be-7a6e01fbdb66
    addMarkers() {
-     let markersWindows = [];
-     let markerCluster = this.map.addMarkerCluster({
-       markers: this.locations,
-       icons: [
-       {
-         url: "https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/cluster.png?alt=media&token=f76f7250-098a-45d5-8a6d-3fcd753bc718", 
-         anchor: {x: 16, y: 16},
-         label: {
-           color: 'white',
-           bold: true,
-           fontSize: 13
-         } as MarkerLabel
-       }
-       ]
-     }).then((marker) => {
-       marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
+     // let markersWindows = [];
+     // let markerCluster = this.map.addMarkerCluster({
+       //   markers: this.locations,
+       //   icons: [
+       //   {
+         //     url: "https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/cluster.png?alt=media&token=f76f7250-098a-45d5-8a6d-3fcd753bc718", 
+         //     anchor: {x: 16, y: 16},
+         //     label: {
+           //       color: 'white',
+           //       bold: true,
+           //       fontSize: 13
+           //     } as MarkerLabel
+           //   }
+           //   ]
+           // }).then((marker) => {
+             //   marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
 
-         let loc = params[1].get('listing');
-         this.presentDetailModal(loc);
-       }); 
-     });
-     // for(let i = 0; i < this.locations.length; i ++){
-       //   let markerSync = this.map.addMarker(this.locations[i]).then((marker) => {
-         //     marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
-           //       let loc = this.locations[i];
-           //       this.presentDetailModal(loc);
-           //     }); 
-           //   });
-           // } 
+               //     let loc = params[1].get('listing');
+               //     this.presentDetailModal(loc);
+               //   }); 
+               // });
+               for(let i = 0; i < this.locations.length; i ++){
+                 let markerSync = this.map.addMarker(this.locations[i]).then((marker) => {
+                   marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
+                     let loc = this.locations[i];
+                     this.presentDetailModal(loc);
+                   }); 
+                 });
+               } 
 
-         }
+             }
 
-         goDetail(listing){
+             goDetail(listing){
 
-           this.navCtrl.push(DetailPage, {
-             listing: listing,
-             user_id: listing.user_id
-           }, {animate: false});
-         }
-         presentFilterModal() {
-           let filterModal = this.modalCtrl.create(FilterModal, { filter: this.filter });
-           filterModal.onDidDismiss(data => {
-             if (!data.close){
-               this.listings = data.listing;
-               this.refreshLocations();
-               if (this.display == 'map'){
-                 this.map.clear().then(() => {
-                   this.addMarkers();
-                 });  
-               }
-               this.filter = data.filter;
+               this.navCtrl.push(DetailPage, {
+                 listing: listing,
+                 user_id: listing.user_id
+               }, {animate: false});
+             }
+             presentFilterModal() {
+               let filterModal = this.modalCtrl.create(FilterModal, { filter: this.filter });
+               filterModal.onDidDismiss(data => {
+                 if (!data.close){
+                   this.isFirebaseQuery = false;
+                   this.listings = data.listing;
+                   this.refreshLocations();
+                   if (this.display == 'map'){
+                     this.map.clear().then(() => {
+                       this.addMarkers();
+                     });  
+                   }
+                   this.filter = data.filter;
 
-               if (!data.filter.province){
-                 this.province = '';
-               }
-               for (let p of this.provinces){
-                 if (p.id == this.filter.province){
-                   this.province = p;
+                   if (!data.filter.province){
+                     this.province = '';
+                   }
+                   for (let p of this.provinces){
+                     if (p.id == this.filter.province){
+                       this.province = p;
+                     }
+                   }
+
                  }
+
+               });
+               filterModal.present();
+             }
+             presentDetailModal(listing) {
+               try{
+                 let data = { goDetail: false, close: true };
+                 this.detailModal.dismiss(data);
+               }catch(e){
                }
+               this.detailModal = this.modalCtrl.create(DetailModal, { listing: listing }, {cssClass: 'detail-modal' });
+               this.detailModal.onDidDismiss(data => {
 
+                 if (data){
+                   if (data.goDetail){
+                     this.navCtrl.push(DetailPage, {
+                       listing: data.listing,
+                       user_id: data.listing.user_id
+                     },{animate: false});
+                   }  
+                 }
+
+
+               });
+               this.detailModal.present();
              }
-
-           });
-           filterModal.present();
-         }
-         presentDetailModal(listing) {
-           try{
-             let data = { goDetail: false, close: true };
-             this.detailModal.dismiss(data);
-           }catch(e){
            }
-           this.detailModal = this.modalCtrl.create(DetailModal, { listing: listing }, {cssClass: 'detail-modal' });
-           this.detailModal.onDidDismiss(data => {
+           @Component({
+             selector: 'page-listing',
+             templateUrl: 'filter.html'
+           })
+           export class FilterModal {
+             public priceRange: any;
+             public provinces: any = [];
+             public districts: any = [];
+             private filter: any = {
+               sort_by: '',
+               keyword: '',
+               listing_type: '',
+               property_type: '',
+               province: '',
+               district: '',
+               min_price: '',
+               max_price: ''
+             };
+             constructor(params: NavParams, 
+               public viewCtrl: ViewController,
+               private listingProvider: ListingProvider) {
 
-             if (data){
-               if (data.goDetail){
-                 this.navCtrl.push(DetailPage, {
-                   listing: data.listing,
-                   user_id: data.listing.user_id
-                 },{animate: false});
-               }  
+               this.filter = params.get('filter');
+               this.provinces = this.listingProvider.getProvinces();
+               this.districts = this.listingProvider.getDistricts(this.filter.province);
+             }
+             dismiss() {
+               let data = { 'close': true };
+               this.viewCtrl.dismiss(data);
              }
 
+             resetFilter(){
+               this.filter = {
+                 sort_by: '',
+                 keyword: '',
+                 listing_type: '',
+                 property_type: '',
+                 province: '',
+                 district: '',
+                 min_price: '',
+                 max_price: ''
+               };
+             }
 
-           });
-           this.detailModal.present();
-         }
-       }
-       @Component({
-         selector: 'page-listing',
-         templateUrl: 'filter.html'
-       })
-       export class FilterModal {
-         public priceRange: any;
-         public provinces: any = [];
-         public districts: any = [];
-         private filter: any = {
-           sort_by: '',
-           keyword: '',
-           listing_type: '',
-           property_type: '',
-           province: '',
-           district: '',
-           min_price: '',
-           max_price: ''
-         };
-         constructor(params: NavParams, 
-           public viewCtrl: ViewController,
-           private listingProvider: ListingProvider) {
+             search(){
+               this.listingProvider.getAll(this.filter).then((listings) => {
+                 let data = {listing: listings, filter: this.filter};
+                 this.viewCtrl.dismiss(data);
+               });
+             }
 
-           this.filter = params.get('filter');
-           this.provinces = this.listingProvider.getProvinces();
-           this.districts = this.listingProvider.getDistricts(this.filter.province);
-         }
-         dismiss() {
-           let data = { 'close': true };
-           this.viewCtrl.dismiss(data);
-         }
-
-         resetFilter(){
-           this.filter = {
-             sort_by: '',
-             keyword: '',
-             listing_type: '',
-             property_type: '',
-             province: '',
-             district: '',
-             min_price: '',
-             max_price: ''
-           };
-         }
-
-         search(){
-           this.listingProvider.getAll(this.filter).then((listings) => {
-             let data = {listing: listings, filter: this.filter};
-             this.viewCtrl.dismiss(data);
-           });
-         }
-
-         provinceChange(){
-           this.districts = this.listingProvider.getDistricts(this.filter.province);
-         }
-       }
-       @Component({
-         selector: 'page-listing',
-         templateUrl: 'detail.html'
-       })
-       export class DetailModal {
-         public priceRange: any;
-         private listing: any;
-         constructor(private params: NavParams, public navCtrl: NavController, private sanitizer: DomSanitizer, public viewCtrl: ViewController) {
+             provinceChange(){
+               this.districts = this.listingProvider.getDistricts(this.filter.province);
+             }
+           }
+           @Component({
+             selector: 'page-listing',
+             templateUrl: 'detail.html'
+           })
+           export class DetailModal {
+             public priceRange: any;
+             private listing: any;
+             constructor(private params: NavParams, public navCtrl: NavController, private sanitizer: DomSanitizer, public viewCtrl: ViewController) {
 
 
-         }
-         ionViewDidEnter(){
-           this.listing = this.params.get('listing');
-         }
-         getBackground(image) {
-           return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
-         }
-         dismiss() {
-           let data = { goDetail: false, close: true };
-           this.viewCtrl.dismiss(data);
-         }
-         goDetail(listing){
-           let data = {goDetail: true, listing: listing};
-           this.viewCtrl.dismiss(data);
-         }
-       }
+             }
+             ionViewDidEnter(){
+               this.listing = this.params.get('listing');
+             }
+             getBackground(image) {
+               return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+             }
+             dismiss() {
+               let data = { goDetail: false, close: true };
+               this.viewCtrl.dismiss(data);
+             }
+             goDetail(listing){
+               let data = {goDetail: true, listing: listing};
+               this.viewCtrl.dismiss(data);
+             }
+           }

@@ -50,6 +50,7 @@
     "com-badrit-base64": "^0.2.0",
     "com-sarriaroman-photoviewer": "^1.1.18",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
+    "cordova-admobsdk": "7.35.0",
     "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
     "cordova-custom-config": "5.0.2",
@@ -113,7 +114,7 @@
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyAmv7Cw0cHhe-CqAFlhav9QFErPzsRUSwg",
         "API_KEY_FOR_IOS": "AIzaSyAmv7Cw0cHhe-CqAFlhav9QFErPzsRUSwg",
-        "PLAY_SERVICES_VERSION": "15.0.1",
+        "PLAY_SERVICES_VERSION": "16.0.1",
         "ANDROID_SUPPORT_V4_VERSION": "27.+",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
@@ -155,9 +156,9 @@
       "call-number": {}
     },
     "platforms": [
-      "android",
+      "browser",
       "ios",
-      "browser"
+      "android"
     ]
   }
 }

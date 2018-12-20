@@ -379,7 +379,8 @@ export class ListingProvider {
 				if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
 				if (filter.province) { query = query.where('province', '==', filter.province) };
 				query = query.orderBy('created_date', 'desc');
-				query = query.limit(200);
+				query = query.startAfter(filter.startAfter);
+				query = query.limit(25);
 				query = query.where('status', '==', 1);
 
 
@@ -421,6 +422,9 @@ export class ListingProvider {
 		}
 		if (filter.sort_by){
 			queryArray.push('sort_by='+filter.sort_by);	
+		}
+		if (filter.startAfter){
+			queryArray.push('start_after='+filter.startAfter);
 		}
 		let query = queryArray.join('&');
 		query = this.queryUrl + '?' + query;
