@@ -1,0 +1,46 @@
+page-listing {
+	.listing-img {
+		width: 120px;
+		padding: 0px 0px 0px 7px;
+	}
+	.item ion-thumbnail {
+
+	}
+
+	.price{
+		font-weight: bold;
+		color: red;
+		font-size: 15px;
+	}
+
+	h2{
+		line-height: 25px;
+		font-size: 17px !important;
+	}
+
+	
+	.next-label{
+		font-size: 20px;
+	}
+
+	.success-label{
+		font-size: 17px;
+	}
+
+	.success-img{
+		margin-top: 120px;
+		margin-bottom: 20px;
+		width: 130px;
+		height: 150px;
+	}
+
+	.modal-detail-label{
+		line-height: 20px;
+	}
+
+	.modal-detail-header{
+		line-height: 30px;
+	}
+	
+
+}

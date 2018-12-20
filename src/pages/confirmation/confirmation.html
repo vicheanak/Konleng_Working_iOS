@@ -1,0 +1,34 @@
+<!--
+  Generated template for the ConfirmationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  
+
+</ion-header>
+
+
+<ion-content >
+	<ion-grid>
+		<ion-row justify-content-center>
+			<img class="success-img" src="../assets/imgs/success.png">
+		</ion-row>
+		<ion-row justify-content-center>
+			<p class="next-label">Done! What's Next?</p>
+		</ion-row>
+	</ion-grid>
+	
+		<div padding>
+			<button round (click)="goPreview()"  ion-button block >Preview</button>
+		</div>
+		<div padding>
+			<button round (click)="goMyProperties()"  ion-button block >My Properties</button>
+		</div>
+		<div padding>
+			<button round (click)="dismiss()"  ion-button block >Add New One</button>
+		</div>
+	
+</ion-content>

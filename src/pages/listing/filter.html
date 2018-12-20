@@ -1,0 +1,93 @@
+
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			{{"FILTER" | translate}}
+		</ion-title>
+		<ion-buttons end (click)="dismiss()">
+			<button round ion-button icon-only >
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+		<ion-item>
+			<ion-label>{{"SORT_BY" | translate}}</ion-label>
+			<ion-select [(ngModel)]="filter.sort_by" interface="popover">
+				<ion-option value="newest">{{"NEWEST" | translate}}</ion-option>
+				<ion-option value="oldest">{{"OLDEST" | translate}}</ion-option>
+				<ion-option value="highest">{{"MOST_EXPENSIVE" | translate}}</ion-option>
+				<ion-option value="lowest">{{"CHEAPEST" | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{"KEYWORDS" | translate}}</ion-label>
+			<ion-input [(ngModel)]="filter.keyword" type="text"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>{{"LISTING_TYPE" | translate}}</ion-label>
+			<ion-select [(ngModel)]="filter.listing_type" interface="popover">
+				<ion-option value="">{{"ANY" | translate}}</ion-option>
+				<ion-option value="sale">{{"sale" | translate}}</ion-option>
+				<ion-option value="rent">{{"RENT" | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>{{"PROPERTY_TYPE" | translate}}</ion-label>
+			<ion-select [(ngModel)]="filter.property_type" interface="popover">
+				<ion-option value="">{{"ANY" | translate}}</ion-option>
+				<ion-option value="house">{{"HOUSE" | translate}}</ion-option>
+				<ion-option value="apartment">{{"APARTMENT" | translate}}</ion-option>
+				<ion-option value="land">{{"LAND" | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>{{"PROVINCE" | translate}}</ion-label>
+
+			<ion-select [(ngModel)]="filter.province" (ionChange)="provinceChange()" interface="popover">
+				<ion-option value="">{{"ANY" | translate}}</ion-option>
+				<ion-option *ngFor="let p of provinces" [value] = "p.id">{{p.id | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>{{"DISTRICT" | translate}}</ion-label>
+
+			<ion-select [(ngModel)]="filter.district" interface="popover">
+				<ion-option value="">{{"ANY" | translate}}</ion-option>
+				<ion-option *ngFor="let d of districts" [value] = "d.id">{{d.id | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+
+		<ion-grid>
+			<ion-row>
+				<ion-col col-6>
+					
+					<ion-input type="number" placeholder="{{'MIN_PRICE' | translate}}" style="border: 1px solid grey" [(ngModel)]="filter.min_price" type="number"></ion-input>
+				</ion-col>
+				<ion-col col-6>
+					
+					<ion-input type="number"  placeholder="{{'MAX_PRICE' | translate}}" style="border: 1px solid grey"  [(ngModel)]="filter.max_price" type="number"></ion-input>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+
+
+	</ion-list>
+	
+	<div padding>
+		<button round (click)="search()" padding ion-button block>{{'SEARCH' | translate}}</button>
+	</div>
+	
+	
+	
+
+
+	
+
+</ion-content>

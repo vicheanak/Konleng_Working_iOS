@@ -1,0 +1,63 @@
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>{{'LOGIN' | translate}}</ion-title>
+		
+	</ion-navbar>
+
+</ion-header>
+<ion-content>
+	<div class="splash-bg"></div>
+	<div class="splash-info">
+		<div class="splash-logo"></div>
+	</div>
+	<form [formGroup]="loginForm">
+		<ion-list inset>
+			<ion-item>
+				
+				<ion-input formControlName="email" placeholder="{{'EMAIL' | translate}}" type="text"></ion-input>
+			</ion-item>
+			
+			<!-- <div ngxErrors="email" #emailErrors="ngxErrors">
+				<div [ngxError]="['email', 'required']" [when]="['touched', 'dirty']">It should be a valid email</div>
+			</div> -->
+
+			<ion-item>
+				
+				<ion-input type="password" placeholder="{{'PASSWORD' | translate}}" formControlName="password"></ion-input>
+			</ion-item>
+
+			<!-- <div ngxErrors="password" #passwordErrors="ngxErrors">
+				<div [ngxError]="['minlength', 'required']" [when]="['touched']">It should be at least 5 characters</div>
+			</div> -->
+		</ion-list>
+
+		<div padding-horizontal>
+			
+
+			<button round ion-button full type="submit" (click)="login()"  [disabled]="!loginForm.valid">Log in</button>
+			<div class="login-footer">
+				<p>
+					<a href="#">Forgot password?</a>
+					If you're a new user, please sign up.
+				</p>
+			</div>
+
+			<div padding>
+			<button round ion-button icon-left block (click)="loginWithFacebook()">
+				<ion-icon name="logo-facebook"></ion-icon> {{ 'LOGIN' | translate }}</button>
+			</div>
+
+			<ion-list>
+
+
+				<button round ion-button icon-left block clear (click)="goRegister()">
+					<ion-icon name="person-add"></ion-icon>
+					Sign up
+				</button>
+			</ion-list>
+		</div>
+	</form>
+
+	
+</ion-content>

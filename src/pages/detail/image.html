@@ -1,0 +1,26 @@
+
+<ion-header class="image-header">
+	<ion-navbar >
+		<ion-title>
+			{{listing?.title}}
+		</ion-title>
+		<ion-buttons end (click)="dismiss()">
+			<button round ion-button icon-only >
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content style="background: #000">
+	
+ <ion-slides #imageSlides zoom="true">
+   <ion-slide *ngFor="let image of images">
+     <div class="swiper-zoom-container">
+       <img src="{{image}}">
+     </div>
+   </ion-slide>
+ </ion-slides>
+	
+
+</ion-content>

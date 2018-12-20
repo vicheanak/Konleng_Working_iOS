@@ -1,0 +1,124 @@
+<!--
+  Generated template for the AddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>{{"EDIT" | translate}}</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col *ngFor="let key of objectKeys(imgPreviews)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
+				<label ion-item no-padding class="image-label">
+					<ion-label id="profile_image" color="primary" stacked><img class="listing-img" [src]="imgPreviews[key]?.src"></ion-label>
+					<ion-input style="display: none" type="file" accept="image/*" (change)="addImage($event, key)"></ion-input>
+				</label>
+			</ion-col>
+			
+		</ion-row>
+	</ion-grid>
+	<ion-list>
+		<ion-item>
+			<ion-label>{{"LISTING_TYPE" | translate}}</ion-label>
+			<ion-select [(ngModel)]="listing.listing_type" interface="popover">
+				<ion-option value="sale">{{"SALE" | translate}}</ion-option>
+				<ion-option value="rent">{{"RENT" | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>{{"PROPERTY_TYPE" | translate}}</ion-label>
+			<ion-select [(ngModel)]="listing.property_type" interface="popover">
+				<ion-option value="house">{{"HOUSE" | translate}}</ion-option>
+				<ion-option value="apartment">{{"APARTMENT" | translate}}</ion-option>
+				<ion-option value="land">{{"LAND" | translate}}</ion-option>
+				<ion-option value="commercial">{{"COMMERCIAL" | translate}}</ion-option>
+				<ion-option value="room">{{"ROOM" | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+				<ion-label>{{"PROVINCE" | translate}}</ion-label>
+
+				<ion-select [(ngModel)]="listing.province" (ionChange)="provinceChange()" interface="popover">
+					<ion-option *ngFor="let p of provinces" [value] = "p.id">{{p.id | translate}}</ion-option>
+				</ion-select>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>{{"DISTRICT" | translate}}</ion-label>
+
+				<ion-select [(ngModel)]="listing.district" interface="popover">
+					<ion-option *ngFor="let d of districts" [value] = "d.id">{{d.id | translate}}</ion-option>
+				</ion-select>
+			</ion-item>
+		<ion-item>
+			<ion-label>{{"PRICE" | translate}}($)</ion-label>
+			<ion-input [(ngModel)]="listing.price" class="right-align" style="text-align: right;" type="number"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{"TITLE" | translate}}</ion-label>
+			<ion-input [(ngModel)]="listing.title" type="text"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{"DESCRIPTION" | translate}}</ion-label>
+			<ion-textarea #descriptionInput id="descriptionInput" rows="5" maxLength="2500" (keyup)="resize()" [(ngModel)]="listing.description"></ion-textarea>
+		</ion-item>
+		<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment'">
+				<ion-item >
+					<ion-label>{{"BEDROOMS" | translate}}</ion-label>
+					<ion-input [(ngModel)]="listing.bedrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
+				</ion-item>
+				<ion-item >
+					<ion-label>{{"BATHROOMS" | translate}}</ion-label>
+					<ion-input [(ngModel)]="listing.bathrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
+				</ion-item>
+			</div>
+
+			<ion-item >
+				<ion-label>{{"SIZE" | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="text"></ion-input>
+			</ion-item>
+		<ion-item>
+			<ion-label>{{"PHONE" | translate}} 1</ion-label>
+			<ion-input [(ngModel)]="listing.phone1" class="right-align" style="text-align: right;" type="number"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>{{"PHONE" | translate}} 2</ion-label>
+			<ion-input [(ngModel)]="listing.phone2" class="right-align" style="text-align: right;" type="number"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label stacked>{{"ADDRESS" | translate}}: {{latLng}}</ion-label>
+			<ion-textarea (ionChange)="runTimeChange()" rows="3" maxLength="500" [(ngModel)]="listing.address"></ion-textarea>
+		</ion-item>
+	</ion-list>
+
+	<div #map id="map" style="position: relative">
+		<img src="assets/imgs/marker.png" style="position:absolute;left:50%;bottom:50%;width:25px;height:40px" />
+	</div>
+	
+	
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+    	<ion-col col-4 padding-horizontal>
+    		<button round ion-button color="{{listing.status == 1 ? 'secondary' : 'light'}}"  (click)="presentSoldConfirm()" full type="submit">{{listing.status == 1 ? 'SOLD' : 'ACTIVATE' | translate}}</button>
+    	</ion-col>
+    	<ion-col col-4 padding-horizontal>
+    		<button round ion-button color="primary" [disabled]="!tmpCloudImages.length && !listing?.images.length" (click)="editListing()" full type="submit">{{"SUBMIT" | translate}}</button>
+    	</ion-col>
+    	<ion-col col-4 padding-horizontal>
+			<button round ion-button color="danger"  (click)="presentDeleteConfirm()" full type="submit">{{"DELETE" | translate}}</button>
+    	</ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+

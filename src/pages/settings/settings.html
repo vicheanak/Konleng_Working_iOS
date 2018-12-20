@@ -1,0 +1,44 @@
+<!--
+  Generated template for the SettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{'SETTINGS' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-item>
+	  <ion-icon name='md-alert' item-start></ion-icon>
+	  <ion-label>{{'NOTIFICATION' | translate}}</ion-label>
+	  <ion-toggle checked="true"></ion-toggle>
+	</ion-item>
+	
+	<ion-item (click)="rate()">
+		<ion-icon name='ios-star-half' item-start></ion-icon>
+		{{'RATE_US' | translate}}
+		<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+	</ion-item>
+	
+	<ion-item (click)="goContact()">
+		<ion-icon name='logo-facebook' item-start></ion-icon>
+		{{'CONTACT_US' | translate}}
+		<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+	</ion-item>
+	<ion-item (click)="goPrivacyPolicy()">
+		<ion-icon name='md-lock' item-start></ion-icon>
+		{{'PRIVACY_POLICY' | translate}}
+		<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+	</ion-item>
+	<ion-item (click)="goTermsOfUse()">
+		<ion-icon name='ios-hand' item-start></ion-icon>
+		{{'TERMS_OF_USE' | translate}}
+		<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+	</ion-item>
+</ion-content>

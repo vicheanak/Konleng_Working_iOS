@@ -1,0 +1,26 @@
+<!--
+  Generated template for the ListingPage page.
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>{{'FOLLOW_MEMBERS' | translate}}</ion-title>
+	</ion-navbar>
+	
+</ion-header>
+<ion-content>
+	
+	<ion-list>
+		<ion-item (click)="goUserProperties(user)" no-padding *ngFor="let user of users">
+			<ion-thumbnail item-start [style.background-image]="getBackground(user?.photoURL)" style="background-size:cover; border-radius: 50%; border-radius: 10px; border: white 2px solid; background-position: center; width: 70px; height: 70px;     margin: 0px 5px 0px 5px !important; padding: 0px !important;">
+			</ion-thumbnail>
+			<h2>{{user.displayName}} {{user.userType == 'agency' ? ' - ' + (user.agencyName) : ''}}</h2>
+			<p class="type">{{user.phone1}}</p>
+			<p class="type">{{user.phone2}}</p>
+			<p class="type">{{user.email}}</p>
+			<ion-icon item-end name="ios-arrow-forward"></ion-icon>
+		</ion-item>
+	</ion-list>
+
+</ion-content>

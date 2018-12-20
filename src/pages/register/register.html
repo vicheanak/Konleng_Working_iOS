@@ -1,0 +1,42 @@
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>{{'REGISTER' | translate}}</ion-title>
+		
+	</ion-navbar>
+
+</ion-header>
+
+<ion-content>
+	<div class="splash-bg"></div>
+	<div class="splash-info">
+		<div class="splash-logo"></div>
+	</div>
+	<form (ngSubmit)="signup()" [formGroup]="registerForm">
+		<ion-list inset>
+			<ion-item>
+				
+				<ion-input formControlName="email" placeholder="{{ 'EMAIL' | translate }}" type="text"></ion-input>
+			</ion-item>
+			
+			
+
+			<ion-item>
+				
+				<ion-input type="password" placeholder="{{ 'PASSWORD' | translate }}" formControlName="password"></ion-input>
+			</ion-item>
+
+		</ion-list>
+
+		<div padding-horizontal>
+			<div class="form-error">{{registerError}}</div>
+
+			<button round ion-button full type="submit" [disabled]="!registerForm.valid">{{ 'REGISTER' | translate }}</button>
+			
+
+
+		</div>
+	</form>
+	
+	
+</ion-content>

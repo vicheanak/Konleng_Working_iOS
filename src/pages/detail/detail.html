@@ -1,0 +1,133 @@
+<!--
+  Generated template for the DetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>{{listing?.title}}</ion-title>
+		<ion-buttons *ngIf="isOwner == true" end (click)="goEdit()">
+			<button round ion-button icon-only >
+				<ion-icon name="md-create"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+	<ion-fab right top>
+		<button round mini ion-fab color="danger" (click)="saveFavorite()"><ion-icon name="{{isFavorite == true ? 'ios-heart' : 'ios-heart-outline'}}"></ion-icon></button>
+	</ion-fab>
+	<ion-slides class="listing-images" pager>
+
+		<ion-slide (click)="presentImageModal(image, listing?.images)" *ngFor="let image of listing?.images" [style.background-image]="getBackground(image)" style="background-size:cover; background-position: center;">
+		</ion-slide>
+
+
+	</ion-slides>
+	<ion-list  no-lines>
+		<ion-item text-wrap>
+			<h1><span style="color: red">{{listing?.status == 0 ? '(Inactive)' : ''}}</span>{{listing?.title}}</h1>
+			<h3>{{listing?.district | translate}} {{listing?.province | translate}}</h3>
+			<p class="price">${{listing?.price | number : fractionSize}}</p>
+			
+		</ion-item>
+		
+		<ion-item class="item-list">
+			<p class="item-header">{{'DESCRIPTION' | translate}}</p>
+			
+		</ion-item>
+		<ion-item class="item-list border">
+			<p>{{'PROPERTY_ID' | translate}}</p>
+			<p item-end>{{listing?.property_id}}</p>
+		</ion-item>
+		<ion-item class="item-list border">
+			<p>{{'LISTING_TYPE' | translate}}</p>
+			<p item-end>{{listing?.listing_type | translate}}</p>
+		</ion-item>
+
+		<ion-item class="item-list border">
+			<p>{{'PROPERTY_TYPE' | translate}}</p>
+			<p item-end>{{listing?.property_type | translate}}</p>
+		</ion-item>
+		
+		<div *ngIf="listing?.property_type == 'house' || listing?.property_type == 'apartment'">
+			<ion-item class="item-list border">
+				<p>{{'BEDROOMS' | translate}}</p>
+				<p item-end>{{listing?.bedrooms}}</p>
+			</ion-item>
+			<ion-item class="item-list border">
+				<p>{{'BATHROOMS' | translate}}</p>
+				<p item-end>{{listing?.bathrooms}}</p>
+			</ion-item>
+		</div>
+		<ion-item class="item-list border">
+			<p>{{'SIZE' | translate}}</p>
+			<p item-end>{{listing?.size}}</p>
+		</ion-item>
+		<ion-item class="item-list border large-height" text-wrap>
+			<p class="large-height">{{'ADDRESS' | translate}}: {{listing?.address}}</p>
+		</ion-item>
+		<ion-item text-wrap>
+			<p class="description" [innerHtml]="listing?.description">
+				
+			</p>
+			<p>
+				{{'CREATED_AT' | translate}} : {{listing?.created_date.seconds * 1000 | date:'dd/MM/yyyy' }}
+			</p>
+		</ion-item>
+		
+		<ion-item class="item-list">
+			<p class="item-header">{{'MAP' | translate}}</p>
+			
+		</ion-item>
+
+		<ion-card no-padding>
+		<div #map id="map" style="height: 200px">
+		</div>
+		</ion-card>
+		<ion-item class="item-list">
+			<p class="item-header">{{'POSTED_BY' | translate}}</p>
+		</ion-item>
+
+		<ion-card no-padding>
+		<ion-list (click)="goUserProperties(user)">
+			<h2 padding><strong>{{user?.displayName}}</strong> {{ listing?.userType == 'agency' ? ' - ' + listing?.agencyName : ''}}</h2>
+		  <ion-item padding-horizontal>
+
+		    <ion-thumbnail item-start [style.background-image]="getBackground(user?.photoURL)" style="background-size:cover; border-radius: 50%; background-position: center top; margin-bottom: 10px;">
+		    </ion-thumbnail>
+		    
+		    <p>
+		    	<button round (click)="call(user?.phone1)" ion-button clear small icon-start>
+					<ion-icon name="md-call"></ion-icon>
+					1: {{user?.phone1}}
+				</button>
+			</p>
+		    <p><button round (click)="call(user?.phone2)"  ion-button clear small icon-start>
+					<ion-icon name="md-call"></ion-icon>
+					2: {{user?.phone2}}
+				</button>
+			</p>
+			<p><button round (click)="sendEmail(user?.email)"  ion-button clear small icon-start>
+					<ion-icon name="md-send"></ion-icon>
+					{{user?.email}}
+				</button>
+			</p>
+			<ion-icon item-end name="ios-arrow-forward"></ion-icon>
+		  </ion-item>
+		</ion-list>
+		</ion-card>
+		
+	
+		
+	</ion-list>
+	<!-- <ion-fab right bottom>
+		<button round (click)="goEdit()" *ngIf="isOwner == true" ion-fab color="danger"><ion-icon name="md-create"></ion-icon></button>
+	</ion-fab> -->
+</ion-content>
+

@@ -1,0 +1,95 @@
+page-detail {
+
+	.slide-zoom {
+		height: 100%;
+	}
+
+	ion-slides.listing-images {
+		height: 250px;
+	}
+
+	h1{
+		line-height: 40px;
+	}
+
+	h2{
+		font-size: 16px !important;
+		height: 25px;
+		padding: 5px;
+		width: 100%;
+		// text-align: center;
+		// line-height: 40px;
+	}	
+
+	.price{
+		font-weight: bold;
+		color: red;
+		font-size: 20px !important;
+		margin: 20px 0px 0px 0px;
+	}
+
+	ion-note{
+		color: black !important;
+		font-family: battambang;
+	}
+
+	p{
+		font-size: 15px !important;
+		line-height: 25px !important;
+	}
+
+
+
+	.item-list{
+		
+		height: 25px !important;
+		min-height: 30px !important;
+		font-size: 12px !important;
+	}
+
+	.border{
+		border-top: 1px dashed #cecece !important;
+	}
+
+	.description{
+		color: black;
+	}
+
+	.item-header{
+		font-style: italic;
+		font-weight: bold;
+		font-size: 17px;
+		// line-height: 40px;
+		// height: 50px;
+	}
+
+	.large-height{
+		
+		height: 50px !important;
+		// line-height: 40px !important;
+	}
+
+	.profile-img{
+		border-radius: 50%;
+		width: 200px;
+		height: 200px;
+	}
+
+	.name-label{
+		font-size: 17px;
+		color: #cecece;
+		// line-height: px;
+	}
+	ion-header.image-header {
+		.toolbar {
+			position: absolute;
+
+			.toolbar-background {
+				background: transparent;
+			}
+			.toolbar-title {
+				color: black;
+			}
+		}
+	}
+}

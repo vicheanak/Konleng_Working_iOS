@@ -1,0 +1,243 @@
+<!--
+  Generated template for the AddPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>{{'ADD' | translate}}</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<ion-stepper no-padding #stepper (selectIndexChange)="selectChange($event)">
+		<ion-step label="{{'LISTING_TYPE' | translate}}" description="">
+			
+			<ion-list radio-group [(ngModel)]="listing.listing_type">
+
+
+				<ion-item>
+					<ion-label>{{'SALE' | translate}}</ion-label>
+					<ion-radio value="sale"></ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>{{'RENT' | translate}}</ion-label>
+					<ion-radio value="rent"></ion-radio>
+				</ion-item>
+
+
+			</ion-list>
+
+			<div>
+				<ion-row justify-content-between>
+					<div></div>
+					<button round ion-button ionicStepperNext [disabled]="listing.listing_type == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+			
+			
+		</ion-step>
+		<ion-step label="{{'PROPERTY_TYPE' | translate}}">
+			<ion-list radio-group [(ngModel)]="listing.property_type">
+
+
+				<ion-item>
+					<ion-label>{{'HOUSE' | translate}}</ion-label>
+					<ion-radio value="house"></ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>{{'LAND' | translate}}</ion-label>
+					<ion-radio value="land"></ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>{{'APARTMENT' | translate}}</ion-label>
+					<ion-radio value="apartment"></ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>{{'COMMERCIAL' | translate}}</ion-label>
+					<ion-radio value="commercial"></ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>{{'ROOM' | translate}}</ion-label>
+					<ion-radio value="room"></ion-radio>
+				</ion-item>
+
+
+			</ion-list>
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.property_type == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+		</ion-step>
+		<ion-step label="{{'PROVINCE' | translate}}" description="">
+			
+			<ion-list class="list-height" (ionChange)="provinceChange()" radio-group [(ngModel)]="listing.province">
+				<ion-item *ngFor="let p of provinces">
+					<ion-label>{{p.id | translate}}</ion-label>
+					<ion-radio value="{{p.id}}"></ion-radio>
+				</ion-item>
+			</ion-list>
+
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.province == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+
+		</ion-step>
+		<ion-step label="{{'DISTRICT' | translate}}" description="">
+			
+			<ion-list class="list-height" radio-group [(ngModel)]="listing.district">
+				<ion-item *ngFor="let d of districts">
+					<ion-label>{{d.id | translate}}</ion-label>
+					<ion-radio value="{{d.id}}"></ion-radio>
+				</ion-item>
+			</ion-list>
+
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.district == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+
+		</ion-step>
+
+		
+
+		<ion-step label="{{'DETAIL' | translate}}" description="">
+			<ion-item no-padding>
+				<ion-label for="title" floating>{{'TITLE' | translate}}</ion-label>
+				<ion-input id="title" [(ngModel)]="listing.title" type="text"></ion-input>
+			</ion-item>
+
+			
+			<label ion-item no-padding>
+				<ion-label>{{'PRICE' | translate}}($)</ion-label>
+				<ion-input [(ngModel)]="listing.price" class="right-align" style="text-align: right;" type="number"></ion-input>
+			</label>
+
+			<label ion-item no-padding>
+				<ion-label floating>{{'DESCRIPTION' | translate}}</ion-label>
+				<ion-textarea #descriptionInput id="descriptionInput" rows="5" maxLength="2500" (keyup)="resize()" [(ngModel)]="listing.description"></ion-textarea>
+			</label>
+			<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment'">
+				<label ion-item no-padding>
+					<ion-label>{{'BEDROOMS' | translate}}</ion-label>
+					<ion-input [(ngModel)]="listing.bedrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
+				</label>
+				<label ion-item no-padding>
+					<ion-label>{{'BATHROOMS' | translate}}</ion-label>
+					<ion-input [(ngModel)]="listing.bathrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
+				</label>
+			</div>
+
+			<label ion-item no-padding>
+				<ion-label>{{'SIZE' | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="text"></ion-input>
+			</label>
+
+			
+
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.title == '' || listing.price == '' || listing.description == '' || listing.size == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+		</ion-step>
+
+		<ion-step label="{{'CONTACT' | translate}}" description="">
+			<ion-item no-padding>
+				<ion-label>{{'I_AM' | translate}}</ion-label>
+				<ion-select [(ngModel)]="listing.userType" interface="popover">
+					<ion-option value="owner">{{'OWNER' | translate}}</ion-option>
+					<ion-option value="agency">{{'AGENCY' | translate}}</ion-option>
+				</ion-select>
+			</ion-item>
+			<label ion-item no-padding *ngIf="listing.userType == 'agency'">
+				<ion-label floating>{{'AGENCY_NAME' | translate}}</ion-label>
+				<ion-input type="text" [(ngModel)]="listing.agencyName"></ion-input>
+			</label>
+			<label ion-item no-padding>
+				<ion-label >{{'NAME' | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.displayName" class="right-align" type="text"></ion-input>
+			</label>
+			<label ion-item no-padding>
+				<ion-label>{{'PHONE' | translate}} 1</ion-label>
+				<ion-input [(ngModel)]="listing.phone1" class="right-align" style="text-align: right;" type="text"></ion-input>
+			</label>
+			<label ion-item no-padding>
+				<ion-label>{{'PHONE' | translate}} 2</ion-label>
+				<ion-input [(ngModel)]="listing.phone2" class="right-align" style="text-align: right;" type="text"></ion-input>
+			</label>
+
+			
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.displayName == '' || listing.phone1 == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+		</ion-step>
+
+
+		
+		<ion-step label="{{'IMAGES' | translate}}" description="">
+			<ion-grid>
+				<ion-row *ngIf="isWeb">
+					<ion-col *ngFor="let key of objectKeys(imgPreviews)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
+						<label ion-item no-padding class="image-label">
+							<ion-label id="profile_image" color="primary" stacked><img class="listing-img" [src]="imgPreviews[key].src"></ion-label>
+							<ion-input style="display: none" type="file" accept="image/*" (change)="addImage($event, key)"></ion-input>
+						</label>
+					</ion-col>
+				</ion-row>
+				<ion-row *ngIf="!isWeb">
+					<ion-col *ngFor="let key of objectKeys(imgPreviews)" (click)="addImage($event, key)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
+						<img class="listing-img" [src]="imgPreviews[key].src">
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.images.length < 1">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+			
+		</ion-step>
+
+		<ion-step label="{{'MAP' | translate}}" description="">
+			
+			<ion-item no-padding>
+				<ion-label stacked>{{'ADDRESS' | translate}}</ion-label>
+				<ion-textarea (ionChange)="runTimeChange()" rows="3" maxLength="500" [(ngModel)]="listing.address">{{listing.district | translate}}</ion-textarea>
+			</ion-item>
+
+			<div #map id="map" style="position: relative">
+				<img src="assets/imgs/marker.png" style="position:absolute;left:50%;bottom:50%;width:25px;height:40px" />
+			</div>
+			
+
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button (click)="addListing()">{{'FINISH' | translate}}</button>
+				</ion-row>
+			</div>
+		</ion-step>
+	</ion-stepper>
+</ion-content>

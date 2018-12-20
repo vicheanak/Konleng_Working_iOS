@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "376338125222",
+    "firebase_url": "https://konleng-cloud.firebaseio.com",
+    "project_id": "konleng-cloud",
+    "storage_bucket": "konleng-cloud.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376338125222:android:412f3f564f8cbe22",
+        "android_client_info": {
+          "package_name": "com.konleng.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376338125222-v2vsbu05f6o3nl1e75qnauksep56i5fb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdRkegd8KZeHKwaoCGqeR_0H2E-f_Ze4A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

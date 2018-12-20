@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>KONLENG</ion-title>
+    <ion-buttons end (click)="switchLanguage()">
+      <button round ion-button icon-start>
+        <ion-icon name="md-globe"></ion-icon>
+        {{"language" | translate }}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar [(ngModel)]="queryText" (search)="searchByKeyword($event)" placeholder='{{ "SEARCH" | translate }}'></ion-searchbar>
+  <div class="card-background-page">
+    <ion-card *ngFor="let province of provinces; let i = index">
+      <div class="card-title">{{ province.id | translate }}</div>
+      <div class="left-content" (click)="goListing(province.id, 'sale')">
+        <ion-label>
+        {{ province?.sale }} {{ "sale" | translate}}
+        </ion-label>
+      </div>
+      <div class="right-content" (click)="goListing(province.id, 'rent')">
+        <ion-label>
+        {{ province?.rent }} {{ "rent" | translate }}
+        </ion-label>
+      </div>
+    </ion-card>
+  </div>
+  
+</ion-content>
+

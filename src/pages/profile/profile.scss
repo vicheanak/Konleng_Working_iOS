@@ -1,0 +1,20 @@
+page-profile {
+
+	.profile-img{
+		border-radius: 50%;
+		width: 200px;
+		height: 200px;
+	}
+
+	.name-label{
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	.listing-img{
+		 object-fit: cover;
+		  width:130px;
+		  height:130px;
+		  border-radius: 50%;
+	}
+}

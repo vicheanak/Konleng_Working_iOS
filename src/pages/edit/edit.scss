@@ -1,0 +1,31 @@
+page-edit {
+	ion-input.right-align {
+		input {
+			text-align: right;
+			/* IF YOU ALSO WANT TO PUSH PLACHEHOLDER TO THE RIGHT USE THE FOLLOWING, IF NOT JUST DELETE THE ::-webkit-input-placeholder*/
+			::-webkit-input-placeholder {
+				text-align: right;
+			}
+		}
+	}
+
+	.image-label > .item-inner {
+	    border-bottom: 0px !important;
+	}
+
+	.listing-img{
+		 object-fit: cover;
+		  width:80px;
+		  height:80px;
+		  border-radius: 15px;
+	}
+	
+	ion-grid{
+		ion-row {
+			ion-col{
+				height: 100px;	
+				margin: 15px;
+			}			
+		}	
+	}
+}

@@ -1,0 +1,63 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar color="primary">
+		<ion-title>{{'PROFILE' | translate}}</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row justify-content-center>
+			<div (click)="addImage()" class="profile-img" style="border: white 2px solid; background-position: center; width: 130px; height: 130px;     margin: 0px 5px 0px 5px !important; padding: 0px !important;" >
+				<img class="listing-img" [src]="photoUrl">
+			</div>
+		</ion-row>
+		<ion-row justify-content-center>
+			<p class="name-label">{{user.displayName}}</p>
+		</ion-row>
+	</ion-grid>
+	
+	<ion-list>
+		<ion-item>
+			<ion-label>{{'I_AM' | translate}}</ion-label>
+			<ion-select [(ngModel)]="user.userType" interface="popover">
+				<ion-option value="owner">{{'OWNER' | translate}}</ion-option>
+				<ion-option value="agency">{{'AGENCY' | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item *ngIf="user.userType == 'agency'">
+			<ion-label floating>{{'AGENCY_NAME' | translate}}</ion-label>
+			<ion-input type="text" [(ngModel)]="user.agencyName"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{'DISPLAY_NAME' | translate}}</ion-label>
+			<ion-input type="text" [(ngModel)]="user.displayName"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{'PHONE' | translate}} 1</ion-label>
+			<ion-input type="number" [(ngModel)]="user.phone1"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{'PHONE' | translate}} 2</ion-label>
+			<ion-input type="number" [(ngModel)]="user.phone2"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>{{'EMAIL' | translate}}</ion-label>
+			<ion-input type="text" disabled [(ngModel)]="user.email"></ion-input>
+		</ion-item>
+		
+	</ion-list>
+	<div padding>
+		
+		<button round (click)="submit()" [disabled]="user.userType == '' || user.displayName == '' || user.phone1 == ''" padding ion-button block>{{'SUBMIT' | translate}}</button>
+		
+	</div>
+</ion-content>
