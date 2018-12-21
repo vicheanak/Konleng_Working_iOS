@@ -135,9 +135,6 @@
         <variable name="APP_NAME" value="Konleng" />
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.38.1" />
     </plugin>
-    <plugin name="cordova-plugin-firebase-authentication" spec="~1.0.1">
-        <variable name="FIREBASE_AUTH_VERSION" value="16.0.1" />
-    </plugin>
     <plugin name="info.protonet.imageresizer" spec="~0.1.1" />
     <plugin name="cordova-plugin-file" spec="~6.0.1" />
     <plugin name="com-sarriaroman-photoviewer" spec="~1.1.18" />
@@ -166,4 +163,5 @@
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="~7.1.4" />
+    <plugin name="cordova-plugin-firebase" spec="2.0.5" />
 </widget>
