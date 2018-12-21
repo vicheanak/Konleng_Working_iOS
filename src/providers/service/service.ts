@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { AdMobPro } from '@ionic-native/admob-pro';
 /*
   Generated class for the ServiceProvider provider.
 
@@ -12,14 +14,17 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
   @Injectable()
   export class ServiceProvider {
     public isAdsShown: boolean = false;
+    private countAds: any = 0;
 
     constructor(public http: HttpClient, 
       private storage: Storage,
       public translate: TranslateService,
-      private nativePageTransitions: NativePageTransitions) {
-      
+      private nativePageTransitions: NativePageTransitions,
+      private admob: AdMobPro,
+      private platform: Platform) {
+
       this.storage.get('language').then((val) => {
-        
+
         this.translate.use(val);
 
       });
@@ -56,12 +61,30 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
       });
     }
 
-    setAdsShown(){
-      this.isAdsShown = true;
+    
+    presentAds(){
+      let adId;
+      if(this.platform.is('android')) {
+          adId = 'ca-app-pub-3976244179029334~9519351931';
+        } else if (this.platform.is('ios')) {
+          adId = 'ca-app-pub-3976244179029334~3852092289';
+        }
+        adId = 'ca-app-pub-3940256099942544/8691691433';
+        this.admob.prepareInterstitial({adId: adId}).then(() => { 
+          this.admob.showInterstitial(); 
+        });
     }
 
-    getAdsShown(){
-      return this.isAdsShown;
+    showAds(){
+      if (this.countAds == 0){
+        this.presentAds();
+        this.countAds ++;
+      }else if (this.countAds > 0){
+        this.countAds ++;
+      }
+      if (this.countAds == 4){
+        this.countAds = 0;
+      }
     }
     
 
@@ -79,7 +102,7 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
 
 
     switchLanguage(){
-      
+
       this.storage.get('language').then((val) => {
         if (val == 'en'){
           this.translate.use('kh');		

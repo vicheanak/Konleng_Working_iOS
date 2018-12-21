@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCdRkegd8KZeHKwaoCGqeR_0H2E-f_Ze4A"
+          "current_key": "AIzaSyB1NRXYa1iRMKNN5f08hxYRgtDiqWjhXGM"
         }
       ],
       "services": {
@@ -35,7 +35,8 @@
         "ads_service": {
           "status": 2
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-3976244179029334~9519351931"
     }
   ],
   "configuration_version": "1"

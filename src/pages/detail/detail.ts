@@ -93,6 +93,8 @@ import { File } from '@ionic-native/file';
    ionViewWillEnter() {
 
 
+     
+     
 
      this.serviceProvider.transition();
      this.listing = this.navParams.get('listing');

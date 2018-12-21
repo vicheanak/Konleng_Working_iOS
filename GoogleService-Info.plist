@@ -7,17 +7,17 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>376338125222-tg70iftq8io8ba1kcibctmltqlevo72l.apps.googleusercontent.com</string>
+	<string>376338125222-2dcci5fnb4f289vpkvqhp0imge3porth.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.376338125222-tg70iftq8io8ba1kcibctmltqlevo72l</string>
+	<string>com.googleusercontent.apps.376338125222-2dcci5fnb4f289vpkvqhp0imge3porth</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAqjVByTPX3dO2Q0p077yrKdM1j8k2fcFk</string>
+	<string>AIzaSyDX8uGegQpPdda7LDB0mwFj46cwRMFtlfA</string>
 	<key>GCM_SENDER_ID</key>
 	<string>376338125222</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>app.konleng.com</string>
+	<string>com.konleng.app</string>
 	<key>PROJECT_ID</key>
 	<string>konleng-cloud</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,8 +33,10 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:376338125222:ios:520f3f2b54a601f1</string>
+	<string>1:376338125222:ios:412f3f564f8cbe22</string>
 	<key>DATABASE_URL</key>
 	<string>https://konleng-cloud.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-3976244179029334~3852092289</string>
 </dict>
 </plist>

@@ -371,30 +371,47 @@ export class ListingProvider {
 			}
 		}
 	}
-	getFirebaseAll(filter){
-		return new Promise<Object>((resolve, reject) => {
-			this.afStore.collection('listings', ref => {
-				let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+	// getFirebaseAll(filter){
+	// 	return new Promise<Object>((resolve, reject) => {
+	// 		this.afStore.collection('listings', ref => {
+	// 			let query: firebase.firestore.Query = ref;
 				
-				if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
-				if (filter.province) { query = query.where('province', '==', filter.province) };
-				query = query.orderBy('created_date', 'desc');
-				query = query.startAfter(filter.startAfter);
-				query = query.limit(25);
-				query = query.where('status', '==', 1);
+	// 			if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
+	// 			if (filter.province) { query = query.where('province', '==', filter.province) };
+	// 			query = query.where('status', '==', 1);
+	// 			query = query.orderBy('created_date', 'desc').limit(10);
+				
+				
 
+	// 			return query;
+	// 		})
+	// 		.valueChanges().subscribe((listingsData: Listing[]) => {
+				
+	// 			let lastIndex = listingsData[listingsData.length - 1];
 
-				return query;
-			})
-			.valueChanges().subscribe((listingsData: Listing[]) => {
-				this.listingsList = [];
-				listingsData.forEach((listing: Listing) => {
-					this.listingsList.push(listing);
-				});
-				resolve(this.listingsList);
-			});
-		});
-	}
+	// 			this.afStore.collection('listings', ref => {
+	// 			let query: firebase.firestore.Query = ref;
+				
+	// 			if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
+	// 			if (filter.province) { query = query.where('province', '==', filter.province) };
+	// 			query = query.where('status', '==', 1);
+	// 			query = query.orderBy('created_date', 'desc').limit(10).startAfter(lastIndex);				
+	// 			console.log('lastIndex ===> ', lastIndex.id);
+	// 			return query;
+	// 			})
+	// 			.valueChanges().subscribe((listingsDataStartAt: Listing[]) => {
+	// 				this.listingsList = [];
+
+	// 				console.log('listingData', listingsDataStartAt.length);
+	// 				listingsDataStartAt.forEach((listing: Listing) => {
+	// 					this.listingsList.push(listing);
+	// 				});
+	// 				resolve(this.listingsList);
+	// 			});
+
+	// 		});
+	// 	});
+	// }
 	getAll(filter){
 
 		
@@ -423,8 +440,8 @@ export class ListingProvider {
 		if (filter.sort_by){
 			queryArray.push('sort_by='+filter.sort_by);	
 		}
-		if (filter.startAfter){
-			queryArray.push('start_after='+filter.startAfter);
+		if (filter.page){
+			queryArray.push('page='+filter.page);
 		}
 		let query = queryArray.join('&');
 		query = this.queryUrl + '?' + query;
@@ -440,7 +457,7 @@ export class ListingProvider {
 				
 				resolve(this.listingsList);
 			}, (err) => {
-				console.error('err', err);
+				console.error('err', JSON.stringify(err));
 			});
 
 		});
