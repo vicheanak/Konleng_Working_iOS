@@ -77,7 +77,9 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
     showAds(){
       if (this.countAds == 0){
-        this.presentAds();
+        setTimeout(() => {
+          this.presentAds();
+        }, 5000);
         this.countAds ++;
       }else if (this.countAds > 0){
         this.countAds ++;

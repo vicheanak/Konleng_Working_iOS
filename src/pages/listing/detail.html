@@ -8,7 +8,7 @@
 <ion-content no-padding style="background: rgba(69, 69, 69, 0.6)">
 	<ion-card no-padding>
 		<ion-item (click)="goDetail(listing)" no-padding>
-			<ion-thumbnail item-start [style.background-image]="getBackground(listing?.thumb)" style="background-size:cover; background-position: center bottom; width: 115px; height: 115px;  border-radius: 5px; margin: 0px 5px 0px 5px !important; padding: 0px !important;">
+			<ion-thumbnail item-start [style.background-image]="getBackground(listing?.thumb)" style="background-size:cover; background-position: center bottom; width: 100px; height: 100px;  border-radius: 5px; margin: 10px !important; padding: 7px !important;">
 			</ion-thumbnail>
 			<h2 class="">{{listing?.title}}</h2>
 			<p class="type">{{listing?.district | translate}} {{listing?.province | translate}}</p>
