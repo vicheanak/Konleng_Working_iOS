@@ -25,6 +25,7 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { AddPage } from '../pages/add/add';
 import { FollowPage } from '../pages/follow/follow';
+import { ReportPage } from '../pages/report/report';
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -111,7 +112,8 @@ import { Firebase } from '@ionic-native/firebase';
     RegisterPage,
     FollowPage,
     AddPage,
-    TabsPage
+    TabsPage,
+    ReportPage
   ],
   imports: [
     BrowserModule,
@@ -161,7 +163,8 @@ import { Firebase } from '@ionic-native/firebase';
     LoginPage,
     RegisterPage,
     AddPage,
-    TabsPage
+    TabsPage,
+    ReportPage
   ],
   providers: [
     StatusBar,

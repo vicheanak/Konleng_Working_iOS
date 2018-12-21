@@ -33,6 +33,11 @@
 			{{'SETTINGS' | translate}}
 			<ion-icon name='ios-arrow-forward' item-end></ion-icon>
 		</ion-item>
+		<ion-item (click)="goReport()">
+			<ion-icon color="danger" name='md-alert' item-start></ion-icon>
+			{{'REPORTS' | translate}}
+			<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+		</ion-item>
 	</ion-list>
 
 	<div class="login-buttons" *ngIf="!auth.authenticated">

@@ -19,6 +19,11 @@ import {User, AuthServiceProvider} from '../auth/auth';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/forkJoin';
+export interface Report { 
+	id: number;
+	title: string;
+	description: string;
+}
 export interface Listing { 
 	property_id: number;
 	name: string;
@@ -92,6 +97,8 @@ export class ListingProvider {
 		private http: HttpClient) {
 		this.listingsCollection = this.afStore.collection<Listing>('listings');
 		this.listings = this.listingsCollection.valueChanges();
+		this.reportsCollection = this.afStore.collection<Report>('reports');
+		this.reports = this.reportsCollection.valueChanges();
 		this.usersCollection = this.afStore.collection<User>('users');
 		this.countsCollection = this.afStore.collection<Count>('counts');
 
@@ -558,6 +565,18 @@ export class ListingProvider {
 				resolve(listing.id);
 			}).catch((msg) => {
 				reject(msg);
+			});
+		});
+	}
+	sendReport(issue){
+		return new Promise<Object>((resolve, reject) => {
+			const id = this.afStore.createId();
+			const issueData = issue;
+			issueData.number = 0;
+			this.reportsCollection.doc(id).set(issueData).then(async (respondId) => {
+				resolve(respondId);
+			}).catch((error) => {
+				reject(error);
 			});
 		});
 	}

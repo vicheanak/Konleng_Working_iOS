@@ -11,6 +11,7 @@ import { RegisterPage } from '../register/register';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
 import { SearchPage } from '../search/search';
+import { ReportPage } from '../report/report';
 
 import { AuthServiceProvider } from '../../providers/auth/auth';
 import { ServiceProvider } from '../../providers/service/service';
@@ -140,12 +141,12 @@ export class MePage {
 		this.navCtrl.push(SettingsPage, {}, {animate: false});
 	}
 
-
-
 	goRegister(){
 		this.navCtrl.push(RegisterPage, {}, {animate: false});
 	}
 
-
+	goReport(){
+		this.navCtrl.push(ReportPage, {}, {animate: false});
+	}
 
 }
