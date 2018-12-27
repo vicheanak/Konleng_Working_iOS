@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 
 import { FormsModule } from '@angular/forms';
 
-import { SearchPage } from '../pages/search/search';
+import { SearchPage, PropertyTypeModal } from '../pages/search/search';
 import { MePage } from '../pages/me/me';
 import { ListingPage, FilterModal, DetailModal } from '../pages/listing/listing';
 import { DetailPage, ImageModal } from '../pages/detail/detail';
@@ -86,11 +86,14 @@ import { ImagesProvider } from '../providers/images/images';
 import { AdMobPro } from '@ionic-native/admob-pro';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { Firebase } from '@ionic-native/firebase';
+import { Diagnostic } from '@ionic-native/diagnostic';
+
 
 @NgModule({
   declarations: [
     MyApp,
     SearchPage,
+    PropertyTypeModal,
     MePage,
     ListingPage,
     FilterModal,
@@ -142,6 +145,7 @@ import { Firebase } from '@ionic-native/firebase';
   entryComponents: [
     MyApp,
     SearchPage,
+    PropertyTypeModal,
     MePage,
     ListingPage,
     FilterModal,
@@ -195,7 +199,8 @@ import { Firebase } from '@ionic-native/firebase';
     ImagesProvider,
     AdMobPro,
     FcmProvider,
-    Firebase
+    Firebase,
+    Diagnostic
   ]
 })
 export class AppModule {

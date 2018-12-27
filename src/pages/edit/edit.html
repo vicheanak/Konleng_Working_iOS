@@ -15,14 +15,18 @@
 
 <ion-content padding>
 	<ion-grid>
-		<ion-row>
+		<ion-row *ngIf="isWeb">
 			<ion-col *ngFor="let key of objectKeys(imgPreviews)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
 				<label ion-item no-padding class="image-label">
 					<ion-label id="profile_image" color="primary" stacked><img class="listing-img" [src]="imgPreviews[key]?.src"></ion-label>
 					<ion-input style="display: none" type="file" accept="image/*" (change)="addImage($event, key)"></ion-input>
 				</label>
 			</ion-col>
-			
+		</ion-row>
+		<ion-row *ngIf="!isWeb">
+			<ion-col *ngFor="let key of objectKeys(imgPreviews)" (click)="addImage($event, key)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
+				<img class="listing-img" [src]="imgPreviews[key].src">
+			</ion-col>
 		</ion-row>
 	</ion-grid>
 	<ion-list>

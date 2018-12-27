@@ -1,0 +1,5 @@
+#!/bin/bash
+cordova platform remove android
+ionic cordova platform remove android
+cordova platform add android
+ionic cordova run android -l -c -- -- --minSdkVersion=19

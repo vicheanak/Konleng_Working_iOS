@@ -71,7 +71,7 @@ export class FcmProvider {
 		date: this.getFormattedDate()
 	}
 
-	return devicesRef.doc(token).set(docData)
+	return devicesRef.doc(this.device.uuid).set(docData)
 
   }
 

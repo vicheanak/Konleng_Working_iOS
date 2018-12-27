@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import {ListingPage} from '../listing/listing';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
@@ -23,7 +23,8 @@ export class SearchPage {
   	public translate: TranslateService,
   	private storage: Storage,
     private listingProvider: ListingProvider,
-    private serviceProvider: ServiceProvider) {
+    private serviceProvider: ServiceProvider,
+    private modalCtrl: ModalController) {
 
   	this.queryText = '';
 
@@ -51,7 +52,9 @@ export class SearchPage {
   }
 
   goListing(province, listing_type){
-    this.navCtrl.push(ListingPage, {province: province, listing_type: listing_type}, {animate: false});
+    this.presentPropertyTypeModal(province, listing_type);
+    // this.navCtrl.push(ListingPage, {province: province, listing_type: listing_type}, {animate: false});
+
   }
 
   searchByKeyword(){
@@ -62,6 +65,43 @@ export class SearchPage {
     this.serviceProvider.switchLanguage();
   }
 
-
-
+  presentPropertyTypeModal(province, listing_type) {
+     let propertyTypeModal = this.modalCtrl.create(PropertyTypeModal, { province: province, listing_type: listing_type });
+     propertyTypeModal.onDidDismiss(data => {
+       if (!data.close){
+         console.log(JSON.stringify(data));
+         this.navCtrl.push(ListingPage, data, {animate: false});
+       }
+     });
+     propertyTypeModal.present();
+   }
 }
+
+@Component({
+   selector: 'page-search',
+   templateUrl: 'property_type.html'
+ })
+ export class PropertyTypeModal {
+   private province: any;
+   private listing_type: any;
+   constructor(params: NavParams, 
+     public viewCtrl: ViewController) {
+
+     this.province = params.get('province');
+     this.listing_type = params.get('listing_type');
+     
+   }
+
+   dismiss() {
+     let data = { 'close': true };
+     this.viewCtrl.dismiss(data);
+   }
+
+   search(property_type){
+       let data = { 'province': this.province, 
+       'listing_type': this.listing_type, 
+       'property_type': property_type };
+       this.viewCtrl.dismiss(data);
+   }
+
+ }

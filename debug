@@ -1,2 +1,0 @@
-#!/bin/bash
-ionic cordova run android -l -c -- -- --minSdkVersion=19

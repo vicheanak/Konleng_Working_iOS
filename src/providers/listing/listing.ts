@@ -86,6 +86,8 @@ export class ListingProvider {
 	private countsCollection: AngularFirestoreCollection<Count>;
 	private provinces: any = [];
 	private districts: any = [];
+	private reportsCollection: any;
+	private reports: any;
 	// private queryUrl: string = 'http://localhost:5000/konleng-cloud/us-central1/webApi/'+'api/v1/listings';
 	private queryUrl: string = 'https://konleng.com/api/v1/listings';
 	listing: Observable<Listing>;
@@ -332,8 +334,8 @@ export class ListingProvider {
 		];
 
 
+		// this.delete100();
 		
-	
 
 	}
 
@@ -377,6 +379,31 @@ export class ListingProvider {
 				return d;
 			}
 		}
+	}
+	delete100(){
+		return new Promise<Object>((resolve, reject) => {
+			this.afStore.collection('listings', ref => {
+				let query: firebase.firestore.Query = ref;
+				query = query.where('province', '==', 'phnom-penh');
+				query = query.where('status', '==', 1);
+				query = query.orderBy('created_date', 'asc').limit(100);
+				
+				
+
+				return query;
+			})
+			.valueChanges().subscribe((listingsData: Listing[]) => {
+				
+				this.listingsCollection.doc(listingsData[0]['id']).delete();
+				// for (let listing of listingsData){
+				// 	console.log(listing['id']);
+				// 	// this.listingsCollection.doc(listing['id']).delete();
+				// }
+				
+				
+				// resolve(listingsData); 
+			});
+		});
 	}
 	// getFirebaseAll(filter){
 	// 	return new Promise<Object>((resolve, reject) => {
@@ -453,6 +480,7 @@ export class ListingProvider {
 		let query = queryArray.join('&');
 		query = this.queryUrl + '?' + query;
 
+		console.log('query', query);
 		return new Promise<Object>((resolve, reject) => {
 
 			this.http.get(query)

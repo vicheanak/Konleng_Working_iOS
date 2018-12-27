@@ -28,6 +28,7 @@
     "@ionic-native/camera": "^4.17.0",
     "@ionic-native/core": "^4.17.0",
     "@ionic-native/device": "^4.18.0",
+    "@ionic-native/diagnostic": "^4.18.0",
     "@ionic-native/email-composer": "^4.18.0",
     "@ionic-native/facebook": "^4.17.0",
     "@ionic-native/file": "^4.17.0",
@@ -51,8 +52,8 @@
     "com-badrit-base64": "^0.2.0",
     "com-sarriaroman-photoviewer": "^1.1.18",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
-    "cordova-admobsdk": "7.35.0",
-    "cordova-android": "7.1.4",
+    "cordova-admobsdk": "^7.35.0",
+    "cordova-android": "^7.1.4",
     "cordova-browser": "5.0.4",
     "cordova-custom-config": "5.0.2",
     "cordova-ios": "4.5.5",
@@ -69,7 +70,7 @@
     "cordova-plugin-extension": "^1.5.4",
     "cordova-plugin-facebook4": "^3.2.0",
     "cordova-plugin-file": "^6.0.1",
-    "cordova-plugin-firebase": "2.0.5",
+    "cordova-plugin-firebase": "^2.0.5",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-googlemaps": "^2.4.6",
     "cordova-plugin-ignore-lint-translation": "0.0.1",
@@ -88,8 +89,11 @@
     "cordova-support-google-services": "^1.2.1",
     "cordova-universal-links-plugin": "git+https://github.com/walteram/cordova-universal-links-plugin.git",
     "cordova-universal-links-plugin-fix": "1.2.1",
+    "cordova.plugins.diagnostic": "4.0.10",
     "es6-promise-plugin": "^4.2.2",
     "firebase": "^5.5.9",
+    "gulp": "^4.0.0",
+    "gulp-cheerio": "^0.6.3",
     "info.protonet.imageresizer": "^0.1.1",
     "ionic-angular": "3.9.2",
     "ionic-img-viewer": "^2.9.0",
@@ -157,12 +161,13 @@
       "cordova-plugin-admobpro": {
         "PLAY_SERVICES_VERSION": "15.0.0"
       },
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-firebase": {},
+      "cordova.plugins.diagnostic": {}
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

@@ -1,0 +1,39 @@
+
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			{{"PROPERTY_TYPE" | translate}}
+		</ion-title>
+		<ion-buttons end (click)="dismiss()">
+			<button round ion-button icon-only >
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content >
+	
+	<div class="card-property-type">
+		<ion-card (click)="search('house')">
+			<div class="card-title">{{"HOUSE" | translate}}</div>
+		</ion-card>
+		<ion-card (click)="search('land')">
+			<div class="card-title">{{"LAND" | translate}}</div>
+		</ion-card>
+		<ion-card (click)="search('apartment')">
+			<div class="card-title">{{"APARTMENT" | translate}}</div>
+		</ion-card>
+		<ion-card (click)="search('commercial')">
+			<div class="card-title">{{"COMMERCIAL" | translate}}</div>
+		</ion-card>
+		<ion-card (click)="search('room')">
+			<div class="card-title">{{"ROOM" | translate}}</div>
+		</ion-card>
+	</div>
+	
+
+
+	
+
+</ion-content>

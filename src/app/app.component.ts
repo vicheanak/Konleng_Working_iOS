@@ -16,6 +16,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Environment } from '@ionic-native/google-maps';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { ListingProvider } from '../providers/listing/listing';
+import { Diagnostic } from '@ionic-native/diagnostic';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -36,15 +38,29 @@ export class MyApp {
     private fcm: FcmProvider,
     private toastCtrl: ToastController,
     private appRate: AppRate,
-    private listingProvider: ListingProvider) {
+    private listingProvider: ListingProvider,
+    private diagnostic: Diagnostic) {
 
 
     splashScreen.show();
     this.auth.getRedirectResult();
 
+    let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
+    let errorCallback = (e) => console.error(e);
 
     platform.ready().then(() => {
 
+      this.diagnostic.requestCameraAuthorization(true).then((cameraRes) => {
+        console.log('CameraRes', cameraRes);
+        this.diagnostic.requestLocationAuthorization("when_in_use").then((locRes) => {
+          console.log('LocRes', locRes);
+        });
+      });  
+      
+      
+
+      //picture, record video
+      //photos media, files on your devices
       this.fcm.getToken();
 
       try{
@@ -113,7 +129,7 @@ export class MyApp {
           promptAgainForEachNewVersion: false,
           useCustomRateDialog: true,
           storeAppURL: {
-            ios: '1440587029',
+            ios: '1445389232',
             android: 'market://details?id=com.konleng.app'
           },
           customLocale: {

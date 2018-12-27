@@ -306,6 +306,7 @@ import { ImagesProvider } from '../../providers/images/images';
  		else if (sourceType == 'gallery'){
  			sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;	
  		}
+ 		
  		const options: CameraOptions = {
  			quality: 80,
  			destinationType: this.camera.DestinationType.FILE_URI,
@@ -344,7 +345,6 @@ import { ImagesProvider } from '../../providers/images/images';
  	}
  	addImage(event, key) {
  		if (document.URL.startsWith('https')){
- 			console.log('=====WEB====');
  			this.imagesProvider.handleImageSelection(event).subscribe((res) =>{
  				this._SUFFIX 			= res.split(':')[1].split('/')[1].split(";")[0];
  				if(this.imagesProvider.isCorrectFileType(this._SUFFIX)){
@@ -358,7 +358,7 @@ import { ImagesProvider } from '../../providers/images/images';
  			});
  		}
  		else{
- 			console.log('=====APP====', key);
+ 			
  			this.actionSheetButtons = [
  			{
  				text: 'Camera',
@@ -382,8 +382,6 @@ import { ImagesProvider } from '../../providers/images/images';
  						this.imgPreviews[key]['hasImg'] = false;
  						this.imgPreviews[key]['src'] = 'assets/imgs/image_blank.png';
  						this.listing.images.splice(key, 1);
-
-
  					}
  				});
  			}

@@ -65,11 +65,11 @@ import { AdMobPro } from '@ionic-native/admob-pro';
     presentAds(){
       let adId;
       if(this.platform.is('android')) {
-          adId = 'ca-app-pub-3976244179029334~9519351931';
+          adId = 'ca-app-pub-3976244179029334/3721721036';
         } else if (this.platform.is('ios')) {
-          adId = 'ca-app-pub-3976244179029334~3852092289';
+          adId = 'ca-app-pub-3976244179029334/8912847276';
         }
-        adId = 'ca-app-pub-3940256099942544/8691691433';
+        
         this.admob.prepareInterstitial({adId: adId}).then(() => { 
           this.admob.showInterstitial(); 
         });
@@ -84,7 +84,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
       }else if (this.countAds > 0){
         this.countAds ++;
       }
-      if (this.countAds == 4){
+      if (this.countAds == 10){
         this.countAds = 0;
       }
     }

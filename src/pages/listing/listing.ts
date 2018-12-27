@@ -61,6 +61,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    private isFirebaseQuery: boolean;
    private tmpListings: any;
    private newListings: any;
+   private myLoading: any;
    constructor(private platform: Platform, 
      public actionSheetCtrl: ActionSheetController, 
      private navCtrl: NavController, 
@@ -72,7 +73,8 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      private listingProvider: ListingProvider,
      private sanitizer: DomSanitizer,
      private serviceProvider: ServiceProvider,
-     private admob: AdMobPro
+     private admob: AdMobPro,
+     private loadingCtrl: LoadingController
      ) {
 
      this.land_icon = {
@@ -126,6 +128,21 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
    }
 
+   presentLoading() {
+     this.myLoading = this.loadingCtrl.create({
+       content: 'Please wait...'
+     });
+
+     this.myLoading.present();
+   }
+
+   dismissLoading(){
+     try{
+       this.myLoading.dismiss();
+     }catch(e){
+
+     }
+   }
 
    moreLocations(){
      this.newLocations = [];
@@ -209,8 +226,10 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
    ionViewDidLoad() {
 
+     this.presentLoading();
      let province = this.navParams.get('province');
      let listing_type = this.navParams.get('listing_type');
+     let property_type = this.navParams.get('property_type');
      let keyword = this.navParams.get('keyword');
      for (let p of this.provinces){
        if (p.id == province){
@@ -220,9 +239,12 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      this.filter.sort_by = 'newest';
      this.filter.province = province;
      this.filter.listing_type = listing_type;
+     this.filter.property_type = property_type;
      this.filter.keyword = keyword;
      this.filter.page = 1;
+     console.log(JSON.stringify(this.filter));
      this.listingProvider.getAll(this.filter).then((listings) => {
+       this.dismissLoading();
        this.location = new LatLng(11.562108, 104.888535);
        this.listings = listings;
        this.refreshLocations();
