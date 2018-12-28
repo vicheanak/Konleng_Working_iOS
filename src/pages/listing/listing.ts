@@ -34,7 +34,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    @ViewChild('listing_map') mapElement: ElementRef;
    private map:GoogleMap;
    private location: LatLng;
-   private display: string = 'list';
+   private display: string = 'map';
    private locations: any = [];
    private detailModal: any;
    private listings: any = [];
@@ -242,12 +242,15 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      this.filter.property_type = property_type;
      this.filter.keyword = keyword;
      this.filter.page = 1;
+     this.filter.location = this.province.lat + ',' + this.province.lng;
      console.log(JSON.stringify(this.filter));
      this.listingProvider.getAll(this.filter).then((listings) => {
        this.dismissLoading();
-       this.location = new LatLng(11.562108, 104.888535);
+       this.location = new LatLng(this.province.lat, this.province.lng);
        this.listings = listings;
        this.refreshLocations();
+       this.cf.detectChanges();
+      this.refreshMap();
      });
 
    }
@@ -277,7 +280,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
        });
        let options = {
          target: this.location,
-         zoom: 12,
+         zoom: 14,
        };
        this.map.moveCamera(options);
 
@@ -323,6 +326,38 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      catch(e){
      }
    }
+   searchHere(){
+     this.presentLoading();
+     let center = this.map.getCameraPosition().target;
+     console.log(JSON.stringify(center));
+     this.map.clear().then(() => {
+       this.filter.page = 1;
+       this.filter.location = center.lat + ',' + center.lng;
+       console.log(JSON.stringify(this.filter));
+       this.listingProvider.getAll(this.filter).then((listings) => {
+         this.dismissLoading();
+         this.location = new LatLng(center.lat, center.lng);
+         this.listings = listings;
+         this.refreshLocations();
+         this.addMarkers();
+         // this.cf.detectChanges();
+
+
+         // this.listings = data.listing;
+         // this.refreshLocations();
+         // if (this.display == 'map'){
+         //   this.map.clear().then(() => {
+         //     this.addMarkers();
+         //   });  
+         // }
+
+
+         // this.refreshMap();
+       });
+     }); 
+     
+   }
+
    loadMore(){
      this.filter.page++;
      this.listingProvider.getAll(this.filter).then((listings) => {

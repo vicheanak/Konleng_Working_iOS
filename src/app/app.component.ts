@@ -56,6 +56,8 @@ export class MyApp {
           console.log('LocRes', locRes);
         });
       });  
+
+      
       
       
 

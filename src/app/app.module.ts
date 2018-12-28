@@ -87,6 +87,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { Firebase } from '@ionic-native/firebase';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 @NgModule({
@@ -200,7 +201,8 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     AdMobPro,
     FcmProvider,
     Firebase,
-    Diagnostic
+    Diagnostic,
+    Geolocation
   ]
 })
 export class AppModule {

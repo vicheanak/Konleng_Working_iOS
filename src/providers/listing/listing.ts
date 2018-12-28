@@ -395,13 +395,6 @@ export class ListingProvider {
 			.valueChanges().subscribe((listingsData: Listing[]) => {
 				
 				this.listingsCollection.doc(listingsData[0]['id']).delete();
-				// for (let listing of listingsData){
-				// 	console.log(listing['id']);
-				// 	// this.listingsCollection.doc(listing['id']).delete();
-				// }
-				
-				
-				// resolve(listingsData); 
 			});
 		});
 	}
@@ -477,6 +470,12 @@ export class ListingProvider {
 		if (filter.page){
 			queryArray.push('page='+filter.page);
 		}
+		if (filter.location){
+			queryArray.push('latlng='+filter.location);
+		}
+
+		console.log('locatoin', filter.location);
+
 		let query = queryArray.join('&');
 		query = this.queryUrl + '?' + query;
 
