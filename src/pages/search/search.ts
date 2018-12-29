@@ -65,6 +65,16 @@ export class SearchPage {
     this.serviceProvider.switchLanguage();
   }
 
+  search(data, listing_type) {
+    console.log('listing_type', listing_type);
+    this.navCtrl.push(ListingPage, {property_type: data, listing_type: listing_type}, {animate: false});  
+  }
+
+  searchWithListingType(property_type, listing_type){
+
+  }
+  
+
   presentPropertyTypeModal(province, listing_type) {
      let propertyTypeModal = this.modalCtrl.create(PropertyTypeModal, { province: province, listing_type: listing_type });
      propertyTypeModal.onDidDismiss(data => {

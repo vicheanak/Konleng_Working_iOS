@@ -105,7 +105,7 @@ export class ListingProvider {
 		this.countsCollection = this.afStore.collection<Count>('counts');
 
 		this.provinces = [
-		{id: "phnom-penh", text: "Phnom Penh", rank: 0, lat: 11.562108, lng: 104.888535},
+		{id: "phnom-penh", text: "Phnom Penh", rank: 0, lat: 11.556186, lng: 104.927834},
 		{id: "preah-sihanouk", text: "Preah Sihanouk", rank: 1, lat: 10.627543, lng: 103.522141},
 		{id: "kampong-cham", text: "Kampong Cham", rank: 2, lat: 11.992419, lng: 105.460255},
 		{id: "siem-reap", text: "Siem Reap", rank: 3, lat: 13.364047, lng: 103.860313},
@@ -474,7 +474,7 @@ export class ListingProvider {
 			queryArray.push('latlng='+filter.location);
 		}
 
-		console.log('locatoin', filter.location);
+		
 
 		let query = queryArray.join('&');
 		query = this.queryUrl + '?' + query;

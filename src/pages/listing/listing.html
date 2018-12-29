@@ -5,7 +5,7 @@
 -->
 <ion-header>
 	<ion-navbar color="primary">
-		<ion-title>{{province?.id | translate}}</ion-title>
+		<ion-title>{{province?.id | translate}} {{this.filter.property_type | translate}} {{this.filter.listing_type | translate}}</ion-title>
 		<ion-buttons end (click)="presentFilterModal()">
 			<button round ion-button icon-only >
 				<ion-icon name="md-search"></ion-icon>
@@ -26,27 +26,25 @@
 		    <ion-refresher-content></ion-refresher-content>
 		</ion-refresher> -->
 		<div [ngSwitch]="display">
-			<ion-grid *ngIf="listings.length == 0">
+			<!-- <ion-grid *ngIf="listings.length == 0">
 				<ion-row justify-content-center>
 					<img class="success-img" src="assets/imgs/konleng_logo.png">
 				</ion-row>
-			</ion-grid>
-			<div *ngSwitchCase="'map'">
-				<ion-list>
+			</ion-grid> -->
+			<!-- <div *ngSwitchCase="'map'"> -->
+			<div [style.display]="display == 'map' ? 'block' : 'none'">
+				<!-- <ion-list> -->
 					<div #listing_map id="listing_map" style="width: 100%; height: 500px"></div>
-				</ion-list>
-				<ion-footer>
+				<!-- </ion-list> -->
+				<!-- <ion-footer>
 					<ion-toolbar no-padding>
 						<ion-row>
-							<ion-col col-6 padding-horizontal>
-								<button round ion-button color="secondary" (click)="loadMore()" full type="submit">{{'LOAD_MORE' | translate}}</button>
-							</ion-col>
-							<ion-col col-6 padding-horizontal>
+							<ion-col col-12 padding-horizontal>
 								<button round ion-button color="primary" (click)="searchHere()" full type="submit">{{'SEARCH_HERE' | translate}}</button>
 							</ion-col>
 						</ion-row>
 					</ion-toolbar>
-				</ion-footer>
+				</ion-footer> -->
 			</div>
 			<div *ngSwitchCase="'list'">
 				<ion-list>
@@ -61,9 +59,9 @@
 					</ion-item>
 
 				</ion-list>
-				<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+				<!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
 					<ion-infinite-scroll-content></ion-infinite-scroll-content>
-				</ion-infinite-scroll>
+				</ion-infinite-scroll> -->
 			</div>
 			
 		</div>

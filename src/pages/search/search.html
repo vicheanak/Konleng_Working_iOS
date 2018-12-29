@@ -15,6 +15,69 @@
   </ion-refresher>
 
   <ion-searchbar [(ngModel)]="queryText" (search)="searchByKeyword($event)" placeholder='{{ "SEARCH" | translate }}'></ion-searchbar>
+  <!-- <ion-list-header no-padding-verticle>
+    {{"PROPERTY_TYPE" | translate}}
+  </ion-list-header>
+ -->  <div class="card-property-type">
+    <ion-card>
+      <div class="card-title">{{"HOUSE" | translate}}</div>
+      <div class="left-content" (click)="search('house', 'sale')">
+        <ion-label>
+        {{ province?.sale }} {{ "sale" | translate}}
+        </ion-label>
+      </div>
+      <div class="right-content" (click)="search('house', 'rent')">
+        <ion-label>
+        {{ province?.rent }} {{ "rent" | translate }}
+        </ion-label>
+      </div>
+    </ion-card>
+    <ion-card>
+      <div class="card-title">{{"LAND" | translate}}</div>
+      <div class="left-content" (click)="search('land', 'sale')">
+        <ion-label>
+        {{ province?.sale }} {{ "sale" | translate}}
+        </ion-label>
+      </div>
+      <div class="right-content" (click)="search('land', 'rent')">
+        <ion-label>
+        {{ province?.rent }} {{ "rent" | translate }}
+        </ion-label>
+      </div>
+    </ion-card>
+    <ion-card>
+      <div class="card-title">{{"APARTMENT" | translate}}</div>
+      <div class="left-content" (click)="search('apartment', 'sale')">
+        <ion-label>
+        {{ province?.sale }} {{ "sale" | translate}}
+        </ion-label>
+      </div>
+      <div class="right-content" (click)="search('apartment', 'rent')">
+        <ion-label>
+        {{ province?.rent }} {{ "rent" | translate }}
+        </ion-label>
+      </div>
+    </ion-card>
+    <ion-card>
+      <div class="card-title">{{"COMMERCIAL" | translate}}</div>
+      <div class="left-content" (click)="search('commercial', 'sale')">
+        <ion-label>
+        {{ province?.sale }} {{ "sale" | translate}}
+        </ion-label>
+      </div>
+      <div class="right-content" (click)="search('commercial', 'rent')">
+        <ion-label>
+        {{ province?.rent }} {{ "rent" | translate }}
+        </ion-label>
+      </div>
+    </ion-card>
+    <ion-card  (click)="search('room', 'rent')">
+      <div class="card-title">{{"ROOM" | translate}}</div>
+    </ion-card>
+  </div>
+  <ion-list-header no-padding-verticle>
+    {{"PROVINCE" | translate}}
+  </ion-list-header>
   <div class="card-background-page">
     <ion-card *ngFor="let province of provinces; let i = index">
       <div class="card-title">{{ province.id | translate }}</div>

@@ -1,5 +1,5 @@
 #!/bin/bash
-ionic cordova build browser
+ionic cordova build browser --prod
 cp -r platforms/browser/www/* ~/Documents/konleng_functions/public
 cd ~/Documents/konleng_functions
 firebase deploy --only hosting

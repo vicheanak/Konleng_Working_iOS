@@ -42,14 +42,24 @@ export class MyApp {
     private diagnostic: Diagnostic) {
 
 
-    splashScreen.show();
-    this.auth.getRedirectResult();
-
+    if (document.URL.startsWith('https')){
+      this.auth.getRedirectResult();
+    }
+    else{
+      splashScreen.show();    
+    }
     let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
     let errorCallback = (e) => console.error(e);
 
     platform.ready().then(() => {
+      if (document.URL.startsWith('https')){
 
+        Environment.setEnv({
+          API_KEY_FOR_BROWSER_RELEASE: "AIzaSyBUuXZ2zRqiAzdOvSvc6YGN1odBEX3qyrw",
+          API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBUuXZ2zRqiAzdOvSvc6YGN1odBEX3qyrw"
+        });
+      }
+      else{
       this.diagnostic.requestCameraAuthorization(true).then((cameraRes) => {
         console.log('CameraRes', cameraRes);
         this.diagnostic.requestLocationAuthorization("when_in_use").then((locRes) => {
@@ -57,12 +67,6 @@ export class MyApp {
         });
       });  
 
-      
-      
-      
-
-      //picture, record video
-      //photos media, files on your devices
       this.fcm.getToken();
 
       try{
@@ -90,14 +94,8 @@ export class MyApp {
       this.rateAuto();
 
 
-      if (document.URL.startsWith('https')){
+      
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-        Environment.setEnv({
-          API_KEY_FOR_BROWSER_RELEASE: "AIzaSyBUuXZ2zRqiAzdOvSvc6YGN1odBEX3qyrw",
-          API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBUuXZ2zRqiAzdOvSvc6YGN1odBEX3qyrw"
-        });
-      }
-      else{
         statusBar.styleDefault();
 
         setTimeout(() => {

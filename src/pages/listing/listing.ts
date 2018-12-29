@@ -60,8 +60,11 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    private room_icon: MarkerIcon;
    private isFirebaseQuery: boolean;
    private tmpListings: any;
-   private newListings: any;
+   private newListings: any = [];
    private myLoading: any;
+   private polygons: any;
+   private listingObjectIDs: any = [];
+   private initialMapLoad: boolean = true;
    constructor(private platform: Platform, 
      public actionSheetCtrl: ActionSheetController, 
      private navCtrl: NavController, 
@@ -144,23 +147,23 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      }
    }
 
-   moreLocations(){
-     this.newLocations = [];
-     for (let listing of this.newListings){
+   loadMoreLocations(){
+     let newLocations:any = [];
+     for (let newListing of this.newListings){
        let icon = this.land_icon;
-       if (listing.property_type == 'land'){
+       if (newListing.property_type == 'land'){
          icon = this.land_icon;
        }
-       if (listing.property_type == 'house'){
+       if (newListing.property_type == 'house'){
          icon = this.house_icon;
        }
-       if (listing.property_type == 'apartment'){
+       if (newListing.property_type == 'apartment'){
          icon = this.apartment_icon;
        }
-       if (listing.property_type == 'commercial'){
+       if (newListing.property_type == 'commercial'){
          icon = this.commercial_icon;
        }
-       if (listing.property_type == 'room'){
+       if (newListing.property_type == 'room'){
          icon = this.room_icon;
        }
        let formatter = new Intl.NumberFormat('en-US', {
@@ -169,18 +172,27 @@ import { AdMobPro } from '@ionic-native/admob-pro';
          minimumFractionDigits: 0
        });
 
-       let price = formatter.format(listing.price);
-       this.newLocations.push({
+       let price = formatter.format(newListing.price);
+
+       let location = {
          title: price,
          disableAutoPan: true, 
          icon: icon, 
-         position: {lat: parseFloat(listing.lat), lng: parseFloat(listing.lng)},
-         listing: listing
+         position: {lat: parseFloat(newListing.lat), lng: parseFloat(newListing.lng)},
+         listing: newListing
+       }
+       
+       this.map.addMarker(location).then((marker) => {
+         marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
+           let listing = location.listing;
+           if (listing){
+             this.presentDetailModal(listing);  
+           }
+         }); 
        });
+     
      }
-     
-     
-     
+   
    }
 
    loadLocations(){
@@ -226,32 +238,8 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
    ionViewDidLoad() {
 
-     this.presentLoading();
-     let province = this.navParams.get('province');
-     let listing_type = this.navParams.get('listing_type');
-     let property_type = this.navParams.get('property_type');
-     let keyword = this.navParams.get('keyword');
-     for (let p of this.provinces){
-       if (p.id == province){
-         this.province = p;
-       }
-     }
-     this.filter.sort_by = 'newest';
-     this.filter.province = province;
-     this.filter.listing_type = listing_type;
-     this.filter.property_type = property_type;
-     this.filter.keyword = keyword;
-     this.filter.page = 1;
-     this.filter.location = this.province.lat + ',' + this.province.lng;
-     console.log(JSON.stringify(this.filter));
-     this.listingProvider.getAll(this.filter).then((listings) => {
-       this.dismissLoading();
-       this.location = new LatLng(this.province.lat, this.province.lng);
-       this.listings = listings;
-       this.refreshLocations();
-       this.cf.detectChanges();
-      this.refreshMap();
-     });
+     // this.presentLoading();
+     
 
    }
 
@@ -261,7 +249,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
      let height = this.platform.height() - 160 + 'px';
      this.renderer.setStyle(this.mapElement.nativeElement, "height", height);
-     this.renderer.setStyle(this.mapElement.nativeElement, "marginTop", '5px');
+     // this.renderer.setStyle(this.mapElement.nativeElement, "marginTop", '5px');
 
 
      let element = this.mapElement.nativeElement;
@@ -269,6 +257,47 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
 
      this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+
+       this.map.on(GoogleMapsEvent.CAMERA_MOVE_END).subscribe((data) => {
+        
+
+         this.polygons = [
+         data[0].farLeft.lat,
+         data[0].farLeft.lng,
+         data[0].farRight.lat,
+         data[0].farRight.lng,
+         data[0].nearRight.lat,
+         data[0].nearRight.lng,
+         data[0].nearLeft.lat,
+         data[0].nearLeft.lng];      
+
+         // this.searchHere();   
+       });
+
+       this.map.on(GoogleMapsEvent.MAP_DRAG_END).subscribe((data) => {
+         let positionInterval = setTimeout(() => {
+         let position:any = this.map.getCameraPosition();
+         
+           
+           if (position){
+               this.polygons = [
+               position.farLeft.lat,
+               position.farLeft.lng,
+               position.farRight.lat,
+               position.farRight.lng,
+               position.nearRight.lat,
+               position.nearRight.lng,
+               position.nearLeft.lat,
+               position.nearLeft.lng];  
+               this.searchHere(); 
+               // clearInterval(positionInterval);
+           }
+         }, 500);
+         
+       });
+
+
+
 
        this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(() => {
 
@@ -284,7 +313,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
        };
        this.map.moveCamera(options);
 
-       this.addMarkers();
+       // this.addMarkers();
      }, (error) => {
        console.error('error map 2', JSON.stringify(error));
      }).catch((error) => {
@@ -293,32 +322,114 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
    }
 
-   segmentChanged(e){
+   resetMapContainer(div:string,visible:boolean){
+      
+      this.map.setDiv('map');
+      this.map.setVisible(visible);
+      setTimeout(()=>{
+        // hack to fix occasionally disappearing map
+        this.map.setDiv('map');
+      }, 1000);   
 
+      // setTimeout(()=>{
+      //   if(this.map){
+      //     this.map.setDiv(div);
+      //     this.map.setVisible(visible);
+      //   }
+      // },600) // timeout is a bit of a hack but it helps here
+    }
+
+   segmentChanged(e){
+     // this.map.setVisible(false);
+     //  this.map.setDiv(null);
+      // this.resetMapContainer('map',false); // assumes div has id of map
      this.cf.detectChanges();
+     
+
      try{
        this.detailModal.dismiss();
      }
      catch(e){
      }
-     if (this.display == 'map'){
-
-       this.platform.ready().then((readySource) => {
-
-         this.refreshMap();
-       });
-     }
+     
 
    }
 
-
+  
 
    ionViewWillEnter(){
      this.serviceProvider.transition();
+
+     if (!this.initialMapLoad) {
+       // subsequent loads...
+       // this.resetMapContainer('map',true); // assumes div has id of map
+     } else {
+       // first load...
+       this.initialMapLoad = false;
+       let province = this.navParams.get('province');
+       let listing_type = this.navParams.get('listing_type');
+       let property_type = this.navParams.get('property_type');
+       let keyword = this.navParams.get('keyword');
+       if (province){
+         for (let p of this.provinces){
+           if (p.id == province){
+             this.province = p;
+           }
+         }  
+         this.filter.province = province;
+
+         this.location = new LatLng(this.province.lat, this.province.lng);
+       }
+       else{
+         this.location = new LatLng(11.556186, 104.927834); 
+       }
+       this.filter.listing_type = listing_type;
+       this.filter.sort_by = 'newest';
+       this.filter.property_type = property_type;
+       this.filter.keyword = keyword;
+       this.filter.page = 1;
+       this.refreshMap(); 
+
+
+       let myInterval = setInterval(() => {
+
+         if (this.polygons){
+
+           clearInterval(myInterval);
+           if (!this.filter.province){
+             this.filter.location = this.polygons.join(',');  
+           }
+
+
+           this.listingProvider.getAll(this.filter).then((listings) => {
+
+             // this.listings = listings;
+             let oldListings: any = listings;
+             oldListings.forEach((oldListing) => {
+               // delete oldListing.description;
+               delete oldListing._highlightResult;
+               delete oldListing._geoloc;
+
+               this.listingObjectIDs.push(oldListing.objectID);
+               this.listings.push(oldListing);
+             })
+             this.refreshLocations();
+             this.addMarkers();
+
+             // this.dismissLoading();
+           });
+         }
+
+       }, 100);
+
+
+
+    }
+
    }
 
    ionViewWillLeave(){
-
+     
      try{
        let data = { goDetail: false, close: true };
        this.detailModal.dismiss(data);
@@ -327,34 +438,60 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      }
    }
    searchHere(){
-     this.presentLoading();
+     
+     // this.presentLoading();
+     // this.map.clear().then(() => {
+
+     // });
      let center = this.map.getCameraPosition().target;
-     console.log(JSON.stringify(center));
-     this.map.clear().then(() => {
        this.filter.page = 1;
-       this.filter.location = center.lat + ',' + center.lng;
-       console.log(JSON.stringify(this.filter));
+       this.filter.location = this.polygons.join(',');
+       
+       this.newListings = [];
        this.listingProvider.getAll(this.filter).then((listings) => {
-         this.dismissLoading();
-         this.location = new LatLng(center.lat, center.lng);
-         this.listings = listings;
-         this.refreshLocations();
-         this.addMarkers();
-         // this.cf.detectChanges();
+            let newLists: any = listings;
+            var tmpNewListings: any = listings;
+            // let tmpListings: any = [];
+            let tmpListingObjectIDs: any = [];
+            // this.newListings = [];
+            
+            let count = 0;
+            newLists.forEach((newList, index, object) => {
+              delete newList.description;
+              delete newList._highlightResult;
+              delete newList._geoloc;
+              this.listingObjectIDs.forEach((objectId) => {
 
+                if (newList.objectID == objectId){
+                  count ++;
+                  delete tmpNewListings[index];
+                }
+              });
+            });
+            
+            
+            tmpNewListings.forEach((tmpList) => {
+                this.listingObjectIDs.push(tmpList.objectID);
+                this.listings.push(tmpList);
+                this.newListings.push(tmpList);
+            });
+            
+            
 
-         // this.listings = data.listing;
-         // this.refreshLocations();
-         // if (this.display == 'map'){
-         //   this.map.clear().then(() => {
-         //     this.addMarkers();
-         //   });  
-         // }
-
-
-         // this.refreshMap();
+            // console.log('tmpNewListings', tmpNewListings.length);
+            
+            // this.newListings = listings;
+            // this.listings = tmpListingObjectIDs;
+            this.loadMoreLocations();
+            // this.addMoreMarkers();
+            
+           // this.listings = listings;
+           // this.refreshLocations();
+           // this.addMarkers();
+         
+         
        });
-     }); 
+
      
    }
 
@@ -364,9 +501,8 @@ import { AdMobPro } from '@ionic-native/admob-pro';
        this.newListings = listings;
        for(let l of this.newListings){
          this.listings.push(l);
-         
        }
-       this.moreLocations();
+       this.loadMoreLocations();
        this.addMoreMarkers();
      });  
    }
@@ -389,8 +525,10 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      for(let i = 0; i < this.locations.length; i ++){
        let markerSync = this.map.addMarker(this.locations[i]).then((marker) => {
          marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
-           let loc = this.locations[i];
-           this.presentDetailModal(loc);
+           let listing = this.locations[i].listing;
+           if (listing){
+             this.presentDetailModal(listing);  
+           }
          }); 
        });
      } 
@@ -427,7 +565,9 @@ import { AdMobPro } from '@ionic-native/admob-pro';
        let markerSync = this.map.addMarker(this.newLocations[i]).then((marker) => {
          marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params) => {
            let loc = this.newLocations[i];
-           this.presentDetailModal(loc);
+           if (loc){
+             this.presentDetailModal(loc);  
+           }
          }); 
        });
      } 
@@ -469,13 +609,14 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      filterModal.present();
    }
    presentDetailModal(listing) {
+     // console.log('listing', listing);
      try{
        let data = { goDetail: false, close: true };
        this.detailModal.dismiss(data);
      }catch(e){
      }
      
-     this.detailModal = this.modalCtrl.create(DetailModal, { listing: listing.listing }, {cssClass: 'detail-modal' });
+     this.detailModal = this.modalCtrl.create(DetailModal, { listing: listing }, {cssClass: 'detail-modal' });
      this.detailModal.onDidDismiss(data => {
 
        if (data){
@@ -556,10 +697,10 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    }
 
    search(){
-     this.presentLoading();
+     // this.presentLoading();
      this.listingProvider.getAll(this.filter).then((listings) => {
        let data = {listing: listings, filter: this.filter};
-       this.dismissLoading();
+       // this.dismissLoading();
        this.viewCtrl.dismiss(data);
      });
    }
@@ -580,7 +721,9 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
    }
    ionViewDidEnter(){
+
      this.listing = this.params.get('listing');
+     
    }
    getBackground(image) {
      return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
