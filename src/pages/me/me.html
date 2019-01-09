@@ -3,11 +3,22 @@
 		<ion-title>
 			{{'ME' | translate}}
 		</ion-title>
+		<ion-buttons end (click)="switchLanguage()">
+      <button round ion-button icon-start>
+        <ion-icon name="md-globe"></ion-icon>
+        {{"language" | translate }}
+      </button>
+    </ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
 	<ion-list>
+		<ion-item (click)="goBusinessPartner()">
+			<ion-icon color="yellow" name='md-star' item-start></ion-icon>
+			{{'BUSINESS_PARTNER' | translate}}
+			<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+		</ion-item>
 		<ion-item (click)="goProfile()">
 			<ion-icon color="primary" name='ios-contact' item-start></ion-icon>
 			{{'PROFILE' | translate}}
@@ -34,8 +45,13 @@
 			<ion-icon name='ios-arrow-forward' item-end></ion-icon>
 		</ion-item>
 		<ion-item (click)="goReport()">
-			<ion-icon color="danger" name='md-alert' item-start></ion-icon>
+			<ion-icon color="primary" name='md-alert' item-start></ion-icon>
 			{{'REPORTS' | translate}}
+			<ion-icon name='ios-arrow-forward' item-end></ion-icon>
+		</ion-item>
+		<ion-item (click)="goAppBuilder()">
+			<ion-icon color="danger" name='ios-appstore' item-start></ion-icon>
+			{{'APP_BUILDER' | translate}}
 			<ion-icon name='ios-arrow-forward' item-end></ion-icon>
 		</ion-item>
 	</ion-list>

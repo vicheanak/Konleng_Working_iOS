@@ -12,9 +12,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
 import { SearchPage } from '../search/search';
 import { ReportPage } from '../report/report';
+import { AppBuilderPage } from '../app-builder/app-builder';
 
 import { AuthServiceProvider } from '../../providers/auth/auth';
 import { ServiceProvider } from '../../providers/service/service';
+
+import { BusinessPartnerPage } from '../business-partner/business-partner';
 
 
 
@@ -53,7 +56,10 @@ export class MePage {
 		console.log('Me Enter');
 	}
 	ionViewWillEnter(){ this.serviceProvider.transition(); }
-	
+
+	switchLanguage(){
+		this.serviceProvider.switchLanguage();
+	}	
 
 	myCallbackFunction = function(_params) {
 		return new Promise((resolve, reject) => {
@@ -65,6 +71,11 @@ export class MePage {
 
 	goLogin(){
 		this.navCtrl.push(LoginPage, {page: 'profile'}, {animate: false});
+	}
+
+	goBusinessPartner(){
+		this.navCtrl.push(BusinessPartnerPage);
+		// this.navCtrl.push(LoginPage, {page: 'business-partner'}, {animate: false});
 	}
 
 	presentLoading() {
@@ -147,6 +158,17 @@ export class MePage {
 
 	goReport(){
 		this.navCtrl.push(ReportPage, {}, {animate: false});
+	}
+
+	goAppBuilder(){
+		this.auth.getUser().then((user) => {
+			if (user){
+				this.navCtrl.push(AppBuilderPage, {}, {animate: false});	
+			}
+			else{
+				this.navCtrl.push(LoginPage, {page: 'app-builder'}, {animate: false});
+			}
+		});
 	}
 
 }

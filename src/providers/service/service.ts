@@ -63,14 +63,17 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
     
     presentAds(){
-      let adId;
+      let videoId;
+      let bannerId;
       if(this.platform.is('android')) {
-          adId = 'ca-app-pub-3976244179029334/3721721036';
+          videoId = 'ca-app-pub-3976244179029334/3721721036';
+          bannerId = 'ca-app-pub-3976244179029334/9581535883';
         } else if (this.platform.is('ios')) {
-          adId = 'ca-app-pub-3976244179029334/8912847276';
+          videoId = 'ca-app-pub-3976244179029334/8912847276';
+          bannerId = 'ca-app-pub-3976244179029334/8048962361';
         }
-        
-        this.admob.prepareInterstitial({adId: adId}).then(() => { 
+        this.admob.prepareInterstitial({adId: videoId})
+        .then(() => { 
           this.admob.showInterstitial(); 
         });
     }
@@ -78,13 +81,14 @@ import { AdMobPro } from '@ionic-native/admob-pro';
     showAds(){
       if (this.countAds == 0){
         setTimeout(() => {
+          console.log('PRESENT ADS');
           this.presentAds();
-        }, 5000);
+        }, 500);
         this.countAds ++;
       }else if (this.countAds > 0){
         this.countAds ++;
       }
-      if (this.countAds == 10){
+      if (this.countAds == 5){
         this.countAds = 0;
       }
     }

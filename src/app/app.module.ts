@@ -26,6 +26,9 @@ import { RegisterPage } from '../pages/register/register';
 import { AddPage } from '../pages/add/add';
 import { FollowPage } from '../pages/follow/follow';
 import { ReportPage } from '../pages/report/report';
+import { AppBuilderPage } from '../pages/app-builder/app-builder';
+import { BusinessPartnerPage } from '../pages/business-partner/business-partner';
+
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -117,7 +120,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     FollowPage,
     AddPage,
     TabsPage,
-    ReportPage
+    ReportPage,
+    AppBuilderPage,
+    BusinessPartnerPage
   ],
   imports: [
     BrowserModule,
@@ -169,7 +174,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     RegisterPage,
     AddPage,
     TabsPage,
-    ReportPage
+    ReportPage,
+    AppBuilderPage,
+    BusinessPartnerPage
   ],
   providers: [
     StatusBar,

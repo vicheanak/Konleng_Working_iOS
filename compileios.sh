@@ -11,4 +11,3 @@ cp Pods/Target\ Support\ Files/Pods-Konleng/Pods-Konleng.debug.xcconfig ./pods-d
 cp Pods/Target\ Support\ Files/Pods-Konleng/Pods-Konleng.release.xcconfig ./pods-release.xcconfig
 cd ../../
 ionic cordova build ios --prod -- --buildFlag="-UseModernBuildSystem=0"
-ionic cordova run ios --prod -- --buildFlag="-UseModernBuildSystem=0"

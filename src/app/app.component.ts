@@ -52,6 +52,7 @@ export class MyApp {
     let errorCallback = (e) => console.error(e);
 
     platform.ready().then(() => {
+
       if (document.URL.startsWith('https')){
 
         Environment.setEnv({

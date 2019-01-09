@@ -1,0 +1,37 @@
+<!--
+  Generated template for the ReportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			{{'APP_BUILDER' | translate}}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-item no-padding>
+		<ion-label for="agency_name" floating>{{'AGENCY_NAME' | translate}}</ion-label>
+		<ion-input id="agency_name" [(ngModel)]="app_builder.agency_name" type="text"></ion-input>
+	</ion-item>
+	<ion-item no-padding>
+		<ion-label for="phone" floating>{{'PHONE' | translate}}</ion-label>
+		<ion-input id="phone" [(ngModel)]="app_builder.phone" type="text"></ion-input>
+	</ion-item>
+	<ion-item no-padding>
+		<ion-label for="logo" floating>{{'LOGO' | translate}}</ion-label>
+		<ion-input id="logo" [(ngModel)]="app_builder.logo" type="text"></ion-input>
+	</ion-item>
+	<ion-item no-padding>
+		<ion-label for="total" floating>{{'TOTAL_PROPERTIES' | translate}}</ion-label>
+		<ion-input id="total" [(ngModel)]="app_builder.total_properties" type="text"></ion-input>
+	</ion-item>
+	<div padding>
+		<button round (click)="submit()" [disabled]="app_builder.agency_name == '' || app_builder.phone == ''" padding ion-button block>{{'SUBMIT' | translate}}</button>
+	</div>
+
+</ion-content>

@@ -74,6 +74,18 @@ export interface Count{
 	takeo: number;
 	tboung_khmum: number;
 }
+export interface AppBuilder { 
+	id: number;
+	title: string;
+	description: string;
+	agency_name: string;
+	phone: string;
+	logo: string;
+	total_properties: number;
+	status: string;
+	created_at: number;
+}
+
 @Injectable()
 export class ListingProvider {
 	private listingsCollection: AngularFirestoreCollection<Listing>;
@@ -87,6 +99,8 @@ export class ListingProvider {
 	private provinces: any = [];
 	private districts: any = [];
 	private reportsCollection: any;
+	private appBuilderCollection: any;
+	private appBuilders: any;
 	private reports: any;
 	// private queryUrl: string = 'http://localhost:5000/konleng-cloud/us-central1/webApi/'+'api/v1/listings';
 	private queryUrl: string = 'https://konleng.com/api/v1/listings';
@@ -101,6 +115,8 @@ export class ListingProvider {
 		this.listings = this.listingsCollection.valueChanges();
 		this.reportsCollection = this.afStore.collection<Report>('reports');
 		this.reports = this.reportsCollection.valueChanges();
+		this.appBuilderCollection = this.afStore.collection<AppBuilder>('app-builder');
+		this.appBuilders = this.appBuilderCollection.valueChanges();
 		this.usersCollection = this.afStore.collection<User>('users');
 		this.countsCollection = this.afStore.collection<Count>('counts');
 
@@ -601,6 +617,17 @@ export class ListingProvider {
 			const issueData = issue;
 			issueData.number = 0;
 			this.reportsCollection.doc(id).set(issueData).then(async (respondId) => {
+				resolve(respondId);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+	}
+	submitAppBuilder(appData){
+		return new Promise<Object>((resolve, reject) => {
+			const id = this.afStore.createId();
+			const data = appData;
+			this.appBuilderCollection.doc(id).set(data).then(async (respondId) => {
 				resolve(respondId);
 			}).catch((error) => {
 				reject(error);

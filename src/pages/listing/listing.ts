@@ -79,7 +79,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      private admob: AdMobPro,
      private loadingCtrl: LoadingController
      ) {
-
+     this.serviceProvider.showAds();
      this.land_icon = {
        url: 'https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/land_icon.png?alt=media&token=50038101-57b6-4d0e-8ae6-4d4a93b29a73',
        size: {
@@ -237,7 +237,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    }
 
    ionViewDidLoad() {
-
+     
      // this.presentLoading();
      
 
@@ -358,6 +358,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
   
 
    ionViewWillEnter(){
+     
      this.serviceProvider.transition();
 
      if (!this.initialMapLoad) {
@@ -508,7 +509,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    }
    doInfinite(infiniteScroll) {
      //ServiceProvider
-     this.serviceProvider.showAds();
+     
      this.filter.page++;
      this.listingProvider.getAll(this.filter).then((listings) => {
        this.newListings = listings;
@@ -574,7 +575,6 @@ import { AdMobPro } from '@ionic-native/admob-pro';
    }
 
    goDetail(listing){
-     this.serviceProvider.showAds();
      this.navCtrl.push(DetailPage, {
        listing: listing,
        user_id: listing.user_id
@@ -721,7 +721,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
 
    }
    ionViewDidEnter(){
-
+     
      this.listing = this.params.get('listing');
      
    }

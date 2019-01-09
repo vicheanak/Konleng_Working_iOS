@@ -13,6 +13,8 @@ import { MePage } from '../me/me';
 import { MyPropertiesPage } from '../my-properties/my-properties';
 import { SavedPage } from '../saved/saved';
 import { ServiceProvider } from '../../providers/service/service';
+import { AppBuilderPage } from '../app-builder/app-builder';
+import { BusinessPartnerPage } from '../business-partner/business-partner';
 
 /**
  * Generated class for the LoginPage page.
@@ -237,6 +239,14 @@ import { ServiceProvider } from '../../providers/service/service';
  		else if (this.navParams.get('page') == 'profile'){
  			this.navCtrl.pop({animate: false});
  			this.navCtrl.push(ProfilePage, {}, {animate: false});
+ 		}
+ 		else if (this.navParams.get('page') == 'app-builder'){
+ 			this.navCtrl.pop({animate: false});
+ 			this.navCtrl.push(AppBuilderPage, {}, {animate: false});
+ 		}
+ 		else if (this.navParams.get('page') == 'business-partner'){
+ 			this.navCtrl.pop({animate: false});
+ 			this.navCtrl.push(BusinessPartnerPage, {}, {animate: false});
  		}
  		else if (this.navParams.get('page') == 'my-properties'){
  			this.navCtrl.pop({animate: false});

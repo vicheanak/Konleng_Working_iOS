@@ -8,6 +8,12 @@
 
 	<ion-navbar color="primary">
 		<ion-title>{{'ADD' | translate}}</ion-title>
+		<ion-buttons end (click)="switchLanguage()">
+	      <button round ion-button icon-start>
+	        <ion-icon name="md-globe"></ion-icon>
+	        {{"language" | translate }}
+	      </button>
+	    </ion-buttons>
 	</ion-navbar>
 
 </ion-header>
@@ -115,8 +121,6 @@
 
 		</ion-step>
 
-		
-
 		<ion-step label="{{'DETAIL' | translate}}" description="">
 			<ion-item no-padding>
 				<ion-label for="title" floating>{{'TITLE' | translate}}</ion-label>
@@ -133,7 +137,7 @@
 				<ion-label floating>{{'DESCRIPTION' | translate}}</ion-label>
 				<ion-textarea #descriptionInput id="descriptionInput" rows="5" maxLength="2500" (keyup)="resize()" [(ngModel)]="listing.description"></ion-textarea>
 			</label>
-			<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment'">
+			<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment' || listing.property_type == 'commercial' || listing.property_type == 'room'">
 				<label ion-item no-padding>
 					<ion-label>{{'BEDROOMS' | translate}}</ion-label>
 					<ion-input [(ngModel)]="listing.bedrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
@@ -142,14 +146,16 @@
 					<ion-label>{{'BATHROOMS' | translate}}</ion-label>
 					<ion-input [(ngModel)]="listing.bathrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
 				</label>
+				<label ion-item no-padding>
+					<ion-label>{{'PARKING_SPACE' | translate}}</ion-label>
+					<ion-input [(ngModel)]="listing.parking_space" class="right-align" style="text-align: right;" type="number"></ion-input>
+				</label>
 			</div>
 
 			<label ion-item no-padding>
 				<ion-label>{{'SIZE' | translate}}</ion-label>
 				<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="text"></ion-input>
 			</label>
-
-			
 
 			<div>
 				<ion-row justify-content-between>

@@ -1,0 +1,58 @@
+<!--
+  Generated template for the BusinessPartnerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>
+			{{'BUSINESS_PARTNER' | translate}}
+		</ion-title>
+		<ion-buttons end (click)="switchLanguage()">
+	      <button round ion-button icon-start>
+	        <ion-icon name="md-globe"></ion-icon>
+	        {{"language" | translate }}
+	      </button>
+	    </ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+	<ion-card padding>
+		<ion-card-content>
+			<h1>Konleng</h1>
+			<h2>{{"PHONE" | translate}}: 096 926 9999</h2>
+			<p>{{"EMAIL" | translate}}: vicheanak@gmail.com</p>
+		</ion-card-content>
+	</ion-card>
+	<div class="card-property-type">
+		<ion-card class="ion-card-property-type">
+			<div class="card-title">{{"BRONZE_PACKAGE" | translate}}</div>
+			<div class="card-subtitle">50 {{"LISTINGS" | translate}} {{"and" | translate}}  5 {{"HIGHLIGHT" | translate}}</div>
+			<div class="card-price">
+				<ion-label>
+					$100 {{"per" | translate}}  {{"YEAR" | translate}}
+				</ion-label>
+			</div>
+		</ion-card>
+		<ion-card class="ion-card-property-type">
+			<div class="card-title">{{"SILVER_PACKAGE" | translate}}</div>
+			<div class="card-subtitle">200 {{"LISTINGS" | translate}} {{"and" | translate}}  20 {{"HIGHLIGHT" | translate}}</div>
+			<div class="card-price">
+				<ion-label>
+					$200 {{"per" | translate}} {{"YEAR" | translate}}
+				</ion-label>
+			</div>
+		</ion-card>
+		<ion-card class="ion-card-property-type">
+			<div class="card-title">{{"GOLD_PACKAGE" | translate}}</div>
+			<div class="card-subtitle">500 {{"LISTINGS" | translate}} {{"and" | translate}}  50 {{"HIGHLIGHT" | translate}}</div>
+			<div class="card-price">
+				<ion-label>
+					$400 {{"per" | translate}} {{"YEAR" | translate}}
+				</ion-label>
+			</div>
+		</ion-card>
+	</div>
+</ion-content>

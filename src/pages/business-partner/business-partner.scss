@@ -1,0 +1,75 @@
+page-business-partner {
+	.card-title {
+		margin-top: 20px;
+		font-size: 28px !important;
+	}
+	.card-subtitle {
+		margin-top: 15px;
+	}
+	ion-list-header{
+		margin: 0px !important;
+		font-size: 19px !important;
+	}
+	
+	.card-property-type {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: center;
+		height: 150px;
+		padding: 5px;
+		.card-title {
+			font-size: 17px !important;
+			color: #fff;
+			text-shadow:
+			2px 2px 0 rgba(69, 69, 70, 0.9),
+			-1px -1px 0 rgba(69, 69, 70, 0.9),  
+			1px -1px 0 rgba(69, 69, 70, 0.9),
+			-1px 1px 0 rgba(69, 69, 70, 0.9),
+			1px 1px 0 rgba(69, 69, 70, 0.9);
+		}
+		
+		ion-card.ion-card-property-type {
+			position: relative;
+			text-align: center;
+			height: 150px;
+			width: 30%;
+			margin: 5px;
+			flex-grow: 1;
+		}
+
+		ion-card:nth-child(1){
+			background-size:cover;
+			box-shadow:inset 0 0 0 2000px rgba(174, 125, 80, 1);
+		}
+		ion-card:nth-child(2){
+			background-size:cover;
+			box-shadow:inset 0 0 0 2000px rgba(204, 204, 204, 1);
+		}
+		ion-card:nth-child(3){
+			background-size:cover;
+			box-shadow:inset 0 0 0 2000px rgba(246, 208, 0, 1);
+		}
+
+		.card-price{
+			position: absolute;
+			bottom: 0px;
+			text-align: center;
+			width: 100%;
+			background: rgba(246, 0, 0, 0.5);
+			padding: 0px;
+			font-size: 14px;
+			color: white;
+			font-weight: bold;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.card-property-type{
+			height: 50%;
+		}
+		ion-card {
+			width: 100% !important;
+		}
+	}
+}

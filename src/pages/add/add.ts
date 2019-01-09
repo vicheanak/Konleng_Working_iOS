@@ -160,6 +160,10 @@ import { ImagesProvider } from '../../providers/images/images';
  		return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
  	}
 
+ 	switchLanguage(){
+ 		this.serviceProvider.switchLanguage();
+ 	}
+
  	presentLoading() {
  		this.myLoading = this.loadingCtrl.create({
  			spinner: 'ios'

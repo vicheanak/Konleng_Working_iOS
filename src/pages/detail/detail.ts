@@ -91,11 +91,7 @@ import { File } from '@ionic-native/file';
    
 
    ionViewWillEnter() {
-
-
      
-     
-
      this.serviceProvider.transition();
      this.listing = this.navParams.get('listing');
      
@@ -150,6 +146,7 @@ import { File } from '@ionic-native/file';
 
    ionViewDidLoad(){
      this.platform.ready().then((readySource) => {
+       this.serviceProvider.showAds();
        this.listing = this.navParams.get('listing');
        this.location = new LatLng(this.listing.lat, this.listing.lng);
        this.refreshMap();
