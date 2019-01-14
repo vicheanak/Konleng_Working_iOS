@@ -354,6 +354,10 @@ import { ImagesProvider } from '../../providers/images/images';
  	provinceChange(){
  		this.districts = this.listingProvider.getDistricts(this.listing.province);
  	}
+
+ 	districtChange(){
+ 		this.communes = this.listingProvider.getCommunes(this.listing.district);
+ 	}
  	
  	ionViewDidLoad() {
  		

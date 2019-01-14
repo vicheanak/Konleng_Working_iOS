@@ -48,20 +48,27 @@
 			</ion-select>
 		</ion-item>
 		<ion-item>
-				<ion-label>{{"PROVINCE" | translate}}</ion-label>
+			<ion-label>{{"PROVINCE" | translate}}</ion-label>
 
-				<ion-select [(ngModel)]="listing.province" (ionChange)="provinceChange()" interface="popover">
-					<ion-option *ngFor="let p of provinces" [value] = "p.id">{{p.id | translate}}</ion-option>
-				</ion-select>
-			</ion-item>
+			<ion-select [(ngModel)]="listing.province" (ionChange)="provinceChange()" interface="popover">
+				<ion-option *ngFor="let p of provinces" [value] = "p.id">{{p.id | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
 
-			<ion-item>
-				<ion-label>{{"DISTRICT" | translate}}</ion-label>
+		<ion-item>
+			<ion-label>{{"DISTRICT" | translate}}</ion-label>
 
-				<ion-select [(ngModel)]="listing.district" interface="popover">
-					<ion-option *ngFor="let d of districts" [value] = "d.id">{{d.id | translate}}</ion-option>
-				</ion-select>
-			</ion-item>
+			<ion-select [(ngModel)]="listing.district" (ionChange)="districtChange()"  interface="popover">
+				<ion-option *ngFor="let d of districts" [value] = "d.id">{{d.id | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label>{{"COMMUNE" | translate}}</ion-label>
+
+			<ion-select [(ngModel)]="listing.commune" interface="popover">
+				<ion-option *ngFor="let c of communes" [value] = "c.id">{{c.id | translate}}</ion-option>
+			</ion-select>
+		</ion-item>
 		<ion-item>
 			<ion-label>{{"PRICE" | translate}}($)</ion-label>
 			<ion-input [(ngModel)]="listing.price" class="right-align" style="text-align: right;" type="number"></ion-input>
@@ -74,21 +81,25 @@
 			<ion-label floating>{{"DESCRIPTION" | translate}}</ion-label>
 			<ion-textarea #descriptionInput id="descriptionInput" rows="5" maxLength="2500" (keyup)="resize()" [(ngModel)]="listing.description"></ion-textarea>
 		</ion-item>
-		<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment'">
-				<ion-item >
-					<ion-label>{{"BEDROOMS" | translate}}</ion-label>
-					<ion-input [(ngModel)]="listing.bedrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
-				</ion-item>
-				<ion-item >
-					<ion-label>{{"BATHROOMS" | translate}}</ion-label>
-					<ion-input [(ngModel)]="listing.bathrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
-				</ion-item>
-			</div>
-
+		<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment' || listing.property_type == 'commercial' || listing.property_type == 'room'">
 			<ion-item >
-				<ion-label>{{"SIZE" | translate}}</ion-label>
-				<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="text"></ion-input>
+				<ion-label>{{"BEDROOMS" | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.bedrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
 			</ion-item>
+			<ion-item >
+				<ion-label>{{"BATHROOMS" | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.bathrooms" class="right-align" style="text-align: right;" type="number"></ion-input>
+			</ion-item>
+			<ion-item >
+				<ion-label>{{"PARKING_SPACE" | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.parking_spaces" class="right-align" style="text-align: right;" type="number"></ion-input>
+			</ion-item>
+		</div>
+
+		<ion-item >
+			<ion-label>{{"SIZE" | translate}}</ion-label>
+			<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="text"></ion-input>
+		</ion-item>
 		<ion-item>
 			<ion-label>{{"PHONE" | translate}} 1</ion-label>
 			<ion-input [(ngModel)]="listing.phone1" class="right-align" style="text-align: right;" type="number"></ion-input>
@@ -111,18 +122,18 @@
 	
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
-    <ion-row>
-    	<ion-col col-4 padding-horizontal>
-    		<button round ion-button color="{{listing.status == 1 ? 'secondary' : 'light'}}"  (click)="presentSoldConfirm()" full type="submit">{{listing.status == 1 ? 'SOLD' : 'ACTIVATE' | translate}}</button>
-    	</ion-col>
-    	<ion-col col-4 padding-horizontal>
-    		<button round ion-button color="primary" [disabled]="!tmpCloudImages.length && !listing?.images.length" (click)="editListing()" full type="submit">{{"SUBMIT" | translate}}</button>
-    	</ion-col>
-    	<ion-col col-4 padding-horizontal>
-			<button round ion-button color="danger"  (click)="presentDeleteConfirm()" full type="submit">{{"DELETE" | translate}}</button>
-    	</ion-col>
-    </ion-row>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-row>
+			<ion-col col-4 padding-horizontal>
+				<button round ion-button color="{{listing.status == 1 ? 'secondary' : 'light'}}"  (click)="presentSoldConfirm()" full type="submit">{{listing.status == 1 ? 'SOLD' : 'ACTIVATE' | translate}}</button>
+			</ion-col>
+			<ion-col col-4 padding-horizontal>
+				<button round ion-button color="primary" [disabled]="!tmpCloudImages.length && !listing?.images.length" (click)="editListing()" full type="submit">{{"SUBMIT" | translate}}</button>
+			</ion-col>
+			<ion-col col-4 padding-horizontal>
+				<button round ion-button color="danger"  (click)="presentDeleteConfirm()" full type="submit">{{"DELETE" | translate}}</button>
+			</ion-col>
+		</ion-row>
+	</ion-toolbar>
 </ion-footer>
 

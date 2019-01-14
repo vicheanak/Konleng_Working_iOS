@@ -55,7 +55,7 @@
 			<p item-end>{{listing?.property_type | translate}}</p>
 		</ion-item>
 		
-		<div *ngIf="listing?.property_type == 'house' || listing?.property_type == 'apartment'">
+		<div *ngIf="listing?.property_type == 'house' || listing?.property_type == 'apartment' || listing?.property_type == 'commercial' || listing?.property_type == 'room'">
 			<ion-item class="item-list border">
 				<p>{{'BEDROOMS' | translate}}</p>
 				<p item-end>{{listing?.bedrooms}}</p>
@@ -63,6 +63,10 @@
 			<ion-item class="item-list border">
 				<p>{{'BATHROOMS' | translate}}</p>
 				<p item-end>{{listing?.bathrooms}}</p>
+			</ion-item>
+			<ion-item class="item-list border">
+				<p>{{'PARKING_SPACE' | translate}}</p>
+				<p item-end>{{listing?.parking_spaces}}</p>
 			</ion-item>
 		</div>
 		<ion-item class="item-list border">
@@ -87,7 +91,7 @@
 		</ion-item>
 
 		<ion-card no-padding>
-		<div #map id="map" style="height: 200px">
+		<div #map id="map" style="height: 200px; pointer-events: none;">
 		</div>
 		</ion-card>
 		<ion-item class="item-list">

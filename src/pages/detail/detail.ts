@@ -120,12 +120,14 @@ import { File } from '@ionic-native/file';
      this.renderer.setStyle(this.mapElement.nativeElement, "zIndex", 9999);
      let element = this.mapElement.nativeElement;
      this.map = GoogleMaps.create(element);
+
      this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
        let options = {
          target: this.location,
          zoom: 12,
        };
        this.map.moveCamera(options);
+       
 
        this.map.on(GoogleMapsEvent.CAMERA_MOVE_END).subscribe((params) => {
          this.cf.detectChanges();
