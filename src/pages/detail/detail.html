@@ -32,7 +32,7 @@
 	<ion-list  no-lines>
 		<ion-item text-wrap>
 			<h1><span style="color: red">{{listing?.status == 0 ? '(Inactive)' : ''}}</span>{{listing?.title}}</h1>
-			<h3>{{listing?.district | translate}} {{listing?.province | translate}}</h3>
+			<h3>{{listing?.commune | translate}}, {{listing?.district | translate}}, {{listing?.province | translate}}</h3>
 			<p class="price">${{listing?.price | number : fractionSize}}</p>
 			
 		</ion-item>
@@ -54,7 +54,10 @@
 			<p>{{'PROPERTY_TYPE' | translate}}</p>
 			<p item-end>{{listing?.property_type | translate}}</p>
 		</ion-item>
-		
+		<ion-item class="item-list border">
+			<p>{{'SIZE' | translate}}</p>
+			<p item-end>{{listing?.size}}</p>
+		</ion-item>
 		<div *ngIf="listing?.property_type == 'house' || listing?.property_type == 'apartment' || listing?.property_type == 'commercial' || listing?.property_type == 'room'">
 			<ion-item class="item-list border">
 				<p>{{'BEDROOMS' | translate}}</p>
@@ -68,11 +71,51 @@
 				<p>{{'PARKING_SPACE' | translate}}</p>
 				<p item-end>{{listing?.parking_spaces}}</p>
 			</ion-item>
+			<ion-item class="item-list border">
+				<p>{{'FLOOR' | translate}}</p>
+				<p item-end>{{listing?.floor}}</p>
+			</ion-item>
+			<ion-item class="item-list border">
+				<p style="font-weight: bold">{{'FEATURE' | translate}}</p>
+			</ion-item>
+
+			<ion-item class="item-list" *ngIf="listing?.swimming_pool">
+				<p>- {{'swimming_pool' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.gym_fitness">
+				<p>- {{'gym_fitness' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.lift">
+				<p>- {{'lift' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.garden">
+				<p>- {{'garden' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.furnished">
+				<p>- {{'furnished' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.balcony">
+				<p>- {{'balcony' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.air_conditioning">
+				<p>- {{'air_conditioning' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.car_parking">
+				<p>- {{'car_parking' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.non_flooding">
+				<p>- {{'non_flooding' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.on_main_road">
+				<p>- {{'on_main_road' | translate }}</p>
+			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.other">
+				<p>- {{'other' | translate }}</p>
+			</ion-item>
+
+			
 		</div>
-		<ion-item class="item-list border">
-			<p>{{'SIZE' | translate}}</p>
-			<p item-end>{{listing?.size}}</p>
-		</ion-item>
+		
 		<ion-item class="item-list border large-height" text-wrap>
 			<p class="large-height">{{'ADDRESS' | translate}}: {{listing?.address}}</p>
 		</ion-item>
