@@ -56,24 +56,26 @@ import { ImagesProvider } from '../../providers/images/images';
  	public latLng: any = "my string";
  	public provinces: any = [];
  	public districts: any = [];
+ 	public communes: any = [];
  	public all_districts: any = [];
  	public imgPreviews: any;
  	private timer: any;
  	public listing: any = {
- 		listing_type: 'sale',
- 		property_type: 'apartment',
- 		province: 'battambang',
- 		district: 'dis',
- 		title: 'ok',
- 		price: 0,
- 		description: 'efa',
- 		bedrooms: 0,
- 		bathrooms: 0,
- 		size: '2',
- 		phone1: 'rr32',
- 		phone2: '342342',
+ 		listing_type: '',
+ 		property_type: '',
+ 		province: '',
+ 		district: '',
+ 		title: '',
+ 		price: '',
+ 		description: '',
+ 		bedrooms: '',
+ 		bathrooms: '',
+ 		parking: '',
+ 		size: '',
+ 		phone1: '',
+ 		phone2: '',
  		images: [],
- 		address: '343242',
+ 		address: '',
  		lat: '',
  		lng: '',
  		email: '',
@@ -124,7 +126,6 @@ import { ImagesProvider } from '../../providers/images/images';
  		this.serviceProvider.transition(); 
  	};
  	compareProvince(province, district): boolean {
- 		
  		return province && district ? province.id === district.province_id : province.id === district.province_id;
  	}
  	resize() {
@@ -214,6 +215,7 @@ import { ImagesProvider } from '../../providers/images/images';
  			description: '',
  			bedrooms: '',
  			bathrooms: '',
+ 			parking: '',
  			size: '',
  			images: [],
  			address: '',

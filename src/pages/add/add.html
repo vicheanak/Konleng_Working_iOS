@@ -105,7 +105,7 @@
 		</ion-step>
 		<ion-step label="{{'DISTRICT' | translate}}" description="">
 			
-			<ion-list class="list-height" radio-group [(ngModel)]="listing.district">
+			<ion-list class="list-height" (ionChange)="districtChange()"  radio-group [(ngModel)]="listing.district">
 				<ion-item *ngFor="let d of districts">
 					<ion-label>{{d.id | translate}}</ion-label>
 					<ion-radio value="{{d.id}}"></ion-radio>
@@ -118,9 +118,23 @@
 					<button round ion-button ionicStepperNext [disabled]="listing.district == ''">{{'NEXT' | translate}}</button>
 				</ion-row>
 			</div>
-
 		</ion-step>
+		<ion-step label="{{'COMMUNE' | translate}}" description="">
+			
+			<ion-list class="list-height" radio-group [(ngModel)]="listing.commune">
+				<ion-item *ngFor="let c of communes">
+					<ion-label>{{c.id | translate}}</ion-label>
+					<ion-radio value="{{c.id}}"></ion-radio>
+				</ion-item>
+			</ion-list>
 
+			<div>
+				<ion-row justify-content-between>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
+					<button round ion-button ionicStepperNext [disabled]="listing.district == ''">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+		</ion-step>
 		<ion-step label="{{'DETAIL' | translate}}" description="">
 			<ion-item no-padding>
 				<ion-label for="title" floating>{{'TITLE' | translate}}</ion-label>
@@ -148,7 +162,7 @@
 				</label>
 				<label ion-item no-padding>
 					<ion-label>{{'PARKING_SPACE' | translate}}</ion-label>
-					<ion-input [(ngModel)]="listing.parking_space" class="right-align" style="text-align: right;" type="number"></ion-input>
+					<ion-input [(ngModel)]="listing.parking_spaces" class="right-align" style="text-align: right;" type="number"></ion-input>
 				</label>
 			</div>
 

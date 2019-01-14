@@ -61,6 +61,7 @@ import { ImagesProvider } from '../../providers/images/images';
  	public latLng: any = "my string";
  	public provinces: any = [];
  	public districts: any = [];
+ 	public communes: any = [];
  	private timer: any;
  	private isWeb: boolean = false;
 
@@ -82,6 +83,7 @@ import { ImagesProvider } from '../../providers/images/images';
  		description: '',
  		bedrooms: '',
  		bathrooms: '',
+ 		parking_spaces: '',
  		size: '',
  		phone1: '',
  		phone2: '',
@@ -448,7 +450,10 @@ import { ImagesProvider } from '../../providers/images/images';
  	provinceChange(){
  		this.districts = this.listingProvider.getDistricts(this.listing.province);
  		this.listing.district = '';
-
+ 	}
+ 	districtChange(){
+ 		this.communes = this.listingProvider.getCommunes(this.listing.district);
+ 		this.listing.commune = '';
  	}
 
  	ionViewWillEnter() {
@@ -528,7 +533,7 @@ import { ImagesProvider } from '../../providers/images/images';
  		if (e == 7){
  			// this.locationChange();
  			if (this.listing.address == ''){
- 				this.listing.address = this.listingProvider.getDistrict(this.listing.district).text + ', ' + this.listingProvider.getProvince(this.listing.province).text;
+ 				this.listing.address = this.listingProvider.getCommune(this.listing.commune).text + ', ' + this.listingProvider.getDistrict(this.listing.district).text + ', ' + this.listingProvider.getProvince(this.listing.province).text;
  				this.getGeocoder(this.listing.address);	
  			}
 
