@@ -21,7 +21,7 @@
 
 <ion-content>
 	<ion-stepper no-padding #stepper (selectIndexChange)="selectChange($event)">
-		<ion-step label="{{'LISTING_TYPE' | translate}}" description="">
+		<ion-step label="{{'CATEGORY' | translate}}" description="">
 			
 			<ion-list radio-group [(ngModel)]="listing.listing_type">
 
@@ -109,12 +109,7 @@
 					<ion-option *ngFor="let c of communes" [value] = "c.id">{{c.id | translate}}</ion-option>
 				</ion-select>
 			</ion-item>
-			<!-- <ion-list class="list-height" (ionChange)="provinceChange()" radio-group [(ngModel)]="listing.province">
-				<ion-item *ngFor="let p of provinces">
-					<ion-label>{{p.id | translate}}</ion-label>
-					<ion-radio value="{{p.id}}"></ion-radio>
-				</ion-item>
-			</ion-list> -->
+			
 
 			<div>
 				<ion-row justify-content-between>
@@ -124,38 +119,6 @@
 			</div>
 
 		</ion-step>
-		<!-- <ion-step label="{{'DISTRICT' | translate}}" description="">
-			
-			<ion-list class="list-height" (ionChange)="districtChange()"  radio-group [(ngModel)]="listing.district">
-				<ion-item *ngFor="let d of districts">
-					<ion-label>{{d.id | translate}}</ion-label>
-					<ion-radio value="{{d.id}}"></ion-radio>
-				</ion-item>
-			</ion-list>
-
-			<div>
-				<ion-row justify-content-between>
-					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
-					<button round ion-button ionicStepperNext [disabled]="listing.district == ''">{{'NEXT' | translate}}</button>
-				</ion-row>
-			</div>
-		</ion-step>
-		<ion-step label="{{'COMMUNE' | translate}}" description="">
-			
-			<ion-list class="list-height" radio-group [(ngModel)]="listing.commune">
-				<ion-item *ngFor="let c of communes">
-					<ion-label>{{c.id | translate}}</ion-label>
-					<ion-radio value="{{c.id}}"></ion-radio>
-				</ion-item>
-			</ion-list>
-
-			<div>
-				<ion-row justify-content-between>
-					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
-					<button round ion-button ionicStepperNext [disabled]="listing.district == ''">{{'NEXT' | translate}}</button>
-				</ion-row>
-			</div>
-		</ion-step> -->
 		<ion-step label="{{'DETAIL' | translate}}" description="">
 			<ion-item no-padding>
 				<ion-label for="title" floating>{{'TITLE' | translate}}</ion-label>
@@ -185,7 +148,16 @@
 					<ion-label>{{'PARKING_SPACE' | translate}}</ion-label>
 					<ion-input [(ngModel)]="listing.parking_spaces" class="right-align" style="text-align: right;" type="number"></ion-input>
 				</label>
+				<label ion-item no-padding>
+					<ion-label>{{'FLOOR' | translate}}</ion-label>
+					<ion-input [(ngModel)]="listing.floor" class="right-align" style="text-align: right;" type="number"></ion-input>
+				</label>
 			</div>
+			<label ion-item no-padding>
+				<ion-label>{{'SIZE' | translate}}</ion-label>
+				<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="number"></ion-input>
+			</label>
+			
 
 			<div>
 				<ion-row justify-content-between>
@@ -196,16 +168,22 @@
 		</ion-step>
 
 		<ion-step label="{{'FEATURE' | translate}}" description="">
-			<label ion-item no-padding>
-				<ion-label>{{'SIZE' | translate}}</ion-label>
-				<ion-input [(ngModel)]="listing.size" class="right-align" style="text-align: right;" type="number"></ion-input>
-			</label>
+			
+			<ion-item no-padding>
+				<ion-label>{{'non_flooding' | translate}}</ion-label>
+				<ion-checkbox [(ngModel)]="listing.non_flooding" color="secondary"></ion-checkbox>
+			</ion-item>
+			<ion-item no-padding>
+				<ion-label>{{'on_main_road' | translate}}</ion-label>
+				<ion-checkbox [(ngModel)]="listing.on_main_road" color="secondary"></ion-checkbox>
+			</ion-item>
+			<ion-item no-padding>
+				<ion-label>{{'in_development_area' | translate}}</ion-label>
+				<ion-checkbox [(ngModel)]="listing.in_development_area" color="secondary"></ion-checkbox>
+			</ion-item>
 			
 			<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment' || listing.property_type == 'commercial' || listing.property_type == 'room'">
-				<label ion-item no-padding>
-					<ion-label>{{'FLOOR' | translate}}</ion-label>
-					<ion-input [(ngModel)]="listing.floor" class="right-align" style="text-align: right;" type="number"></ion-input>
-				</label>
+				
 				<ion-item no-padding>
 					<ion-label>{{'swimming_pool' | translate}}</ion-label>
 					<ion-checkbox [(ngModel)]="listing.swimming_pool" color="secondary"></ion-checkbox>
@@ -238,19 +216,12 @@
 					<ion-label>{{'car_parking' | translate}}</ion-label>
 					<ion-checkbox [(ngModel)]="listing.car_parking" color="secondary"></ion-checkbox>
 				</ion-item>
-				<ion-item no-padding>
-					<ion-label>{{'non_flooding' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.non_flooding" color="secondary"></ion-checkbox>
-				</ion-item>
-				<ion-item no-padding>
-					<ion-label>{{'on_main_road' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.on_main_road" color="secondary"></ion-checkbox>
-				</ion-item>
-				<ion-item no-padding>
-					<ion-label>{{'other' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.other" color="secondary"></ion-checkbox>
-				</ion-item>
+				
 			</div>
+			<ion-item no-padding>
+				<ion-label>{{'other' | translate}}</ion-label>
+				<ion-checkbox [(ngModel)]="listing.other" color="secondary"></ion-checkbox>
+			</ion-item>
 			<div>
 				<ion-row justify-content-between>
 					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>

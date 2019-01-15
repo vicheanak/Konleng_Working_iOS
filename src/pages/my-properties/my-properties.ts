@@ -37,14 +37,16 @@ import { ServiceProvider } from '../../providers/service/service';
    ionViewDidLoad() {
      this.user = this.navParams.get('user');
      this.listingProvider.getUserListings(this.user.uid, 1).then((listings) => {
-       console.log('listings', listings);
+       
        this.activeListings = listings;
      }).catch((error) => {
-       console.error('ERROR listing', error);
+       console.error('ERROR activeListing', error);
      });
-     // this.listingProvider.getUserListings(this.user.uid, 0).then((listings) => {
-     //   this.inactiveListings = listings;
-     // });
+     this.listingProvider.getUserListings(this.user.uid, 0).then((listings) => {
+       this.inactiveListings = listings;
+     }).catch((error) => {
+       console.error('ERROR inactiveListing', error);
+     });
    }
 
    segmentChanged(){

@@ -109,6 +109,9 @@
 			<ion-item class="item-list" *ngIf="listing?.on_main_road">
 				<p>- {{'on_main_road' | translate }}</p>
 			</ion-item>
+			<ion-item class="item-list" *ngIf="listing?.in_development_area">
+				<p>- {{'in_development_area' | translate }}</p>
+			</ion-item>
 			<ion-item class="item-list" *ngIf="listing?.other">
 				<p>- {{'other' | translate }}</p>
 			</ion-item>

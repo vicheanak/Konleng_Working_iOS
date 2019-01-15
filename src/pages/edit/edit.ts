@@ -167,8 +167,8 @@ import { ImagesProvider } from '../../providers/images/images';
  			const tabs = this.navCtrl.parent;
  			tabs.select(2)
  			.then(() => tabs.getSelected().push(MyPropertiesPage, {user: this.user}, { animate: false }))
- 			.then(() => tabs.getSelected().push(DetailPage, {listing: listing, user_id: listing.user_id}, { animate: false }))
- 			.then(() => this.navCtrl.popToRoot());
+ 			.then(() => tabs.getSelected().push(DetailPage, {listing: listing, user_id: listing.user_id}, { animate: false }));
+ 			// .then(() => this.navCtrl.popToRoot());
  		}catch(e){
 
  		}

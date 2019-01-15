@@ -18,7 +18,7 @@ import {
 import { ListingProvider } from '../../providers/listing/listing';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ServiceProvider } from '../../providers/service/service';
-import { AdMobPro } from '@ionic-native/admob-pro';
+
 
 /**
  * Generated class for the ListingPage page.
@@ -76,7 +76,6 @@ import { AdMobPro } from '@ionic-native/admob-pro';
      private listingProvider: ListingProvider,
      private sanitizer: DomSanitizer,
      private serviceProvider: ServiceProvider,
-     private admob: AdMobPro,
      private loadingCtrl: LoadingController
      ) {
      this.serviceProvider.showAds();

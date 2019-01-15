@@ -97,6 +97,7 @@ import { ImagesProvider } from '../../providers/images/images';
  		non_flooding: false,
  		on_main_road: false,
  		other: false,
+ 		in_development_area: false,
  		phone1: '',
  		phone2: '',
  		images: [],
