@@ -28,6 +28,13 @@ import { AdMobPro } from '@ionic-native/admob-pro';
         this.translate.use(val);
 
       });
+
+      this.storage.get('first_time_load').then((val) => {
+        if (!val){
+          this.storage.set('first_time_load', '1');
+          window.location.reload();
+        }
+      });
     }
 
     transition(){
