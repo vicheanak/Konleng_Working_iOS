@@ -68,6 +68,12 @@ import { AdMobPro } from '@ionic-native/admob-pro';
       });
     }
 
+    genUuid(){
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
     
     presentAds(){
       let videoId;
@@ -89,7 +95,7 @@ import { AdMobPro } from '@ionic-native/admob-pro';
       if (this.countAds == 0){
         setTimeout(() => {
           console.log('PRESENT ADS');
-          this.presentAds();
+          // this.presentAds();
         }, 500);
         this.countAds ++;
       }else if (this.countAds > 0){

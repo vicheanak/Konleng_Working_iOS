@@ -21,6 +21,30 @@
 
 <ion-content>
 	<ion-stepper no-padding #stepper (selectIndexChange)="selectChange($event)">
+		<ion-step label="{{'IMAGES' | translate}}" description="">
+			<ion-grid>
+				<ion-row *ngIf="isWeb">
+					<ion-col *ngFor="let key of objectKeys(imgPreviews)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
+						<label ion-item no-padding class="image-label">
+							<ion-label id="profile_image" color="primary" stacked><img class="listing-img" [src]="imgPreviews[key].src"></ion-label>
+							<ion-input style="display: none" type="file" accept="image/*" (change)="addImage($event, key)"></ion-input>
+						</label>
+					</ion-col>
+				</ion-row>
+				<ion-row *ngIf="!isWeb">
+					<ion-col *ngFor="let key of objectKeys(imgPreviews)" (click)="addImage($event, key)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
+						<img class="listing-img" [src]="imgPreviews[key].src">
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			<div>
+				<ion-row justify-content-between>
+					<div></div>
+					<button round ion-button ionicStepperNext [disabled]="listing.images.length < 1">{{'NEXT' | translate}}</button>
+				</ion-row>
+			</div>
+			
+		</ion-step>
 		<ion-step label="{{'CATEGORY' | translate}}" description="">
 			
 			<ion-list radio-group [(ngModel)]="listing.listing_type">
@@ -41,7 +65,7 @@
 
 			<div>
 				<ion-row justify-content-between>
-					<div></div>
+					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
 					<button round ion-button ionicStepperNext [disabled]="listing.listing_type == ''">{{'NEXT' | translate}}</button>
 				</ion-row>
 			</div>
@@ -171,50 +195,50 @@
 			
 			<ion-item no-padding>
 				<ion-label>{{'non_flooding' | translate}}</ion-label>
-				<ion-checkbox [(ngModel)]="listing.non_flooding" color="secondary"></ion-checkbox>
+				<ion-checkbox [(ngModel)]="listing.non_flooding"></ion-checkbox>
 			</ion-item>
 			<ion-item no-padding>
 				<ion-label>{{'on_main_road' | translate}}</ion-label>
-				<ion-checkbox [(ngModel)]="listing.on_main_road" color="secondary"></ion-checkbox>
+				<ion-checkbox [(ngModel)]="listing.on_main_road"></ion-checkbox>
 			</ion-item>
 			<ion-item no-padding>
 				<ion-label>{{'in_development_area' | translate}}</ion-label>
-				<ion-checkbox [(ngModel)]="listing.in_development_area" color="secondary"></ion-checkbox>
+				<ion-checkbox [(ngModel)]="listing.in_development_area"></ion-checkbox>
 			</ion-item>
 			
 			<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment' || listing.property_type == 'commercial' || listing.property_type == 'room'">
 				
 				<ion-item no-padding>
 					<ion-label>{{'swimming_pool' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.swimming_pool" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.swimming_pool"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'gym_fitness' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.gym_fitness" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.gym_fitness"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'lift' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.lift" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.lift"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'garden' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.garden" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.garden"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'furnished' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.furnished" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.furnished"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'balcony' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.balcony" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.balcony"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'air_conditioning' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.air_conditioning" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.air_conditioning"></ion-checkbox>
 				</ion-item>
 				<ion-item no-padding>
 					<ion-label>{{'car_parking' | translate}}</ion-label>
-					<ion-checkbox [(ngModel)]="listing.car_parking" color="secondary"></ion-checkbox>
+					<ion-checkbox [(ngModel)]="listing.car_parking"></ion-checkbox>
 				</ion-item>
 				
 			</div>
@@ -266,30 +290,7 @@
 
 
 		
-		<ion-step label="{{'IMAGES' | translate}}" description="">
-			<ion-grid>
-				<ion-row *ngIf="isWeb">
-					<ion-col *ngFor="let key of objectKeys(imgPreviews)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
-						<label ion-item no-padding class="image-label">
-							<ion-label id="profile_image" color="primary" stacked><img class="listing-img" [src]="imgPreviews[key].src"></ion-label>
-							<ion-input style="display: none" type="file" accept="image/*" (change)="addImage($event, key)"></ion-input>
-						</label>
-					</ion-col>
-				</ion-row>
-				<ion-row *ngIf="!isWeb">
-					<ion-col *ngFor="let key of objectKeys(imgPreviews)" (click)="addImage($event, key)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
-						<img class="listing-img" [src]="imgPreviews[key].src">
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-			<div>
-				<ion-row justify-content-between>
-					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
-					<button round ion-button ionicStepperNext [disabled]="listing.images.length < 1">{{'NEXT' | translate}}</button>
-				</ion-row>
-			</div>
-			
-		</ion-step>
+		
 
 		<ion-step label="{{'MAP' | translate}}" description="">
 			
@@ -306,7 +307,7 @@
 			<div>
 				<ion-row justify-content-between>
 					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
-					<button round ion-button (click)="addListing()">{{'FINISH' | translate}}</button>
+					<button round ion-button color="secondary" (click)="addListing()">{{'FINISH' | translate}}</button>
 				</ion-row>
 			</div>
 		</ion-step>

@@ -58,22 +58,23 @@ import { ImagesProvider } from '../../providers/images/images';
  	private actionSheetTitle: string;
  	private map:GoogleMap;
  	private location: LatLng;
- 	public latLng: any = "my string";
- 	public provinces: any = [];
- 	public districts: any = [];
- 	public communes: any = [];
+ 	private latLng: any = "my string";
+ 	private provinces: any = [];
+ 	private districts: any = [];
+ 	private communes: any = [];
  	private timer: any;
  	private isWeb: boolean = false;
 
- 	public image : string;
+ 	private image : string;
 
- 	public isSelected : boolean 		=	false;
+ 	private isSelected : boolean 		=	false;
 
  	private _SUFFIX : string;
 
  	private mapEnvironment: Environment;
- 	public imgPreviews: any;
- 	public listing: any = {
+ 	private imgPreviews: any;
+ 	private listing: any = {
+ 		id: '',
  		listing_type: '',
  		property_type: '',
  		province: '',
@@ -140,6 +141,7 @@ import { ImagesProvider } from '../../providers/images/images';
  		this.imgPreview = 'assets/imgs/image_blank.jpg';
  		this.location = new LatLng(11.556492, 104.934909);
  		this.provinces = this.listingProvider.getProvinces();
+
 
  		if (document.URL.startsWith('https')){
  			this.isWeb = true;
@@ -471,8 +473,11 @@ import { ImagesProvider } from '../../providers/images/images';
 
  	ionViewWillEnter() {
  		this.serviceProvider.transition();
+ 		this.listing.id = this.serviceProvider.genUuid();
+ 		
  	}
  	ionViewDidEnter(){
+ 		
  		this.auth.getUser().then((user) => {
  			this.user = user;
 
@@ -546,9 +551,19 @@ import { ImagesProvider } from '../../providers/images/images';
  		if (e == 7){
  			// this.locationChange();
  			if (this.listing.address == ''){
- 				this.listing.address = this.listingProvider.getCommune(this.listing.commune).text + ', ' + this.listingProvider.getDistrict(this.listing.district).text + ', ' + this.listingProvider.getProvince(this.listing.province).text;
+ 				let commune = this.listing.commune ? this.listingProvider.getCommune(this.listing.commune).text : '';
+ 				let district = this.listing.district ? this.listingProvider.getDistrict(this.listing.district).text : '';
+ 				this.listing.address = commune + ', ' + district + ', ' + this.listingProvider.getProvince(this.listing.province).text;
  				this.getGeocoder(this.listing.address);	
  			}
+ 		}
+ 		if (e == 1){
+ 			this.listingProvider.updateImages(this.listing.id, this.listing.images).then((imgs) => {
+				this.listing.images = imgs;
+				console.log(JSON.stringify(this.listing.images));
+			}).catch((err) => {
+				console.log("ERR IMAGE", err);
+			});
 
  		}
  	}
@@ -562,27 +577,25 @@ import { ImagesProvider } from '../../providers/images/images';
  		this.listing.description = this.listing.description.replace(/\n/g, "<br />");
  		this.presentLoading();
  		if (this.auth.authenticated){
- 			console.log("====> ", 8);
+ 			
  			this.auth.updatePhonenumbers(this.listing);
  			this.listingProvider.add(this.listing).then((listing) => {
- 				console.log("====> ", 9);
- 				console.log('this.listing.images', this.listing.images);
- 				console.log('listing', JSON.stringify(listing));
- 				if (this.listing.images.length > 0){
- 					console.log("====> ", 10);
- 					this.listingProvider.updateImages(listing['id'], this.listing.images).then((imgs) => {
- 						console.log('Images return ==> ', JSON.stringify(imgs));
- 						console.log("====> ", 11);
- 						this.listing.images = imgs;
- 						this.listingProvider.update(listing['id'], this.listing).then((listing) => {
+				this.dismissLoading(this.listing);
+ 				// if (this.listing.images.length > 0){
+ 				// 	console.log("====> ", 10);
+ 				// 	this.listingProvider.updateImages(listing['id'], this.listing.images).then((imgs) => {
+ 				// 		console.log('Images return ==> ', JSON.stringify(imgs));
+ 				// 		console.log("====> ", 11);
+ 				// 		this.listing.images = imgs;
+ 				// 		this.listingProvider.update(listing['id'], this.listing).then((listing) => {
 
- 							this.dismissLoading(this.listing);
+ 				// 			this.dismissLoading(this.listing);
 
- 						});
- 					}).catch((err) => {
- 						console.log("ERR IMAGE", err);
- 					});
- 				}
+ 				// 		});
+ 				// 	}).catch((err) => {
+ 				// 		console.log("ERR IMAGE", err);
+ 				// 	});
+ 				// }
  			});
  		}
 

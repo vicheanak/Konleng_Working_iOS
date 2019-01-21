@@ -2079,561 +2079,436 @@ export class ListingProvider {
 			});
 		});
 	}
-	// getFirebaseAll(filter){
-		// 	return new Promise<Object>((resolve, reject) => {
-			// 		this.afStore.collection('listings', ref => {
-				// 			let query: firebase.firestore.Query = ref;
-				
-				// 			if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
-				// 			if (filter.province) { query = query.where('province', '==', filter.province) };
-				// 			query = query.where('status', '==', 1);
-				// 			query = query.orderBy('created_date', 'desc').limit(10);
-				
-				
-
-				// 			return query;
-				// 		})
-				// 		.valueChanges().subscribe((listingsData: Listing[]) => {
-					
-					// 			let lastIndex = listingsData[listingsData.length - 1];
-
-					// 			this.afStore.collection('listings', ref => {
-						// 			let query: firebase.firestore.Query = ref;
-						
-						// 			if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
-						// 			if (filter.province) { query = query.where('province', '==', filter.province) };
-						// 			query = query.where('status', '==', 1);
-						// 			query = query.orderBy('created_date', 'desc').limit(10).startAfter(lastIndex);				
-						// 			console.log('lastIndex ===> ', lastIndex.id);
-						// 			return query;
-						// 			})
-						// 			.valueChanges().subscribe((listingsDataStartAt: Listing[]) => {
-							// 				this.listingsList = [];
-
-							// 				console.log('listingData', listingsDataStartAt.length);
-							// 				listingsDataStartAt.forEach((listing: Listing) => {
-								// 					this.listingsList.push(listing);
-								// 				});
-								// 				resolve(this.listingsList);
-								// 			});
-
-								// 		});
-								// 	});
-								// }
-								getAll(filter){
-
-									
-									let queryArray = [];
-									if (filter.property_type){
-										queryArray.push('property_type='+filter.property_type);
-									}
-									if (filter.listing_type){
-										queryArray.push('listing_type='+filter.listing_type);	
-									}
-									if (filter.province){
-										queryArray.push('province='+filter.province);	
-									}
-									if (filter.district){
-										queryArray.push('district='+filter.district);	
-									}
-									if (filter.min_price){
-										queryArray.push('min_price='+filter.min_price);	
-									}
-									if (filter.max_price){
-										queryArray.push('max_price='+filter.max_price);	
-									}
-									if (filter.keyword){
-										queryArray.push('q='+filter.keyword);	
-									}
-									if (filter.sort_by){
-										queryArray.push('sort_by='+filter.sort_by);	
-									}
-									if (filter.page){
-										queryArray.push('page='+filter.page);
-									}
-									if (filter.location){
-										queryArray.push('latlng='+filter.location);
-									}
-
-									
-
-									let query = queryArray.join('&');
-									query = this.queryUrl + '?' + query;
-
-									console.log('query', query);
-									return new Promise<Object>((resolve, reject) => {
-
-										this.http.get(query)
-										.subscribe((res) => {
-											this.listingsList = [];
-											res['hits'].forEach((listing: Listing) => {
-												this.listingsList.push(listing);
-											});
-											
-											resolve(this.listingsList);
-										}, (err) => {
-											console.error('err', JSON.stringify(err));
-										});
-
-									});
-								}
-								// searchKeyword(keyword){
-									// 	return new Promise<Object>((resolve, reject) => {
-										// 		this.afStore.collection('listings', ref => {
-											// 			let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-											// 			// query = query.orderBy('title').startAt(keyword).endAt(keyword+"\uf8ff");  
-											// 			// query = query.orderBy('property_id').startAt(keyword).endAt(keyword+"\uf8ff");  
-											// 			// query = query.orderBy('displayName').startAt(keyword).endAt(keyword+"\uf8ff");  
-											// 			// query = query.orderBy('agencyName').startAt(keyword).endAt(keyword+"\uf8ff");  
-											// 			// query = query.orderBy('provinceName').startAt(keyword).endAt(keyword+"\uf8ff");  
-											// 			// query = query.orderBy('districtName').startAt(keyword).endAt(keyword+"\uf8ff");
-											// 			// query = query.orderBy('listing_type').startAt(keyword).endAt(keyword+"\uf8ff");  
-											// 			// query = query.orderBy('property_type').startAt(keyword).endAt(keyword+"\uf8ff");  
-											
-											// 			query = query.where('status', '==', 1);
-											// 			return query;
-											// 		})
-											// 		.valueChanges().subscribe((listingsData: Listing[]) => {
-												// 			this.listingsList = [];
-												// 			listingsData.forEach((listing: Listing) => {
-													// 				this.listingsList.push(listing);
-													
-													// 			});
-													// 			resolve(this.listingsList);
-													// 		});
-													// 	});
-													// }
-													
-													// filter(filter){
-														// 	return new Promise<Object>((resolve, reject) => {
-															// 		this.afStore.collection('listings', ref => {
-																// 			let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-																// 			if (filter.property_type) { query = query.where('property_type', '==', filter.property_type) };
-																// 			if (filter.listing_type) { query = query.where('listing_type', '==', filter.listing_type) };
-																// 			if (filter.province) { query = query.where('province', '==', filter.province) };
-																// 			if (filter.district) { query = query.where('district', '==', filter.district) };
-																// 			if (filter.keyword) { 
-																	// 				query = query.orderBy('title').startAt(filter.keyword).endAt(filter.keyword+"\uf8ff");  
-																	// 			}
-																	// 			else{
-																		// 				if (filter.sort_by == 'newest' && !filter.min_price && !filter.max_price){
-																			// 					query = query.orderBy('created_date', 'desc');
-																			// 				}
-																			// 				if (filter.sort_by == 'oldest' && !filter.min_price && !filter.max_price){
-																				// 					query = query.orderBy('created_date', 'asc');
-																				// 				}
-																				// 				if (filter.sort_by == 'highest'){
-																					// 					query = query.orderBy('price', 'desc');
-																					// 				}
-																					// 				if (filter.sort_by == 'lowest'){
-																						// 					query = query.orderBy('price', 'asc');
-																						// 				}
-
-																						// 				if (filter.min_price && filter.sort_by != 'highest' && filter.sort_by != 'lowest'){
-																							// 					query = query.orderBy('price').where('price', '>=', parseFloat(filter.min_price));
-																							// 				}
-																							// 				else if (filter.min_price){
-																								// 					if (filter.sort_by == 'highest' || filter.sort_by == 'lowest'){
-																									// 						query = query.where('price', '>=', parseFloat(filter.min_price));	
-																									// 					}
-																									// 				}
-																									// 				if (filter.max_price){
-																										// 					query = query.where('price', '<=', parseFloat(filter.max_price));
-																										// 				}
-																										// 			}
-
-																										// 			query = query.where('status', '==', 1);
+	
+	getAll(filter){
 
 
-																										// 			return query;
-																										// 		})
-																										// 		.valueChanges().subscribe((listingsData: Listing[]) => {
-																											// 			this.listingsList = [];
-																											// 			listingsData.forEach((listing: Listing) => {
-																												// 				this.listingsList.push(listing);
-																												
-																												// 			});
-																												// 			resolve(this.listingsList);
-																												// 		});
-																												// 	});
-																												// }
-																												createId(){
-																													return new Promise<Object>((resolve, reject) => {
-																														const id = this.afStore.createId();
-																														
-																														resolve(id);
-																													});
-																												}
-																												markAsActive(listing){
-																													
-																													return new Promise<Object>((resolve, reject) => {
-																														this.listingsCollection.doc(listing.id).update({status: 1}).then((res) => {
-																															this.addCount(listing.province, listing.listing_type);
-																															
-																															resolve(listing.id);
-																														}).catch((msg) => {
-																															reject(msg);
-																														});
-																													});
-																												}
-																												sendReport(issue){
-																													return new Promise<Object>((resolve, reject) => {
-																														const id = this.afStore.createId();
-																														const issueData = issue;
-																														issueData.number = 0;
-																														this.reportsCollection.doc(id).set(issueData).then(async (respondId) => {
-																															resolve(respondId);
-																														}).catch((error) => {
-																															reject(error);
-																														});
-																													});
-																												}
-																												submitAppBuilder(appData){
-																													return new Promise<Object>((resolve, reject) => {
-																														const id = this.afStore.createId();
-																														const data = appData;
-																														this.appBuilderCollection.doc(id).set(data).then(async (respondId) => {
-																															resolve(respondId);
-																														}).catch((error) => {
-																															reject(error);
-																														});
-																													});
-																												}
-																												markAsSold(listing){
-																													
-																													return new Promise<Object>((resolve, reject) => {
-																														this.listingsCollection.doc(listing.id).update({status: 0}).then((res) => {
-																															this.minusCount(listing.province, listing.listing_type);
-																															
-																															resolve(listing.id);
-																														}).catch((msg) => {
-																															
-																															reject(msg);
-																														});
-																													});
-																												}
-																												deleteListing(listing){
-																													
-																													if (listing.status == 1){
-																														this.minusCount(listing.province, listing.listing_type);
-																													}
-																													return new Promise<Object>((resolve, reject) => {
-																														this.listingsCollection.doc(listing.id).delete().then((res) => {
-																															resolve(listing.id);
-																														}).catch((msg) => {
-																															reject(msg);
-																														});
-																													});
-																												}
-																												addCount(province, listing_type){
+		let queryArray = [];
+		if (filter.property_type){
+			queryArray.push('property_type='+filter.property_type);
+		}
+		if (filter.listing_type){
+			queryArray.push('listing_type='+filter.listing_type);	
+		}
+		if (filter.province){
+			queryArray.push('province='+filter.province);	
+		}
+		if (filter.district){
+			queryArray.push('district='+filter.district);	
+		}
+		if (filter.min_price){
+			queryArray.push('min_price='+filter.min_price);	
+		}
+		if (filter.max_price){
+			queryArray.push('max_price='+filter.max_price);	
+		}
+		if (filter.keyword){
+			queryArray.push('q='+filter.keyword);	
+		}
+		if (filter.sort_by){
+			queryArray.push('sort_by='+filter.sort_by);	
+		}
+		if (filter.page){
+			queryArray.push('page='+filter.page);
+		}
+		if (filter.location){
+			queryArray.push('latlng='+filter.location);
+		}
 
-																													let countData = {};
-																													this.countsCollection.doc(province).get().subscribe((data) => {
-																														
-																														if (listing_type == 'sale'){
-																															countData['sale'] = data.data().sale + 1;
-																														}
-																														else if(listing_type == 'rent'){
-																															countData['rent'] = data.data().rent + 1;
-																														}
-																														this.countsCollection.doc(province).update(countData);
-																														
-																													}, (error) => {
-																														console.error('===> 11', error);
-																													});
-																												}
-																												minusCount(province, listing_type){
-																													let countData = {};
-																													this.countsCollection.doc(province).get().subscribe((data) => {
-																														
-																														if (listing_type == 'sale'){
-																															countData['sale'] = data.data().sale - 1;
-																														}
-																														else if(listing_type == 'rent'){
-																															countData['rent'] = data.data().rent - 1;
-																														}
 
-																														this.countsCollection.doc(province).update(countData);
-																														
-																													});
-																												}
-																												getListing(id){
-																													return new Promise<Object>((resolve, reject) => {
-																														this.listingsCollection.doc(id).snapshotChanges().subscribe((listingsData) => {
-																															let data = listingsData.payload.data();
-																															data['id'] = listingsData.payload.id;
-																															
-																															resolve(data);
-																														});
-																													});
-																												}
-																												set(id, listing){
-																													return new Promise<Object>((resolve, reject) => {
-																														listing.price = parseFloat(listing.price);
-																														listing.bedrooms = parseFloat(listing.bedrooms);
-																														listing.bathrooms = parseFloat(listing.bathrooms);
-																														listing.lat = parseFloat(listing.lat);
-																														listing.lng = parseFloat(listing.lng);
-																														listing.provinceName = this.getProvince(listing.province).text;
-																														listing.districtName = this.getDistrict(listing.district).text;
-																														
-																														this.listingsCollection.doc(id).set(listing).then((res) => {
-																															
-																															resolve(id);
-																														}).catch((msg) => {
-																															
-																															console.error('error set', JSON.stringify(msg));
-																															reject(msg);
-																														});
-																													});
-																												}
-																												add(listing){
-																													
-																													
-																													return new Promise<Object>((resolve, reject) => {
-																														const id = this.afStore.createId();
-																														
-																														listing.created_date = new Date();
-																														listing.status = 1;
 
-																														let size = listing.property_type + Math.floor(100000 + Math.random() * 900000);
-																														listing.property_id = size;
-																														let tmpImages = listing.images;
-																														listing.images = [];
-																														this.addCount(listing.province, listing.listing_type);
-																														
-																														this.set(id, listing).then((id) => {
-																															
-																															listing.id = id;
-																															listing.images = tmpImages;
-																															resolve(listing);
-																														}).catch((msg) => {
-																															
-																															reject(msg);
-																														});
-																														
-																													});
-																												}
-																												update(id, listing){
-																													return new Promise<Object>((resolve, reject) => {
-																														this.set(id, listing).then((id) => {
-																															resolve(id);
-																														}).catch((msg) => {
-																															reject(msg);
-																														});
-																													});
-																												}
-																												uploadImagesToFirestore(id, dataUrl, index){
-																													return new Promise<Object>((resolve, reject) => {
-																														const currentTime = new Date().getTime();
-																														const storageRef: AngularFireStorageReference = this.afStorage.ref(`listing_images/${id}_${index}.jpeg`);
-																														if (document.URL.startsWith('https')){
-																															storageRef.put(dataUrl).then((snapshot) => {
-																																storageRef.getDownloadURL().subscribe((url) => {
-																																	resolve(url);
-																																})
-																															}).catch((msg) => {
-																																reject(msg);
-																															});
-																														}
-																														else{
-																															let metaData = {
-																																contentType: 'image/jpeg',
-																																listingUuid: id
-																															};
-																															storageRef.putString(dataUrl, 'data_url', metaData).then(() => {
-																																storageRef.getDownloadURL().subscribe((url: any) => {
-																																	resolve(url);
-																																});
-																															}).catch((msg) => {
-																																console.error('ERROR STORAGE', JSON.stringify(msg));
-																																reject(msg);
-																															});
-																														}
-																														
-																														
-																													});
-																												}
-																												updateImages(id, images){
-																													return new Promise<Object>((resolve, reject) => {
-																														let imagesArray = [];
-																														let countImg = 0;
-																														let totalImg = images.length;
-																														let thumbReady = false;
-																														let thumbImage = '';
-																														for(let i = 0; i < images.length; i ++){
-																															let image = images[i];
+		let query = queryArray.join('&');
+		query = this.queryUrl + '?' + query;
 
-																															if (document.URL.startsWith('https')){
-																																this.uploadImagesToFirestore(id, image, i).then((url) => {
-																																	countImg ++;
-																																	imagesArray.push(url);
-																																}, (error) => {
-																																	console.error('ERROR UPLOAD IMAGE', JSON.stringify(error));
-																																});
-																															}
-																															else{
-																																let filename = image.substring(image.lastIndexOf('/')+1);
-																																filename = filename.split('?')[0];
-																																let path =  image.substring(0,image.lastIndexOf('/')+1);
-																																
-																																this.file.readAsDataURL(path, filename).then((dataUrl) => {
-																																	
-																																	this.uploadImagesToFirestore(id, dataUrl, i).then((url) => {
-																																		
-																																		countImg ++;
-																																		imagesArray.push(url);
-																																	});
-																																}).catch((error) => {
-																																	console.error("ERORR UPLOAD", JSON.stringify(error));
-																																})
-																															}
-																														}
+		
+		return new Promise<Object>((resolve, reject) => {
 
-																														let myInterval = setInterval(() => {
-																															if (totalImg == countImg){
-																																clearInterval(myInterval);
-																																resolve(imagesArray);
-																															}
-																														}, 500);
-																													});
-																												}
-																												getFavorites(){
-																													return new Promise<Object>((resolve, reject) => {
-																														this.auth.getUser().then((user) => {
-																															this.usersCollection.doc(user['uid']).collection('favorites').valueChanges().subscribe((result) => {
-																																
-																																resolve(result);
-																															});
-																														});
-																														
-																													});
-																												}
+			this.http.get(query)
+			.subscribe((res) => {
+				this.listingsList = [];
+				res['hits'].forEach((listing: Listing) => {
+					this.listingsList.push(listing);
+				});
 
-																												getFollows(){
-																													return new Promise<Object>((resolve, reject) => {
-																														this.auth.getUser().then((user) => {
-																															this.usersCollection.doc(user['uid']).collection('follows').valueChanges().subscribe((result) => {
-																																
-																																resolve(result);
-																															});
-																														});
-																														
-																													});
-																												}
-																												
-																												getUserListings(user_id, status){
-																													return new Promise<Object>((resolve, reject) => {
-																														this.auth.getUser().then((user) => {
-																															this.afStore.collection('listings', ref => {
-																																let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-																																query = query.where('user_id', '==', user_id);
-																																query = query.where('status', '==', status);
-																																return query;
-																															}).snapshotChanges().subscribe((listingsData) => {
-																																this.listingsList = [];
-																																listingsData.map((listing) => {
-																																	let data = listing.payload.doc.data();
-																																	data['id'] = listing.payload.doc.id;
-																																	this.listingsList.push(data);
-																																});
-																																resolve(this.listingsList);
-																															});
-																														});
-																														
-																													});
-																												}
-																												getCounter(){
-																													return new Promise<Object>((resolve, reject) => {
-																														this.afStore.collection('counts', ref => {
-																															let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-																															query = query.orderBy('rank', 'asc');
-																															return query;
-																														}).valueChanges().subscribe((counter) => {
-																															resolve(counter);
-																														});
-																													});
-																												}
-																												countListingProvinces() {
-																													return new Promise<Object>((resolve, reject) => {
+				resolve(this.listingsList);
+			}, (err) => {
+				console.error('err', JSON.stringify(err));
+			});
 
-																														let provincesObs = [];
+		});
+	}
 
-																														let provinces = [
-																														{id: "phnom-penh", total: 0},
-																														{id: "preah-sihanouk", total: 0},
-																														{id: "kampong-cham", total: 0},
-																														{id: "siem-reap", total: 0},
-																														{id: "battambang ", total: 0},
-																														{id: "kandal ", total: 0},
-																														{id: "banteay-meanchey", total: 0},
-																														{id: "kampong-chhnang", total: 0},
-																														{id: "kampong-speu", total: 0},
-																														{id: "kampong-thom", total: 0},
-																														{id: "kampot ", total: 0},
-																														{id: "kep ", total: 0},
-																														{id: "koh-kong", total: 0},
-																														{id: "kratie ", total: 0},
-																														{id: "mondulkiri ", total: 0},
-																														{id: "oddar-meanchey", total: 0},
-																														{id: "pailin ", total: 0},
-																														{id: "preah-vihear", total: 0},
-																														{id: "prey-veng", total: 0},
-																														{id: "pursat ", total: 0},
-																														{id: "ratanakiri ", total: 0},
-																														{id: "stung-treng", total: 0},
-																														{id: "svay-rieng", total: 0},
-																														{id: "takeo ", total: 0},
-																														{id: "tboung-khmum" , total: 0}
-																														];
+	createId(){
+		return new Promise<Object>((resolve, reject) => {
+			const id = this.afStore.createId();
 
-																														for (let province of provinces){
-																															let afProvince = this.afStore.collection('listings', ref => {
-																																let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-																																query = query.where('status', '==', 1);
-																																query = query.where('province', '==', province.id);
-																																return query;
-																															}).snapshotChanges().take(1).map((data) => {
-																																province.total = data.length;
-																																return province;
-																															});
-																															provincesObs.push(afProvince);
-																														}
+			resolve(id);
+		});
+	}
+	markAsActive(listing){
 
-																														Observable.forkJoin(
-																															provincesObs
-																															).subscribe((dataForkjoin) => {
-																																resolve(dataForkjoin);
-																															})
-																														});
-																												}
-																												
+		return new Promise<Object>((resolve, reject) => {
+			this.listingsCollection.doc(listing.id).update({status: 1}).then((res) => {
+				this.addCount(listing.province, listing.listing_type);
 
-																												
-																												getByUserRef(userRef) {
-																													return this.listingsCollection = this.afStore.collection('listings', ref => ref.where('user', '==', userRef));
-																												}
-																												getByFilters(name: string,
-																													listing_type:string,
-																													property_type:string,
-																													province:string,
-																													district:string,
-																													title:string,
-																													price:string,
-																													description:string,
-																													bedrooms:string,
-																													bathrooms:string,
-																													size:string,
-																													user_id:string,
-																													phone_1:string,
-																													phone_2:string,
-																													images:string,
-																													address:string) {
-																													return this.listingsCollection = this.afStore.collection<Listing>('listings', ref => {
-																														// Compose a query using multiple .where() methods
-																														return ref
-																														.where('listing_type', '==', listing_type)
-																														.where('price', '>', price);
-																													});
-																												}
-																											}
+				resolve(listing.id);
+			}).catch((msg) => {
+				reject(msg);
+			});
+		});
+	}
+	sendReport(issue){
+		return new Promise<Object>((resolve, reject) => {
+			const id = this.afStore.createId();
+			const issueData = issue;
+			issueData.number = 0;
+			this.reportsCollection.doc(id).set(issueData).then(async (respondId) => {
+				resolve(respondId);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+	}
+	submitAppBuilder(appData){
+		return new Promise<Object>((resolve, reject) => {
+			const id = this.afStore.createId();
+			const data = appData;
+			this.appBuilderCollection.doc(id).set(data).then(async (respondId) => {
+				resolve(respondId);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+	}
+	markAsSold(listing){
+
+		return new Promise<Object>((resolve, reject) => {
+			this.listingsCollection.doc(listing.id).update({status: 0}).then((res) => {
+				this.minusCount(listing.province, listing.listing_type);
+
+				resolve(listing.id);
+			}).catch((msg) => {
+
+				reject(msg);
+			});
+		});
+	}
+	deleteListing(listing){
+
+		if (listing.status == 1){
+			this.minusCount(listing.province, listing.listing_type);
+		}
+		return new Promise<Object>((resolve, reject) => {
+			this.listingsCollection.doc(listing.id).delete().then((res) => {
+				resolve(listing.id);
+			}).catch((msg) => {
+				reject(msg);
+			});
+		});
+	}
+	addCount(province, listing_type){
+
+		let countData = {};
+		this.countsCollection.doc(province).get().subscribe((data) => {
+
+			if (listing_type == 'sale'){
+				countData['sale'] = data.data().sale + 1;
+			}
+			else if(listing_type == 'rent'){
+				countData['rent'] = data.data().rent + 1;
+			}
+			this.countsCollection.doc(province).update(countData);
+
+		}, (error) => {
+			console.error('===> 11', error);
+		});
+	}
+	minusCount(province, listing_type){
+		let countData = {};
+		this.countsCollection.doc(province).get().subscribe((data) => {
+
+			if (listing_type == 'sale'){
+				countData['sale'] = data.data().sale - 1;
+			}
+			else if(listing_type == 'rent'){
+				countData['rent'] = data.data().rent - 1;
+			}
+
+			this.countsCollection.doc(province).update(countData);
+
+		});
+	}
+	getListing(id){
+		return new Promise<Object>((resolve, reject) => {
+			this.listingsCollection.doc(id).snapshotChanges().subscribe((listingsData) => {
+				let data = listingsData.payload.data();
+				data['id'] = listingsData.payload.id;
+
+				resolve(data);
+			});
+		});
+	}
+	set(id, listing){
+		return new Promise<Object>((resolve, reject) => {
+			listing.price = parseFloat(listing.price);
+			listing.bedrooms = parseFloat(listing.bedrooms);
+			listing.bathrooms = parseFloat(listing.bathrooms);
+			listing.lat = parseFloat(listing.lat);
+			listing.lng = parseFloat(listing.lng);
+			listing.provinceName = this.getProvince(listing.province).text;
+			listing.districtName = this.getDistrict(listing.district).text;
+
+			this.listingsCollection.doc(id).set(listing).then((res) => {
+
+				resolve(id);
+			}).catch((msg) => {
+
+				console.error('error set', JSON.stringify(msg));
+				reject(msg);
+			});
+		});
+	}
+	add(listing){
+
+
+		return new Promise<Object>((resolve, reject) => {
+			// const id = this.afStore.createId();
+
+			listing.created_date = new Date();
+			listing.status = 1;
+
+			let size = listing.property_type + Math.floor(100000 + Math.random() * 900000);
+			listing.property_id = size;
+			
+			this.addCount(listing.province, listing.listing_type);
+
+			this.set(listing.id, listing).then((id) => {
+				resolve(listing);
+			}).catch((msg) => {
+				reject(msg);
+			});
+
+		});
+	}
+	update(id, listing){
+		return new Promise<Object>((resolve, reject) => {
+			this.set(id, listing).then((id) => {
+				resolve(id);
+			}).catch((msg) => {
+				reject(msg);
+			});
+		});
+	}
+	uploadImagesToFirestore(id, dataUrl, index){
+		return new Promise<Object>((resolve, reject) => {
+			const currentTime = new Date().getTime();
+			const storageRef: AngularFireStorageReference = this.afStorage.ref(`listing_images/${currentTime}_${index}.jpeg`);
+			if (document.URL.startsWith('https')){
+				storageRef.put(dataUrl).then((snapshot) => {
+					storageRef.getDownloadURL().subscribe((url) => {
+						resolve(url);
+					})
+				}).catch((msg) => {
+					reject(msg);
+				});
+			}
+			else{
+				let metaData = {
+					contentType: 'image/jpeg',
+				};
+				storageRef.putString(dataUrl, 'data_url', metaData).then(() => {
+					storageRef.getDownloadURL().subscribe((url: any) => {
+						resolve(url);
+					});
+				}).catch((msg) => {
+					console.error('ERROR STORAGE', JSON.stringify(msg));
+					reject(msg);
+				});
+			}
+
+
+		});
+	}
+	updateImages(id, images){
+		return new Promise<Object>((resolve, reject) => {
+			let imagesArray = [];
+			let countImg = 0;
+			let totalImg = images.length;
+			let thumbReady = false;
+			let thumbImage = '';
+			for(let i = 0; i < images.length; i ++){
+				let image = images[i];
+
+				if (document.URL.startsWith('https')){
+					this.uploadImagesToFirestore(id, image, i).then((url) => {
+						countImg ++;
+						imagesArray.push(url);
+					}, (error) => {
+						console.error('ERROR UPLOAD IMAGE', JSON.stringify(error));
+					});
+				}
+				else{
+					let filename = image.substring(image.lastIndexOf('/')+1);
+					filename = filename.split('?')[0];
+					let path =  image.substring(0,image.lastIndexOf('/')+1);
+
+					this.file.readAsDataURL(path, filename).then((dataUrl) => {
+
+						this.uploadImagesToFirestore(id, dataUrl, i).then((url) => {
+
+							countImg ++;
+							imagesArray.push(url);
+						});
+					}).catch((error) => {
+						console.error("ERORR UPLOAD", JSON.stringify(error));
+					})
+				}
+			}
+
+			let myInterval = setInterval(() => {
+				if (totalImg == countImg){
+					clearInterval(myInterval);
+					resolve(imagesArray);
+				}
+			}, 500);
+		});
+	}
+	getFavorites(){
+		return new Promise<Object>((resolve, reject) => {
+			this.auth.getUser().then((user) => {
+				this.usersCollection.doc(user['uid']).collection('favorites').valueChanges().subscribe((result) => {
+
+					resolve(result);
+				});
+			});
+
+		});
+	}
+
+	getFollows(){
+		return new Promise<Object>((resolve, reject) => {
+			this.auth.getUser().then((user) => {
+				this.usersCollection.doc(user['uid']).collection('follows').valueChanges().subscribe((result) => {
+
+					resolve(result);
+				});
+			});
+
+		});
+	}
+
+	getUserListings(user_id, status){
+		return new Promise<Object>((resolve, reject) => {
+			this.auth.getUser().then((user) => {
+				this.afStore.collection('listings', ref => {
+					let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+					query = query.where('user_id', '==', user_id);
+					query = query.where('status', '==', status);
+					return query;
+				}).snapshotChanges().subscribe((listingsData) => {
+					this.listingsList = [];
+					listingsData.map((listing) => {
+						let data = listing.payload.doc.data();
+						data['id'] = listing.payload.doc.id;
+						this.listingsList.push(data);
+					});
+					resolve(this.listingsList);
+				});
+			});
+
+		});
+	}
+	getCounter(){
+		return new Promise<Object>((resolve, reject) => {
+			this.afStore.collection('counts', ref => {
+				let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+				query = query.orderBy('rank', 'asc');
+				return query;
+			}).valueChanges().subscribe((counter) => {
+				resolve(counter);
+			});
+		});
+	}
+	countListingProvinces() {
+		return new Promise<Object>((resolve, reject) => {
+
+			let provincesObs = [];
+
+			let provinces = [
+			{id: "phnom-penh", total: 0},
+			{id: "preah-sihanouk", total: 0},
+			{id: "kampong-cham", total: 0},
+			{id: "siem-reap", total: 0},
+			{id: "battambang ", total: 0},
+			{id: "kandal ", total: 0},
+			{id: "banteay-meanchey", total: 0},
+			{id: "kampong-chhnang", total: 0},
+			{id: "kampong-speu", total: 0},
+			{id: "kampong-thom", total: 0},
+			{id: "kampot ", total: 0},
+			{id: "kep ", total: 0},
+			{id: "koh-kong", total: 0},
+			{id: "kratie ", total: 0},
+			{id: "mondulkiri ", total: 0},
+			{id: "oddar-meanchey", total: 0},
+			{id: "pailin ", total: 0},
+			{id: "preah-vihear", total: 0},
+			{id: "prey-veng", total: 0},
+			{id: "pursat ", total: 0},
+			{id: "ratanakiri ", total: 0},
+			{id: "stung-treng", total: 0},
+			{id: "svay-rieng", total: 0},
+			{id: "takeo ", total: 0},
+			{id: "tboung-khmum" , total: 0}
+			];
+
+			for (let province of provinces){
+				let afProvince = this.afStore.collection('listings', ref => {
+					let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+					query = query.where('status', '==', 1);
+					query = query.where('province', '==', province.id);
+					return query;
+				}).snapshotChanges().take(1).map((data) => {
+					province.total = data.length;
+					return province;
+				});
+				provincesObs.push(afProvince);
+			}
+
+			Observable.forkJoin(
+				provincesObs
+				).subscribe((dataForkjoin) => {
+					resolve(dataForkjoin);
+				})
+			});
+	}
+
+
+
+	getByUserRef(userRef) {
+		return this.listingsCollection = this.afStore.collection('listings', ref => ref.where('user', '==', userRef));
+	}
+	getByFilters(name: string,
+		listing_type:string,
+		property_type:string,
+		province:string,
+		district:string,
+		title:string,
+		price:string,
+		description:string,
+		bedrooms:string,
+		bathrooms:string,
+		size:string,
+		user_id:string,
+		phone_1:string,
+		phone_2:string,
+		images:string,
+		address:string) {
+		return this.listingsCollection = this.afStore.collection<Listing>('listings', ref => {
+			// Compose a query using multiple .where() methods
+			return ref
+			.where('listing_type', '==', listing_type)
+			.where('price', '>', price);
+		});
+	}
+}

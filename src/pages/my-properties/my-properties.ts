@@ -31,10 +31,8 @@ import { ServiceProvider } from '../../providers/service/service';
      private serviceProvider: ServiceProvider) {
 
    }
-   ionViewWillEnter(){ this.serviceProvider.transition(); }
-
-
-   ionViewDidLoad() {
+   ionViewWillEnter(){ 
+     this.serviceProvider.transition(); 
      this.user = this.navParams.get('user');
      this.listingProvider.getUserListings(this.user.uid, 1).then((listings) => {
        
@@ -47,6 +45,11 @@ import { ServiceProvider } from '../../providers/service/service';
      }).catch((error) => {
        console.error('ERROR inactiveListing', error);
      });
+   }
+
+
+   ionViewDidLoad() {
+     
    }
 
    segmentChanged(){

@@ -160,7 +160,7 @@ import { ImagesProvider } from '../../providers/images/images';
 
  	dismissLoading(listing){
  		try{
- 			this.myLoading.dismiss();
+ 			
  			
  			console.log('listing edit', listing);
 
@@ -168,6 +168,7 @@ import { ImagesProvider } from '../../providers/images/images';
  			tabs.select(2)
  			.then(() => tabs.getSelected().push(MyPropertiesPage, {user: this.user}, { animate: false }))
  			.then(() => tabs.getSelected().push(DetailPage, {listing: listing, user_id: listing.user_id}, { animate: false }));
+ 			this.myLoading.dismiss();
  			// .then(() => this.navCtrl.popToRoot());
  		}catch(e){
 
@@ -195,10 +196,10 @@ import { ImagesProvider } from '../../providers/images/images';
 
  	dismissDeleteLoading(){
  		try{
- 			this.myLoading.dismiss();
- 			this.navCtrl.pop({animate: false});
- 			this.navCtrl.pop({animate: false});
  			
+ 			this.navCtrl.pop({animate: false});
+ 			this.navCtrl.pop({animate: false});
+ 			this.myLoading.dismiss();
  		}catch(e){
 
  		}

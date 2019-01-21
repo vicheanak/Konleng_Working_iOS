@@ -79,36 +79,38 @@ import { ServiceProvider } from '../../providers/service/service';
      private loadingCtrl: LoadingController
      ) {
      this.serviceProvider.showAds();
+    
+
      this.land_icon = {
-       url: 'https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/land_icon.png?alt=media&token=50038101-57b6-4d0e-8ae6-4d4a93b29a73',
+       url: 'https://res.cloudinary.com/konleng/image/upload/v1548063321/land_icon.png',
        size: {
          width: 30,
          height: 30
        }
      } as MarkerIcon;
      this.house_icon = {
-       url: 'https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/house_icon.png?alt=media&token=cbbfe331-5cdf-4cfa-9b86-8478d87e6fc6',
+       url: 'https://res.cloudinary.com/konleng/image/upload/v1548063321/house_icon.png',
        size: {
          width: 30,
          height: 30
        },
      } as MarkerIcon;
      this.apartment_icon = {
-       url: 'https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/apartment_icon.png?alt=media&token=f8ce5937-ca3b-4f45-8955-d82d28ed3f7a',
+       url: 'https://res.cloudinary.com/konleng/image/upload/v1548063322/apartment_icon.png',
        size: {
          width: 30,
          height: 30
        }
      } as MarkerIcon;
      this.commercial_icon = {
-       url: 'https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/commercial_icon.png?alt=media&token=09be9872-59bd-4d1d-a576-7904d94a8ada',
+       url: 'https://res.cloudinary.com/konleng/image/upload/v1548063322/commercial_icon.png',
        size: {
          width: 30,
          height: 30
        }
      } as MarkerIcon;
      this.room_icon = {
-       url: 'https://firebasestorage.googleapis.com/v0/b/konleng-cloud.appspot.com/o/room_icon.png?alt=media&token=1d08f1d9-feec-4f88-a8e0-07ad1c5aa0fd',
+       url: 'https://res.cloudinary.com/konleng/image/upload/v1548063322/room_icon.png',
        size: {
          width: 30,
          height: 30
@@ -308,7 +310,7 @@ import { ServiceProvider } from '../../providers/service/service';
        });
        let options = {
          target: this.location,
-         zoom: 14,
+         zoom: 13,
        };
        this.map.moveCamera(options);
 
