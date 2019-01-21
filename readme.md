@@ -78,6 +78,9 @@ Have a bug or an issue with this template? [Open a new issue](https://github.com
 
 The template was created by and is maintained by **[Vannavy Vicheanak](https://medium.com/@vicheanak)**
 
+## Pitch Deck on Slideshare
+https://www.slideshare.net/DenCambodia/konleng-startup-pitch-deck-v2
+
 ## Copyright and License
 
 Copyright 2018 Vannavy Vicheanak. Code released under the [MIT](https://github.com/vicheanak/konleng/blob/master/LICENSE) license.
