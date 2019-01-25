@@ -3,6 +3,8 @@ import { NavController, NavParams, LoadingController, AlertController } from 'io
 import { ListingProvider } from '../../providers/listing/listing';
 import { AuthServiceProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
+import { ServiceProvider } from '../../providers/service/service';
+
 /**
  * Generated class for the AppBuilderPage page.
  *
@@ -31,12 +33,15 @@ import { LoginPage } from '../login/login';
  	private myLoading: any;
  	private user: any;
  	constructor(private listingProvider: ListingProvider, 
+ 		private serviceProvider: ServiceProvider,
  		public navCtrl: NavController, 
  		public navParams: NavParams,
  		private loadingCtrl: LoadingController,
  		private auth: AuthServiceProvider,
  		private alertCtrl: AlertController) {
  	}
+
+ 	ionViewWillEnter(){ this.serviceProvider.transition(); }
 
  	ionViewDidEnter(){
  		this.auth.getUser().then((user) => {

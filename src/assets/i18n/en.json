@@ -1988,5 +1988,11 @@
 	"thma-pechr": "Thma Pechr",
 	"tonle-bet": "Tonle Bet",
 	"suong": "Suong",
-	"vihear-luong": "Vihear Luong"
+	"vihear-luong": "Vihear Luong",
+	"DONATE": "Donate",
+	"LOCAL_BANK_TRANSFER": "Local Bank Transfer",
+	"INTERNATIONAL_WIRE_TRANSFER": "International Wire Transfer",
+	"BANK": "Bank",
+	"SWIFT": "Swift",
+	"ACCOUNT": "Account"
 }

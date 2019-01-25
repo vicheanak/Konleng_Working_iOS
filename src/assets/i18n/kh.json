@@ -1987,5 +1987,11 @@
 	"thma-pechr": "ថ្មពេជ្រ",
 	"tonle-bet": "ទន្លេបិទ",
 	"suong": "សួង",
-	"vihear-luong": "វិហារលួង"
+	"vihear-luong": "វិហារលួង",
+	"DONATE": "បរិច្ចាក",
+	"LOCAL_BANK_TRANSFER": "ធនាគារក្នុងស្រុក",
+	"INTERNATIONAL_WIRE_TRANSFER": "ធនាគារក្រៅស្រុក",
+	"BANK": "ធនាគារ",
+	"SWIFT": "លេខកូដធនាគារ",
+	"ACCOUNT": "គណនី"
 }

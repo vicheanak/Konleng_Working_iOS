@@ -18,7 +18,7 @@ import { AuthServiceProvider } from '../../providers/auth/auth';
 import { ServiceProvider } from '../../providers/service/service';
 
 import { BusinessPartnerPage } from '../business-partner/business-partner';
-
+import { DonatePage } from '../donate/donate';
 
 
 
@@ -158,6 +158,10 @@ export class MePage {
 
 	goReport(){
 		this.navCtrl.push(ReportPage, {}, {animate: false});
+	}
+
+	goDonate(){
+		this.navCtrl.push(DonatePage, {}, {animate: false});
 	}
 
 	goAppBuilder(){

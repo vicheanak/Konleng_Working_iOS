@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ListingProvider } from '../../providers/listing/listing';
+import { ServiceProvider } from '../../providers/service/service';
 
 /**
  * Generated class for the ReportPage page.
@@ -26,11 +27,14 @@ import { ListingProvider } from '../../providers/listing/listing';
    private myLoading: any;
 
    constructor(private listingProvider: ListingProvider, 
+     private serviceProvider: ServiceProvider,
      public navCtrl: NavController, 
      public navParams: NavParams,
      private loadingCtrl: LoadingController,
      private alertCtrl: AlertController) {
    }
+
+   ionViewWillEnter(){ this.serviceProvider.transition(); }
 
    ionViewDidLoad() {
      console.log('ionViewDidLoad ReportPage');

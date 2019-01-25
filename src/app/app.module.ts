@@ -28,6 +28,7 @@ import { FollowPage } from '../pages/follow/follow';
 import { ReportPage } from '../pages/report/report';
 import { AppBuilderPage } from '../pages/app-builder/app-builder';
 import { BusinessPartnerPage } from '../pages/business-partner/business-partner';
+import { DonatePage } from '../pages/donate/donate';
 
 
 
@@ -122,7 +123,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     TabsPage,
     ReportPage,
     AppBuilderPage,
-    BusinessPartnerPage
+    BusinessPartnerPage,
+    DonatePage
   ],
   imports: [
     BrowserModule,
@@ -176,7 +178,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     TabsPage,
     ReportPage,
     AppBuilderPage,
-    BusinessPartnerPage
+    BusinessPartnerPage,
+    DonatePage
   ],
   providers: [
     StatusBar,

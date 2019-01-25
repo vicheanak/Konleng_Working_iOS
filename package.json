@@ -54,7 +54,7 @@
     "com-sarriaroman-photoviewer": "^1.1.18",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "cordova-admobsdk": "^7.35.0",
-    "cordova-android": "^7.1.4",
+    "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
     "cordova-custom-config": "5.0.2",
     "cordova-ios": "4.5.5",
