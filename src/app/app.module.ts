@@ -29,7 +29,10 @@ import { ReportPage } from '../pages/report/report';
 import { AppBuilderPage } from '../pages/app-builder/app-builder';
 import { BusinessPartnerPage } from '../pages/business-partner/business-partner';
 import { DonatePage } from '../pages/donate/donate';
-
+import { ProspectPage } from '../pages/prospect/prospect';
+import { ProspectDetailPage } from '../pages/prospect-detail/prospect-detail';
+import { AddProspectPage } from '../pages/add-prospect/add-prospect';
+import { EditProspectPage } from '../pages/edit-prospect/edit-prospect';
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -124,7 +127,11 @@ import { Geolocation } from '@ionic-native/geolocation';
     ReportPage,
     AppBuilderPage,
     BusinessPartnerPage,
-    DonatePage
+    DonatePage,
+    ProspectPage,
+    ProspectDetailPage,
+    AddProspectPage,
+    EditProspectPage
   ],
   imports: [
     BrowserModule,
@@ -179,7 +186,11 @@ import { Geolocation } from '@ionic-native/geolocation';
     ReportPage,
     AppBuilderPage,
     BusinessPartnerPage,
-    DonatePage
+    DonatePage,
+    ProspectPage,
+    ProspectDetailPage,
+    AddProspectPage,
+    EditProspectPage
   ],
   providers: [
     StatusBar,

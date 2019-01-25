@@ -23,12 +23,16 @@
 		<button round mini ion-fab color="danger" (click)="saveFavorite()"><ion-icon name="{{isFavorite == true ? 'ios-heart' : 'ios-heart-outline'}}"></ion-icon></button>
 	</ion-fab>
 	<ion-slides class="listing-images" pager>
-
 		<ion-slide (click)="presentImageModal(image, listing?.images)" *ngFor="let image of listing?.images" [style.background-image]="getBackground(image)" style="background-size:cover; background-position: center;">
 		</ion-slide>
-
-
 	</ion-slides>
+	
+	<ion-item *ngIf="isOwner == true" color="primary" (click)="goProspect()">
+		<ion-icon name="contact" item-start></ion-icon>
+	    <ion-label>{{'PROSPECT' | translate}}: 44</ion-label>
+	    <ion-icon item-end name="ios-arrow-forward"></ion-icon>
+	</ion-item>
+	
 	<ion-list  no-lines>
 		<ion-item text-wrap>
 			<h1><span style="color: red">{{listing?.status == 0 ? '(Inactive)' : ''}}</span>{{listing?.title}}</h1>
@@ -36,6 +40,10 @@
 			<p class="price">${{listing?.price | number : fractionSize}}</p>
 			
 		</ion-item>
+
+		
+		  
+		
 		
 		<ion-item class="item-list">
 			<p class="item-header">{{'DESCRIPTION' | translate}}</p>
@@ -176,6 +184,91 @@
 	
 		
 	</ion-list>
+	<div class="accordion vertical">
+    <ul>
+        <li>
+            <input type="radio" id="radio-1" name="radio-accordion" checked="checked" />
+            <label for="radio-1">ANZ (8.25% - 8.50%)</label>
+            <div class="content">
+                <b>All ANZ Royal Bank Home Loans will be denominated in United States Dollars (USD).</b>
+                
+                	
+                		<p>Interest rate – 8.25% p.a. for loan limit $200,000 and above (variable)
+                8.50% p.a. for loan limit below $200,000 (variable)</p>
+                		<p>- Redraw facility</p>
+                		<p>- Maximum loan amount up to 70% of the property valuation</p>
+                		<p>- Maximum loan term up to 20 years</p>
+                		<p>- 3% for lump sum payment within the first three years</p>
+                		<p>- Loan approval fee of 1% of loan amopt
+                		<p>- Other associated costs – One time fees payable when Letter of Offer is issued except insurance</p>
+                		
+                			<p>- Property valuation starts from $150*</p>
+                			<p>- Document arrangement fee $200</p>
+                			<p>- Mortgage registration starts from $185*</p>
+                			<p>- Fire insurance (must be renewed annually).</p>
+                		
+                	
+                	
+                	
+                <p>Call our Lending Managers on our ANZ Royal Home Loan hotline at <strong>078 222 082</strong> or <strong>078 222 086</strong> for assistance.</p>
+            </div>
+        </li>
+        <li>
+            <input type="radio" id="radio-2" name="radio-accordion" />
+            <label for="radio-2">Acleda Bank (8.5%)</label>
+            <div class="content">
+                <b>All Acleda Bank Home Loans will be denominated in United States Dollars (USD).</b>
+                
+                	
+                		<p>Interest rate – 8.25% p.a. for loan limit $200,000 and above (variable)
+                8.50% p.a. for loan limit below $200,000 (variable)</p>
+                		<p>- Redraw facility</p>
+                		<p>- Maximum loan amount up to 70% of the property valuation</p>
+                		<p>- Maximum loan term up to 20 years</p>
+                		<p>- 3% for lump sum payment within the first three years</p>
+                		<p>- Loan approval fee of 1% of loan amopt
+                		<p>- Other associated costs – One time fees payable when Letter of Offer is issued except insurance</p>
+                		
+                			<p>- Property valuation starts from $150*</p>
+                			<p>- Document arrangement fee $200</p>
+                			<p>- Mortgage registration starts from $185*</p>
+                			<p>- Fire insurance (must be renewed annually).</p>
+                		
+                	
+                	
+                	
+                <p>Call our Lending Managers on our ANZ Royal Home Loan hotline at <strong>078 222 082</strong> or <strong>078 222 086</strong> for assistance.</p>
+            </div>
+        </li>
+        <li>
+            <input type="radio" id="radio-2" name="radio-accordion" />
+            <label for="radio-2">CIMB Bank (9.2%)</label>
+            <div class="content">
+                <b>All CIMB Bank Home Loans will be denominated in United States Dollars (USD).</b>
+                
+                	
+                		<p>Interest rate – 8.25% p.a. for loan limit $200,000 and above (variable)
+                8.50% p.a. for loan limit below $200,000 (variable)</p>
+                		<p>- Redraw facility</p>
+                		<p>- Maximum loan amount up to 70% of the property valuation</p>
+                		<p>- Maximum loan term up to 20 years</p>
+                		<p>- 3% for lump sum payment within the first three years</p>
+                		<p>- Loan approval fee of 1% of loan amopt
+                		<p>- Other associated costs – One time fees payable when Letter of Offer is issued except insurance</p>
+                		
+                			<p>- Property valuation starts from $150*</p>
+                			<p>- Document arrangement fee $200</p>
+                			<p>- Mortgage registration starts from $185*</p>
+                			<p>- Fire insurance (must be renewed annually).</p>
+                		
+                	
+                	
+                	
+                <p>Call our Lending Managers on our ANZ Royal Home Loan hotline at <strong>078 222 082</strong> or <strong>078 222 086</strong> for assistance.</p>
+            </div>
+        </li>
+    </ul>
+</div>
 	<!-- <ion-fab right bottom>
 		<button round (click)="goEdit()" *ngIf="isOwner == true" ion-fab color="danger"><ion-icon name="md-create"></ion-icon></button>
 	</ion-fab> -->

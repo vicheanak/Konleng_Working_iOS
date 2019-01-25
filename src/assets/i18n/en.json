@@ -1,5 +1,7 @@
 {
 	"konleng": "KONLENG APP",
+	"PROSPECT": "Prospect",
+	"SEARCH_NEAR_ME": "Search Near Me",
 	"sale": "Sale",
 	"rent": "Rent",
 	"phnom-penh": "Phnom Penh",
@@ -45,7 +47,7 @@
 	"COMMUNE": "Commune/Sangkat",
 	"MIN_PRICE": "Min Price",
 	"MAX_PRICE": "Max Price",
-	"SEARCH": "Search",
+	"SEARCH": "Search by keywords",
 	"ANY": "Any",
 	"NEWEST": "Newest",
 	"OLDEST": "Oldest",

@@ -14,7 +14,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
     <ion-searchbar [(ngModel)]="queryText" (search)="searchByKeyword($event)" placeholder='{{ "SEARCH" | translate }}'></ion-searchbar>
-      
+    
+    <ion-item padding-horizontal>
+      <ion-label>{{'SEARCH_NEAR_ME' | translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="isNearMe" color="primary"></ion-checkbox>
+    </ion-item>
+    
     
   
   <!-- <ion-list-header no-padding-verticle>

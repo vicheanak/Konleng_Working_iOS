@@ -19,6 +19,7 @@ import { ServiceProvider } from '../../providers/service/service';
 
 import { BusinessPartnerPage } from '../business-partner/business-partner';
 import { DonatePage } from '../donate/donate';
+import { ProspectPage } from '../prospect/prospect';
 
 
 
@@ -73,8 +74,12 @@ export class MePage {
 		this.navCtrl.push(LoginPage, {page: 'profile'}, {animate: false});
 	}
 
+	goProspect(){
+		this.navCtrl.push(ProspectPage, {animate: false});
+	}
+
 	goBusinessPartner(){
-		this.navCtrl.push(BusinessPartnerPage);
+		this.navCtrl.push(BusinessPartnerPage, {animate: false});
 		// this.navCtrl.push(LoginPage, {page: 'business-partner'}, {animate: false});
 	}
 

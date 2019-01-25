@@ -19,6 +19,8 @@ import {User, AuthServiceProvider} from '../auth/auth';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/forkJoin';
+
+
 export interface Report { 
 	id: number;
 	title: string;
@@ -85,6 +87,8 @@ export interface AppBuilder {
 	status: string;
 	created_at: number;
 }
+
+
 
 @Injectable()
 export class ListingProvider {
@@ -2481,6 +2485,55 @@ export class ListingProvider {
 					resolve(dataForkjoin);
 				})
 			});
+	}
+
+	createProspect(prospect){
+
+		return new Promise<Object>((resolve, reject) => {
+			this.auth.getUser().then((user) => {
+				let newProspect = prospect;
+				newProspect.agent_id = user['uid'];
+				this.afStore.collection('prospects').add(newProspect).then((data) => {
+					resolve(data);
+				});
+			});
+			
+		});
+		
+	}
+
+	
+
+	getProspects(){
+		return new Promise<Object>((resolve, reject) => {
+			this.auth.getUser().then((user) => {
+				this.afStore.collection('prospects', ref => {
+					let query: firebase.firestore.Query = ref;
+					query = query.where('user_id', '==', user['uid']);
+
+					return query;
+				})
+				.valueChanges().subscribe((prospectData) => {
+					resolve(prospectData);
+				});
+			});
+			
+		});
+	}
+
+	getProspectsByListing(listingId){
+		return new Promise<Object>((resolve, reject) => {
+			this.afStore.collection('prospects', ref => {
+				let query: firebase.firestore.Query = ref;
+				query = query.where('listing_id', '==', listingId);
+				
+				return query;
+			})
+			.valueChanges().subscribe((prospectData) => {
+				
+				resolve(prospectData);
+			});
+		});
 	}
 
 

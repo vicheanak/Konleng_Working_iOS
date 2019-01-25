@@ -18,6 +18,7 @@ export class SearchPage {
   private provinceData: any = [];
   private provinceDisplay: any = [];
   private isWeb: boolean = false;
+  private isNearMe: boolean = true;
 
   constructor(public navCtrl: NavController, 
   	public translate: TranslateService,

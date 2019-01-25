@@ -24,6 +24,7 @@ import {
 } from '@ionic-native/google-maps';
 
 import { LoginPage } from '../login/login';
+import { ProspectPage } from '../prospect/prospect';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ServiceProvider } from '../../providers/service/service';
 import { File } from '@ionic-native/file';
@@ -162,6 +163,10 @@ import { File } from '@ionic-native/file';
 
    goEdit(){
      this.navCtrl.push(EditPage, {listing: this.listing}, {animate: false});
+   }
+
+   goProspect(){
+     this.navCtrl.push(ProspectPage, {listingId: this.listing.id}, {animate: false});
    }
 
 
