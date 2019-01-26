@@ -49,6 +49,28 @@ export interface Listing {
 	created_date:number;
 	link: string;
 }
+export interface ValuationListing { 
+	property_id: number;
+	name: string;
+	listing_type:string;
+	property_type:string;
+	province:string;
+	district:string;
+	districtName: string;
+	provinceName: string;
+	title:string;
+	price:string;
+	description:string;
+	bedrooms:string;
+	bathrooms:string;
+	size:string;
+	user_id:string;
+	phone_1:string;
+	phone_2:string;
+	address:string;
+	created_date:number;
+	link: string;
+}
 export interface Count{
 	phnom_penh: number;
 	preah_sihanouk: number;
@@ -119,6 +141,8 @@ export class ListingProvider {
 	private reportsCollection: any;
 	private appBuilderCollection: any;
 	private appBuilders: any;
+	private valuationListingsCollection: any;
+	private valuationListings: any;
 	private prospectCollection: any;
 	private prospects: any;
 	private reports: any;
@@ -133,6 +157,8 @@ export class ListingProvider {
 		private http: HttpClient) {
 		this.listingsCollection = this.afStore.collection<Listing>('listings');
 		this.listings = this.listingsCollection.valueChanges();
+		this.valuationListingsCollection = this.afStore.collection<ValuationListing>('valuation_listings');
+		this.valuationListings = this.valuationListingsCollection.valueChanges();
 		this.reportsCollection = this.afStore.collection<Report>('reports');
 		this.reports = this.reportsCollection.valueChanges();
 		this.appBuilderCollection = this.afStore.collection<AppBuilder>('app-builder');
@@ -2304,6 +2330,48 @@ export class ListingProvider {
 			this.addCount(listing.province, listing.listing_type);
 
 			this.set(listing.id, listing).then((id) => {
+				resolve(listing);
+			}).catch((msg) => {
+				reject(msg);
+			});
+
+		});
+	}
+	setValuationListing(id, listing){
+		return new Promise<Object>((resolve, reject) => {
+			listing.price = parseFloat(listing.price);
+			listing.bedrooms = parseFloat(listing.bedrooms);
+			listing.bathrooms = parseFloat(listing.bathrooms);
+			listing.lat = parseFloat(listing.lat);
+			listing.lng = parseFloat(listing.lng);
+			listing.provinceName = this.getProvince(listing.province).text;
+			listing.districtName = this.getDistrict(listing.district).text;
+
+			this.valuationListingsCollection.doc(id).set(listing).then((res) => {
+
+				resolve(id);
+			}).catch((msg) => {
+
+				console.error('error set', JSON.stringify(msg));
+				reject(msg);
+			});
+		});
+	}
+	addValuationListing(listing){
+
+
+		return new Promise<Object>((resolve, reject) => {
+			// const id = this.afStore.createId();
+
+			listing.created_date = new Date();
+			listing.status = 1;
+
+			let size = listing.property_type + Math.floor(100000 + Math.random() * 900000);
+			listing.property_id = size;
+			
+			
+
+			this.setValuationListing(listing.id, listing).then((id) => {
 				resolve(listing);
 			}).catch((msg) => {
 				reject(msg);

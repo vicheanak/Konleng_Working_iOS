@@ -209,12 +209,12 @@ import { ImagesProvider } from '../../providers/images/images';
  			this.resetListing();
  			this.resetStep();
  			this.scrollToTop();
-
- 			const tabs = this.navCtrl.parent;
- 			tabs.select(2)
- 			.then(() => tabs.getSelected().push(MyPropertiesPage, {user: this.user}, { animate: false }))
- 			.then(() => tabs.getSelected().push(DetailPage, {listing: listing, user_id: listing.user_id}, { animate: false }))
- 			.then(() => this.navCtrl.popToRoot());
+ 			this.navCtrl.pop();
+ 			// const tabs = this.navCtrl.parent;
+ 			// tabs.select(2)
+ 			// .then(() => tabs.getSelected().push(MyPropertiesPage, {user: this.user}, { animate: false }))
+ 			// .then(() => tabs.getSelected().push(DetailPage, {listing: listing, user_id: listing.user_id}, { animate: false }))
+ 			// .then(() => this.navCtrl.popToRoot());
  		}catch(e){
 
  		}
@@ -549,7 +549,7 @@ import { ImagesProvider } from '../../providers/images/images';
  	}
  	selectChange(e) {
 
- 		if (e == 7){
+ 		if (e == 6){
  			// this.locationChange();
  			if (this.listing.address == ''){
  				let commune = this.listing.commune ? this.listingProvider.getCommune(this.listing.commune).text : '';
@@ -558,29 +558,21 @@ import { ImagesProvider } from '../../providers/images/images';
  				this.getGeocoder(this.listing.address);	
  			}
  		}
- 		if (e == 1){
- 			this.listingProvider.updateImages(this.listing.id, this.listing.images).then((imgs) => {
-				this.listing.images = imgs;
-				console.log(JSON.stringify(this.listing.images));
-			}).catch((err) => {
-				console.log("ERR IMAGE", err);
-			});
-
- 		}
+ 		
  	}
 
 
  	addInstantPropertyValuation(){
  		
  		// this.listing.description = this.listing.description.replace(/\n/g, "<br />");
- 		// this.presentLoading();
- 		// if (this.auth.authenticated){
+ 		this.presentLoading();
+ 		if (this.auth.authenticated){
  			
- 		// 	this.auth.updatePhonenumbers(this.listing);
- 		// 	this.listingProvider.add(this.listing).then((listing) => {
-			// 	this.dismissLoading(this.listing);
- 		// 	});
- 		// }
+
+ 			this.listingProvider.addValuationListing(this.listing).then((listing) => {
+				this.dismissLoading(this.listing);
+ 			});
+ 		}
 
 
  	}

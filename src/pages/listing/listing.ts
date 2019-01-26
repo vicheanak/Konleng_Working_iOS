@@ -41,6 +41,7 @@ import { ServiceProvider } from '../../providers/service/service';
    private provinces: any = [];
    private province: any;
    private startAfter: number = 0;
+   private isNearMe: any;
    private filter: any = {
      sort_by: 'newest',
      keyword: '',
@@ -118,6 +119,8 @@ import { ServiceProvider } from '../../providers/service/service';
      } as MarkerIcon;
 
      this.provinces = this.listingProvider.getProvinces();
+
+     this.isNearMe = this.navParams.get('isNearMe');
 
 
    }
@@ -257,8 +260,9 @@ import { ServiceProvider } from '../../providers/service/service';
      this.map = GoogleMaps.create(element);
 
 
-     this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
 
+     this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+       
        this.map.on(GoogleMapsEvent.CAMERA_MOVE_END).subscribe((data) => {
         
 
@@ -308,11 +312,24 @@ import { ServiceProvider } from '../../providers/service/service';
 
          }
        });
-       let options = {
-         target: this.location,
-         zoom: 13,
-       };
-       this.map.moveCamera(options);
+       if (this.isNearMe){
+         this.map.getMyLocation().then((resp) => {
+           this.location = new LatLng(resp.latLng.lat, resp.latLng.lng);
+           let options = {
+             target: this.location,
+             zoom: 13,
+           };
+           this.map.moveCamera(options);  
+         });
+       }
+       else{
+         let options = {
+           target: this.location,
+           zoom: 13,
+         };
+         this.map.moveCamera(options);  
+       }
+       
 
        // this.addMarkers();
      }, (error) => {
@@ -383,7 +400,7 @@ import { ServiceProvider } from '../../providers/service/service';
          this.location = new LatLng(this.province.lat, this.province.lng);
        }
        else{
-         this.location = new LatLng(11.556186, 104.927834); 
+           this.location = new LatLng(11.556186, 104.927834);
        }
        this.filter.listing_type = listing_type;
        this.filter.sort_by = 'newest';

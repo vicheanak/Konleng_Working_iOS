@@ -5,7 +5,14 @@
 -->
 <ion-header>
 	<ion-navbar color="primary">
-		<ion-title>{{'SELECT_PROPERTY' | translate}}</ion-title>
+		<ion-title>
+			{{"SELECT_PROPERTY" | translate}}
+		</ion-title>
+		<ion-buttons end (click)="dismiss()">
+			<button round ion-button icon-only >
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 <ion-content>

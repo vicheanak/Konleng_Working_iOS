@@ -21,30 +21,6 @@
 
 <ion-content>
 	<ion-stepper no-padding #stepper (selectIndexChange)="selectChange($event)">
-		<ion-step label="{{'IMAGES' | translate}}" description="">
-			<ion-grid>
-				<ion-row *ngIf="isWeb">
-					<ion-col *ngFor="let key of objectKeys(imgPreviews)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
-						<label ion-item no-padding class="image-label">
-							<ion-label id="profile_image" color="primary" stacked><img class="listing-img" [src]="imgPreviews[key].src"></ion-label>
-							<ion-input style="display: none" type="file" accept="image/*" (change)="addImage($event, key)"></ion-input>
-						</label>
-					</ion-col>
-				</ion-row>
-				<ion-row *ngIf="!isWeb">
-					<ion-col *ngFor="let key of objectKeys(imgPreviews)" (click)="addImage($event, key)" col-4 style="background-size:cover; background-position: center bottom;border: 2px solid white;">
-						<img class="listing-img" [src]="imgPreviews[key].src">
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-			<div>
-				<ion-row justify-content-between>
-					<div></div>
-					<button round ion-button ionicStepperNext [disabled]="listing.images.length < 1">{{'NEXT' | translate}}</button>
-				</ion-row>
-			</div>
-			
-		</ion-step>
 		<ion-step label="{{'CATEGORY' | translate}}" description="">
 			
 			<ion-list radio-group [(ngModel)]="listing.listing_type">
@@ -96,11 +72,7 @@
 					<ion-radio value="commercial"></ion-radio>
 				</ion-item>
 
-				<ion-item>
-					<ion-label>{{'ROOM' | translate}}</ion-label>
-					<ion-radio value="room"></ion-radio>
-				</ion-item>
-
+				
 
 			</ion-list>
 			<div>
@@ -144,18 +116,6 @@
 
 		</ion-step>
 		<ion-step label="{{'DETAIL' | translate}}" description="">
-			<ion-item no-padding>
-				<ion-label for="title" floating>{{'TITLE' | translate}}</ion-label>
-				<ion-input id="title" [(ngModel)]="listing.title" type="text"></ion-input>
-			</ion-item>
-
-			
-			
-
-			<label ion-item no-padding>
-				<ion-label floating>{{'DESCRIPTION' | translate}}</ion-label>
-				<ion-textarea #descriptionInput id="descriptionInput" rows="5" maxLength="2500" (keyup)="resize()" [(ngModel)]="listing.description"></ion-textarea>
-			</label>
 			<div *ngIf="listing.property_type == 'house' || listing.property_type == 'apartment' || listing.property_type == 'commercial' || listing.property_type == 'room'">
 				<label ion-item no-padding>
 					<ion-label>{{'BEDROOMS' | translate}}</ion-label>
@@ -175,7 +135,7 @@
 			<div>
 				<ion-row justify-content-between>
 					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
-					<button round ion-button ionicStepperNext [disabled]="listing.title == '' || listing.description == ''">{{'NEXT' | translate}}</button>
+					<button round ion-button ionicStepperNext>{{'NEXT' | translate}}</button>
 				</ion-row>
 			</div>
 		</ion-step>
@@ -207,6 +167,10 @@
 				<ion-label>{{'high_price_furnished' | translate}}</ion-label>
 				<ion-checkbox [(ngModel)]="listing.high_price_furnished"></ion-checkbox>
 			</ion-item>
+			<ion-item no-padding>
+				<ion-label>{{'has_title' | translate}}</ion-label>
+				<ion-checkbox [(ngModel)]="listing.has_title"></ion-checkbox>
+			</ion-item>
 			<div>
 				<ion-row justify-content-between>
 					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
@@ -216,13 +180,7 @@
 		</ion-step>
 
 		<ion-step label="{{'CONTACT' | translate}}" description="">
-			<ion-item no-padding>
-				<ion-label>{{'I_AM' | translate}}</ion-label>
-				<ion-select [(ngModel)]="listing.userType" interface="popover">
-					<ion-option value="owner">{{'OWNER' | translate}}</ion-option>
-					<ion-option value="agency">{{'AGENCY' | translate}}</ion-option>
-				</ion-select>
-			</ion-item>
+			
 			<label ion-item no-padding *ngIf="listing.userType == 'agency'">
 				<ion-label floating>{{'AGENCY_NAME' | translate}}</ion-label>
 				<ion-input type="text" [(ngModel)]="listing.agencyName"></ion-input>
@@ -270,7 +228,7 @@
 			<div>
 				<ion-row justify-content-between>
 					<button round color="light" ion-button ionicStepperPrevious>{{'BACK' | translate}}</button>
-					<button round ion-button color="secondary" (click)="addInstantPropertyValuation()">{{'FINISH' | translate}}</button>
+					<button round ion-button color="secondary" (click)="addInstantPropertyValuation()">{{'VALUATE' | translate}}</button>
 				</ion-row>
 			</div>
 		</ion-step>

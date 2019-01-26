@@ -32,7 +32,6 @@ export class SearchPage {
     if (document.URL.startsWith('https')){
       this.isWeb = true;
     }
-    
 
   }
 
@@ -68,7 +67,7 @@ export class SearchPage {
 
   search(data, listing_type) {
     console.log('listing_type', listing_type);
-    this.navCtrl.push(ListingPage, {property_type: data, listing_type: listing_type}, {animate: false});  
+    this.navCtrl.push(ListingPage, {isNearMe: this.isNearMe, property_type: data, listing_type: listing_type}, {animate: false});  
   }
 
   searchWithListingType(property_type, listing_type){
