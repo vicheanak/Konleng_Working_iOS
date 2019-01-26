@@ -22,6 +22,8 @@ export class BusinessPartnerPage {
   	private serviceProvider: ServiceProvider) {
   }
 
+  ionViewWillEnter(){ this.serviceProvider.transition(); }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad BusinessPartnerPage');
   }

@@ -6,6 +6,8 @@ import { DetailPage } from '../detail/detail';
 import { AddProspectPage } from '../../pages/add-prospect/add-prospect';
 import { ProspectDetailPage } from '../../pages/prospect-detail/prospect-detail';
 import { ServiceProvider } from '../../providers/service/service';
+import {AuthServiceProvider} from '../../providers/auth/auth';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the ProspectPage page.
@@ -28,23 +30,33 @@ import { ServiceProvider } from '../../providers/service/service';
  		public navParams: NavParams, 
  		private listingProvider: ListingProvider,
  		private serviceProvider: ServiceProvider,
- 		private platform: Platform) {
+ 		private platform: Platform,
+ 		private auth: AuthServiceProvider) {
 
  	}
- 	ionViewWillEnter(){ this.serviceProvider.transition(); }
+ 	ionViewWillEnter(){ 
+ 		this.serviceProvider.transition(); 
+ 	
+ 	}
 
-
- 	ionViewDidLoad() {
- 		this.platform.ready().then((readySource) => {
- 			this.listingProvider.getProspects().then((data) => {
-
-	 			this.prospects = data;
-	 		});
-
+ 	ionViewDidEnter(){
+ 		this.auth.getUser().then((user) => {
+ 			console.log('THIS USER');
+ 			console.log(this.user);
+ 			this.user = user;
+ 			if (!this.user){
+ 				this.navCtrl.push(LoginPage, {page: 'prospect'}, {animate: false});
+ 			}
+ 			else{
+ 				this.listingProvider.getProspects().then((data) => {
+		 			this.prospects = data;
+		 		});
+ 			}
  		});
- 		
- 		console.log('ionViewDidLoad ProspectPage');
  	}
+
+
+ 	
 
  	goNewProspect() {
 		this.navCtrl.push(AddProspectPage, {}, {animate: false});

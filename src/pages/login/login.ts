@@ -10,6 +10,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AddPage } from '../add/add';
 import { Storage } from '@ionic/storage';
 import { MePage } from '../me/me';
+import { ProspectPage } from '../prospect/prospect';
 import { MyPropertiesPage } from '../my-properties/my-properties';
 import { SavedPage } from '../saved/saved';
 import { ServiceProvider } from '../../providers/service/service';
@@ -259,6 +260,10 @@ import { BusinessPartnerPage } from '../business-partner/business-partner';
  		else if (this.navParams.get('page') == 'me'){
  			this.navCtrl.pop({animate: false});
  			this.navCtrl.push(MePage, {}, {animate: false});
+ 		}
+ 		else if (this.navParams.get('page') == 'prospect'){
+ 			this.navCtrl.pop({animate: false});
+ 			this.navCtrl.push(ProspectPage, {}, {animate: false});
  		}
  	}
  	loginWithFacebook(){
