@@ -88,6 +88,19 @@ export interface AppBuilder {
 	created_at: number;
 }
 
+export interface Prospect { 
+	id: string;
+	name:string;
+	phonenumber: string;
+	note: string;
+	listing_id: string;
+	listing_title: string;
+	listing_price: string;
+	user_uid: string;
+	created_at: number;
+}
+
+
 
 
 @Injectable()
@@ -106,6 +119,8 @@ export class ListingProvider {
 	private reportsCollection: any;
 	private appBuilderCollection: any;
 	private appBuilders: any;
+	private prospectCollection: any;
+	private prospects: any;
 	private reports: any;
 	// private queryUrl: string = 'http://localhost:5000/konleng-cloud/us-central1/webApi/'+'api/v1/listings';
 	private queryUrl: string = 'https://konleng.com/api/v1/listings';
@@ -122,6 +137,8 @@ export class ListingProvider {
 		this.reports = this.reportsCollection.valueChanges();
 		this.appBuilderCollection = this.afStore.collection<AppBuilder>('app-builder');
 		this.appBuilders = this.appBuilderCollection.valueChanges();
+		this.prospectCollection = this.afStore.collection<Prospect>('prospects');
+		this.prospects = this.prospectCollection.valueChanges();
 		this.usersCollection = this.afStore.collection<User>('users');
 		this.countsCollection = this.afStore.collection<Count>('counts');
 
@@ -2401,21 +2418,33 @@ export class ListingProvider {
 		});
 	}
 
-	getUserListings(user_id, status){
+	getUserListings(user_id, status, limit?: number){
 		return new Promise<Object>((resolve, reject) => {
 			this.auth.getUser().then((user) => {
 				this.afStore.collection('listings', ref => {
 					let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
 					query = query.where('user_id', '==', user_id);
-					query = query.where('status', '==', status);
+					if (status != 3){
+						query = query.where('status', '==', status);	
+					}
+					console.log('holy');
+					console.log('limit', limit);
+					if (limit){
+						query = query.orderBy('created_date', 'asc').limit(limit);	
+					}
+					
+					
 					return query;
 				}).snapshotChanges().subscribe((listingsData) => {
 					this.listingsList = [];
+
 					listingsData.map((listing) => {
 						let data = listing.payload.doc.data();
 						data['id'] = listing.payload.doc.id;
 						this.listingsList.push(data);
 					});
+					console.log('error 1');
+					console.log(JSON.stringify(this.listingsList));
 					resolve(this.listingsList);
 				});
 			});
@@ -2487,14 +2516,17 @@ export class ListingProvider {
 			});
 	}
 
-	createProspect(prospect){
+	setProspect(prospect){
 
 		return new Promise<Object>((resolve, reject) => {
 			this.auth.getUser().then((user) => {
-				let newProspect = prospect;
-				newProspect.agent_id = user['uid'];
-				this.afStore.collection('prospects').add(newProspect).then((data) => {
-					resolve(data);
+				this.prospectCollection.doc(prospect.id).set(prospect).then(() => {
+
+					resolve();
+				}).catch((msg) => {
+
+					console.error('error set', JSON.stringify(msg));
+					reject(msg);
 				});
 			});
 			
@@ -2504,16 +2536,32 @@ export class ListingProvider {
 
 	
 
+	deleteProspect(prospect_id){
+
+		return new Promise<Object>((resolve, reject) => {
+			this.prospectCollection.doc(prospect_id).delete().then(() => {
+				resolve(true);
+			});
+		});
+
+		
+	}
+
+
+
+	
+
 	getProspects(){
 		return new Promise<Object>((resolve, reject) => {
 			this.auth.getUser().then((user) => {
 				this.afStore.collection('prospects', ref => {
 					let query: firebase.firestore.Query = ref;
-					query = query.where('user_id', '==', user['uid']);
+					query = query.where('user_uid', '==', user['uid']);
 
 					return query;
 				})
 				.valueChanges().subscribe((prospectData) => {
+					
 					resolve(prospectData);
 				});
 			});

@@ -7,7 +7,12 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>{{'PROSPECT_DETAIL' | translate}}</ion-title>
+    <ion-title>{{prospect?.name}}</ion-title>
+    <ion-buttons end (click)="goEditProspect(prospect)">
+    	<button round ion-button icon-only >
+    		<ion-icon name="md-create"></ion-icon>
+    	</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -17,15 +22,24 @@
 <ion-list>
 	<ion-item>
 		<ion-icon name="contact" item-start></ion-icon>
-	    <ion-label>{{'NAME' | translate}}: {{'VICHEANAK' | translate}}</ion-label>
-	</ion-item>
-	<ion-item>
-		<ion-icon name="mail" item-start></ion-icon>
-	    <ion-label>{{'PHONENUMBER' | translate}}: vicheanak@gmail.com</ion-label>
+	    <ion-label>{{prospect?.name}}</ion-label>
 	</ion-item>
 	<ion-item>
 		<ion-icon name="md-call" item-start></ion-icon>
-	    <ion-label>{{'NOTE' | translate}}: +855 (096) 926 9999</ion-label>
+	    <ion-label>{{prospect?.phonenumber}}</ion-label>
 	</ion-item>
+	<ion-item>
+		<ion-icon name="md-paper" item-start></ion-icon>
+	    <ion-label>{{prospect?.note}}</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-icon name="home" item-start></ion-icon>
+	    <ion-label>{{prospect?.listing_title}}</ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-icon name="home" item-start></ion-icon>
+	    <ion-label>{{prospect?.listing_price}}</ion-label>
+	</ion-item>
+
 </ion-list>
 </ion-content>

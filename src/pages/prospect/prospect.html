@@ -10,7 +10,7 @@
     <ion-title>{{'PROSPECT' | translate}}</ion-title>
     <ion-buttons end (click)="goNewProspect()">
     	<button round ion-button icon-only >
-    		<ion-icon name="md-create"></ion-icon>
+    		<ion-icon name="md-add"></ion-icon>
     	</button>
     </ion-buttons>
   </ion-navbar>
@@ -19,12 +19,14 @@
 
 
 <ion-content no-padding>
+
 <ion-list>
-	<ion-item>
-	    <ion-label>John Smith</ion-label>
-	</ion-item>
-	<ion-item>
-	    <ion-label>Dave John</ion-label>
-	</ion-item>
+	<ion-item *ngFor="let p of prospects" (click)="goProspectDetail(p)">
+    <h2>{{p.name}}</h2>
+    <p>{{p.phonenumber}}</p>
+    <p>{{p.listing_title}}</p>
+    <p>{{p.listing_price}}</p>
+    <ion-icon item-end name="ios-arrow-forward"></ion-icon>
+  </ion-item>
 </ion-list>
 </ion-content>

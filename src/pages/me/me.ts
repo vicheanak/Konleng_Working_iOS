@@ -20,6 +20,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { BusinessPartnerPage } from '../business-partner/business-partner';
 import { DonatePage } from '../donate/donate';
 import { ProspectPage } from '../prospect/prospect';
+import { InstantPropertyValuationPage } from '../instant-property-valuation/instant-property-valuation';
 
 
 
@@ -76,6 +77,18 @@ export class MePage {
 
 	goProspect(){
 		this.navCtrl.push(ProspectPage, {animate: false});
+	}
+
+	goInstantPropertyValuation(){
+		this.auth.getUser().then((user) => {
+			if (user){
+				this.navCtrl.push(InstantPropertyValuationPage, {user: user}, {animate: false});	
+			}
+			else{
+				this.navCtrl.push(LoginPage, {page: 'my-properties'}, {animate: false});
+			}
+		});
+		
 	}
 
 	goBusinessPartner(){

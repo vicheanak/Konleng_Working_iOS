@@ -26,7 +26,7 @@
 				<h2>{{listing.title}}</h2>
 				<p class="type">{{listing.commune | translate}}, {{listing.district | translate}}, {{listing.province | translate}}</p>
 				<p class="type">{{listing.property_type | translate}} {{"FOR" | translate}} {{listing.listing_type | translate}}</p>
-				<p class="price">${{listing.price | number : fractionSize}} - <span class="prospect">{{"PROSPECT" | translate}} 44</span></p>
+				<p class="price">${{listing.price | number : fractionSize}}</p>
 				<ion-icon item-end name="ios-arrow-forward"></ion-icon>
 			</ion-item>
 		</ion-list>

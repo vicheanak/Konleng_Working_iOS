@@ -7,29 +7,39 @@
 <ion-header>
 	<ion-navbar color="primary">
 		<ion-title>
-			{{'EDIT_PROSPECT' | translate}}
+			{{'PROSPECT' | translate}}
 		</ion-title>
 	</ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-	<ion-item no-padding>
-		<ion-label for="title" floating>{{'NAME' | translate}}</ion-label>
-		<ion-input id="title" [(ngModel)]="prospect.title" type="text"></ion-input>
+<ion-content no-padding>
+	<ion-card no-padding>
+			<ion-item (click)="presentListingModal()" no-padding>
+				<ion-thumbnail item-start [style.background-image]="getBackground(listing?.images[0])" style="background-size:cover; border-radius: 10px; border: white 2px solid; background-position: center; width: 115px; height: 115px;     margin: 0px 5px 0px 5px !important; padding: 0px !important;">
+				</ion-thumbnail>
+				<h2>{{listing?.title}}</h2>
+				<p class="type">{{listing?.commune | translate}}, {{listing?.district | translate}}, {{listing?.province | translate}}</p>
+				<p class="type">{{listing?.property_type | translate}} {{"FOR" | translate}} {{listing?.listing_type | translate}}</p>
+				<p class="price">${{listing?.price | number : fractionSize}}</p>
+				<ion-icon item-end name="ios-arrow-forward"></ion-icon>
+			</ion-item>
+		</ion-card>
+	<ion-item >
+		<ion-label for="name" floating>{{'NAME' | translate}}</ion-label>
+		<ion-input id="name" type="text" [(ngModel)]="prospect.name"></ion-input>
 	</ion-item>
-	<ion-item no-padding>
-		<ion-label for="title" floating>{{'PHONENUMBER' | translate}}</ion-label>
-		<ion-input id="title" [(ngModel)]="prospect.title" type="text"></ion-input>
+	<ion-item >
+		<ion-label for="phonenumber" floating>{{'PHONE' | translate}}</ion-label>
+		<ion-input id="phonenumber" [(ngModel)]="prospect.phonenumber" type="text"></ion-input>
 	</ion-item>
-	<label ion-item no-padding>
+	<label ion-item >
 		<ion-label floating>{{'NOTE' | translate}}</ion-label>
-		<ion-textarea #descriptionInput id="descriptionInput" rows="5" maxLength="2500" (keyup)="resize()" [(ngModel)]="prospect.description"></ion-textarea>
+		<ion-input id="note" [(ngModel)]="prospect.note" type="text"></ion-input>
 	</label>
 	<div padding>
-		
-		<button round (click)="submit()" [disabled]="prospect.title == ''" padding ion-button block>{{'SUBMIT' | translate}}</button>
-		
+		<button round (click)="submit()" [disabled]="prospect.name == '' && prospect.phonenumber == ''" padding ion-button block>{{'SUBMIT' | translate}}</button>
+		<button round color="danger" (click)="delete()" padding ion-button block>{{'DELETE' | translate}}</button>
 	</div>
 
 </ion-content>

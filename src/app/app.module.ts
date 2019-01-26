@@ -31,8 +31,10 @@ import { BusinessPartnerPage } from '../pages/business-partner/business-partner'
 import { DonatePage } from '../pages/donate/donate';
 import { ProspectPage } from '../pages/prospect/prospect';
 import { ProspectDetailPage } from '../pages/prospect-detail/prospect-detail';
-import { AddProspectPage } from '../pages/add-prospect/add-prospect';
-import { EditProspectPage } from '../pages/edit-prospect/edit-prospect';
+import { AddProspectPage, ListingModal } from '../pages/add-prospect/add-prospect';
+import { EditProspectPage, EditProspectListingModal } from '../pages/edit-prospect/edit-prospect';
+import { InstantPropertyValuationPage } from '../pages/instant-property-valuation/instant-property-valuation';
+
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -107,6 +109,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     FilterModal,
     DetailModal,
     ImageModal,
+    ListingModal,
     DetailPage,
     ChangePasswordPage,
     ConfirmationPage,
@@ -131,7 +134,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     ProspectPage,
     ProspectDetailPage,
     AddProspectPage,
-    EditProspectPage
+    EditProspectPage,
+    EditProspectListingModal,
+    InstantPropertyValuationPage
   ],
   imports: [
     BrowserModule,
@@ -166,6 +171,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     FilterModal,
     DetailModal,
     ImageModal,
+    ListingModal,
     DetailPage,
     ChangePasswordPage,
     ConfirmationPage,
@@ -190,7 +196,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     ProspectPage,
     ProspectDetailPage,
     AddProspectPage,
-    EditProspectPage
+    EditProspectPage,
+    EditProspectListingModal,
+    InstantPropertyValuationPage
   ],
   providers: [
     StatusBar,

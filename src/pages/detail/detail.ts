@@ -25,6 +25,7 @@ import {
 
 import { LoginPage } from '../login/login';
 import { ProspectPage } from '../prospect/prospect';
+import { AddProspectPage } from '../add-prospect/add-prospect';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ServiceProvider } from '../../providers/service/service';
 import { File } from '@ionic-native/file';
@@ -167,6 +168,10 @@ import { File } from '@ionic-native/file';
 
    goProspect(){
      this.navCtrl.push(ProspectPage, {listingId: this.listing.id}, {animate: false});
+   }
+
+   goAddProspect(){
+    this.navCtrl.push(AddProspectPage, {listing: this.listing}, {animate: false}); 
    }
 
 
