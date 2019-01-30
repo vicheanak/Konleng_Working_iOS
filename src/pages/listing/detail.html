@@ -9,6 +9,9 @@
 	<ion-card no-padding>
 		<ion-item (click)="goDetail(listing)" no-padding>
 			<ion-thumbnail item-start [style.background-image]="getBackground(listing?.thumb)" style="background-size:cover; background-position: center bottom; width: 100px; height: 100px;  border-radius: 5px; margin: 10px !important; padding: 7px !important;">
+				<div class="mask">
+					<div class="bluredBackground"></div>
+				</div>
 			</ion-thumbnail>
 			<h2 class="">{{listing?.title}}</h2>
 			<p class="type">{{listing?.district | translate}} {{listing?.province | translate}}</p>

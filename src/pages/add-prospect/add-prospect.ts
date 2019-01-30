@@ -67,7 +67,6 @@ import { ProspectPage } from '../prospect/prospect';
  					console.error('ERROR activeListing', error);
  				});
  			}
-
  		});
  	}
 

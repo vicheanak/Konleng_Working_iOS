@@ -96,7 +96,7 @@ import { File } from '@ionic-native/file';
      
      this.serviceProvider.transition();
      this.listing = this.navParams.get('listing');
-     
+     console.log('LISTING', JSON.stringify(this.listing));
      // this.listing.created_date = new Date().getTime() + this.listing.created_date;
 
      this.auth.isFavorite(this.listing.id).then((res) => {

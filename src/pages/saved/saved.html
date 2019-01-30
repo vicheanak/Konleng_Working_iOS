@@ -20,6 +20,9 @@
 	<ion-list>
 		<ion-item (click)="goDetail(listing)" no-padding *ngFor="let listing of listings">
 			<ion-thumbnail item-start [style.background-image]="getBackground(listing?.images[0])" style="background-size:cover; border-radius: 10px; border: white 2px solid; background-position: center; width: 115px; height: 115px;     margin: 0px 5px 0px 5px !important; padding: 0px !important;">
+				<div class="mask">
+					<div class="bluredBackground"></div>
+				</div>
 			</ion-thumbnail>
 			<h2>{{listing.title}}</h2>
 			<p class="type">{{listing.district | translate}}, {{listing.province | translate}}</p>

@@ -22,8 +22,14 @@
 	<ion-fab right top>
 		<button round mini ion-fab color="danger" (click)="saveFavorite()"><ion-icon name="{{isFavorite == true ? 'ios-heart' : 'ios-heart-outline'}}"></ion-icon></button>
 	</ion-fab>
+
 	<ion-slides class="listing-images" pager>
-		<ion-slide (click)="presentImageModal(image, listing?.images)" *ngFor="let image of listing?.images" [style.background-image]="getBackground(image)" style="background-size:cover; background-position: center;">
+
+		<!-- <ion-slide (click)="presentImageModal(image, listing?.images)" *ngFor="let image of listing?.images" [style.background-image]="getBackground(image)" style="background-size:cover; background-position: center;"> -->
+		<ion-slide *ngFor="let image of listing?.images" [style.background-image]="getBackground(image)" style="background-size:cover; background-position: center;">
+			<div class="mask">
+				<div class="bluredBackground"></div>
+			</div>
 		</ion-slide>
 	</ion-slides>
 	
